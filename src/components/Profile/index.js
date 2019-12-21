@@ -2,7 +2,24 @@ import React, { Component } from "react";
 import profileService from "../../services/profileService";
 import Progressbar from "./Progressbar";
 import Character from "./Character"
-//import styled from 'styled-components'
+import styled from 'styled-components'
+import SideNavbar from './SideNavbar'
+
+//test styled
+
+const TestText = styled.div`
+    color: red;
+    p {
+      color : blue;
+    }
+  `
+
+  const TestButton = styled.button`
+    color : green;
+    &:hover{
+      color : red;
+    }
+  `
 
 export default class Profile extends Component {
   state = {
@@ -34,6 +51,16 @@ export default class Profile extends Component {
   render() {
     return (
       <div className="container">
+        <SideNavbar/>
+        <TestButton>
+          test
+        </TestButton>
+        <TestText>
+          test
+          <p>
+            55555
+          </p>
+        </TestText>
         <Progressbar
           color="warning"
           percent={this.state.percentExp}
