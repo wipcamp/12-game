@@ -1,42 +1,24 @@
 import React, { Component } from "react";
 import styled from 'styled-components'
-import { Navbar } from "reactstrap";
+import { Nav } from "reactstrap";
 
 const StyledMenu = styled.nav`
-  display: flex;
+  display: inline-block
   flex-direction: column;
   justify-content: center;
-  background: #EFFFFA;
+  background: red;
   transform: ${({ open }) => open ? 'translateX(80vw)' : 'translateX(100vw)'};
   height: 100vh;
-  text-align: left;
   padding: 2rem;
   position: absolute;
-  top: 0;
-  left: 0;
   transition: transform 0.3s ease-in-out;
-
-  @media (max-width: 576px) {
-      width: 100%;
-    }
-
-  a {
-    font-size: 2rem;
-    text-transform: uppercase;
-    padding: 2rem 0;
-    font-weight: bold;
-    letter-spacing: 0.5rem;
-    color: #0D0C1D;
-    text-decoration: none;
-    transition: color 0.3s linear;
-
-    @media (max-width: 576px) {
-      font-size: 1.5rem;
-      text-align: center;
-    }
 
     &:hover {
       color: #343078;
+    }
+
+    a{
+      display : inline-block;
     }
   }
 `
@@ -45,7 +27,7 @@ const Menu = ({ open }) => {
   return (
     <StyledMenu open={open}>
       <a href="/">
-        About us
+        About us aeqwqdwedewfeqf
       </a>
       <a href="/">
         Pricing
@@ -60,7 +42,7 @@ const Menu = ({ open }) => {
 const StyledBurger = styled.button`
   position: absolute;
   top: 5%;
-  left: 2rem;
+  right: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -69,7 +51,6 @@ const StyledBurger = styled.button`
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 0;
   z-index: 10;
 
   &:focus {
