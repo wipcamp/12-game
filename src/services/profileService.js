@@ -3,7 +3,7 @@ import api from '../utils/apiGameUserService'
 
 const profileService = {
     getProfile : async (lineId) => {
-        let res = await api.get(`/profile/${lineId}`)
+        let res = await api.get(`/profile?id=${lineId}`)
         return res;
     },
   
