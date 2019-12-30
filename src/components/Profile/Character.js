@@ -1,27 +1,31 @@
 import React, { Component } from 'react'
+import CharacterController from './CharacterController'
+import FlareComponent from 'flare-react';
+
 
 export default class Character extends Component {
     state = {
+        characterController : new CharacterController(),
         image_source: [
             {
-              level: 1,
-              source: "/image/level1.png"
+              level: 10,
+              source: "/image/level1.flr"
             },
             {
               level: 20,
-              source: "/image/level2.png"
+              source: "/image/level2.flr"
             },
             {
               level: 30,
-              source: "/image/level3.png"
+              source: "/image/level3.flr"
             },
             {
               level: 40,
-              source: "/image/level4.png"
+              source: "/image/level4.flr"
             },
             {
               level: 50,
-              source: "/image/level5.png"
+              source: "/image/level5.flr"
             }
           ],
     }
@@ -45,7 +49,7 @@ export default class Character extends Component {
     }
     return (
       <div>
-        <img src={data} alt="Logo" />
+        <FlareComponent controller={this.state.characterController} width={200} height={200} file={data}/>
       </div>
     );
   }
