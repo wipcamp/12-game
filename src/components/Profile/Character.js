@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 
 export default class Character extends Component {
     state = {
-        user_level : this.props.level,
         image_source: [
             {
-              level: 10,
+              level: 1,
               source: "/image/level1.png"
             },
             {
@@ -17,7 +16,7 @@ export default class Character extends Component {
               source: "/image/level3.png"
             },
             {
-              level: 43,
+              level: 40,
               source: "/image/level4.png"
             },
             {
@@ -26,14 +25,22 @@ export default class Character extends Component {
             }
           ],
     }
-
+  
     
   getProfileImage() {
     let data = null;
-    const { image_source } = this.state;
-    for (let i = 0; i < image_source.length; i++) {
-      if (image_source[i].level == this.state.level) {
-        data = image_source[i].source;
+    for (let i = 0; i < this.state.image_source.length; i++) {
+      if (this.state.level<this.state.image_source[i].level) {
+        if(i!=0){
+          data = this.state.image_source[i-1].source
+        }else{
+          data = this.state.image_source[i].source
+        }
+        i = this.state.image_source.length
+      }else{
+        if(i==this.state.image_source.length-1){
+          data = this.state.image_source[i].source
+        }
       }
     }
     return (
@@ -53,6 +60,6 @@ export default class Character extends Component {
     render() {
         return (
             this.getProfileImage()
-        )
+        );
     }
 }
