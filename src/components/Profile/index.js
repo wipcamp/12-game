@@ -24,7 +24,7 @@ const TestText = styled.div`
 export default class Profile extends Component {
   state = {
     user_test_data: {},
-    sample_id: 123456,
+    sample_id: 1,
     percentExp: 0,
     user_level : 0,
     user_str : 0,
@@ -46,6 +46,7 @@ export default class Profile extends Component {
       user_dex : data.data.dex,
       user_luk : data.data.luk
     });
+    console.log(data)
   }
 
   render() {
