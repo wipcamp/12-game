@@ -5,6 +5,13 @@ import Character from "./Character"
 import styled from 'styled-components'
 import SideNavbar from './SideNavbar'
 
+const CenterComponent = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`
+
 export default class Profile extends Component {
   state = {
     user_test_data: {},
@@ -36,6 +43,7 @@ export default class Profile extends Component {
     return (
       <div className="container">
         <SideNavbar/>
+        <CenterComponent>
         <Progressbar
           color="warning"
           percent={this.state.percentExp}
@@ -69,6 +77,7 @@ export default class Profile extends Component {
           level = {this.state.user_luk}
           status="luk"
         />
+        </CenterComponent>
       </div>
     );
   }
