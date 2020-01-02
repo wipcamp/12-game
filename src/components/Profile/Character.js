@@ -9,7 +9,7 @@ export default class Character extends Component {
         image_source: [
             {
               level: 10,
-              source: "/image/level1.flr"
+              source: "/image/level2.flr"
             },
             {
               level: 20,
@@ -17,24 +17,25 @@ export default class Character extends Component {
             },
             {
               level: 30,
-              source: "/image/level3.flr"
+              source: "/image/level1.flr"
             },
             {
               level: 40,
-              source: "/image/level4.flr"
+              source: "/image/level1.flr"
             },
             {
               level: 50,
-              source: "/image/level5.flr"
+              source: "/image/level1.flr"
             }
           ],
     }
   
     
   getProfileImage() {
+    console.log(this.props.level)
     let data = null;
     for (let i = 0; i < this.state.image_source.length; i++) {
-      if (this.state.level<this.state.image_source[i].level) {
+      if (this.props.level<this.state.image_source[i].level) {
         if(i!=0){
           data = this.state.image_source[i-1].source
         }else{
