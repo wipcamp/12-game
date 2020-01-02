@@ -5,22 +5,6 @@ import Character from "./Character"
 import styled from 'styled-components'
 import SideNavbar from './SideNavbar'
 
-//test styled
-
-const TestText = styled.div`
-    color: red;
-    p {
-      color : blue;
-    }
-  `
-
-  const TestButton = styled.button`
-    color : green;
-    &:hover{
-      color : red;
-    }
-  `
-
 export default class Profile extends Component {
   state = {
     user_test_data: {},
@@ -46,22 +30,12 @@ export default class Profile extends Component {
       user_dex : data.data.dex,
       user_luk : data.data.luk
     });
-    console.log(data)
   }
 
   render() {
     return (
       <div className="container">
         <SideNavbar/>
-        <TestButton>
-          test
-        </TestButton>
-        <TestText>
-          test
-          <p>
-            55555
-          </p>
-        </TestText>
         <Progressbar
           color="warning"
           percent={this.state.percentExp}
