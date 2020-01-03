@@ -146,6 +146,7 @@ class Test extends Component {
               null
           }
           <div className="support">
+              <p onClick={this.getProfile.bind(this)} >Get user</p>
             {/* <Button variant="contained" onClick={this.getProfile.bind(this)} style={{ marginRight: '20px' }} color="primary">
               Getdata INFO
             </Button>
