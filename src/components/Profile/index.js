@@ -49,10 +49,10 @@ export default class Profile extends Component {
     });
   }
 
-  async getProfileData(id) {
-    let data = await profileService.getProfile(id);
+  async getProfileData() {
+    let data = await profileService.getProfile(this.state.user_id); 
     this.setState({
-      user_test_data: data.data,
+      user_test_data: data,
       percentExp: (data.data.exp * data.data.maxExp) / 100,
       user_level: data.data.level,
       user_str: data.data.str,
@@ -73,6 +73,7 @@ export default class Profile extends Component {
             status='Level'
           />
           <p onClick={this.getProfile.bind(this)} >Get user</p>
+          <p onClick={this.getProfileData.bind(this)} >Get DATA</p>
           user_id: {this.state.user_test_data.id} <br /> {this.state.user_id} <br />
           team: {this.state.user_test_data.team} <br />
           energy: {this.state.user_test_data.energy} <br />
