@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 
-const { apiUrl  } = window['runConfig'];
+const  apiUrl   = window['runConfig'].apiUrl;
 const createInstance = (headers) => {
   return axios.create({
     baseURL: apiUrl,

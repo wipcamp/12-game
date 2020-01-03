@@ -11,7 +11,7 @@ const CenterComponent = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
 `
-
+const liff = window.liff;
 export default class Profile extends Component {
   state = {
     user_test_data: {},
@@ -24,7 +24,17 @@ export default class Profile extends Component {
   };
 
   componentDidMount() {
-    this.getProfileData(this.state.sample_id);
+    // this.getProfileData(this.state.sample_id);
+    this.getProfileData(this.getProfile());
+  }
+
+  getProfile(){
+    liff.init(async () => {
+      let getProfile = await liff.getProfile();
+      this.setState({
+        sample_id: getProfile.userId
+      });
+    });
   }
 
   async getProfileData(id) {
