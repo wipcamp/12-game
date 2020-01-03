@@ -14,14 +14,15 @@ const CenterComponent = styled.div`
 const liff = window.liff;
 export default class Profile extends Component {
   state = {
-    user_id: "U0d2f062bb2921e6f1e48d70c7a030ab2",
+    user_id: 1,
     user_test_data: {},
     sample_id: 1,
     percentExp: 0,
     user_level: 0,
     user_str: 0,
     user_dex: 0,
-    user_luk: 0
+    user_luk: 0,
+    isLogin: false
   };
 
   componentDidMount() {
@@ -32,6 +33,9 @@ export default class Profile extends Component {
       })
       .then(async () => {
         if (!liff.isLoggedIn()) {
+          this.setState({
+            isLogin: true
+          })
           liff.login();
         }
       })
@@ -50,15 +54,12 @@ export default class Profile extends Component {
   async getProfileData(id) {
     let data = await profileService.getProfile(id);
     this.setState({
-      user_id : data.id,
-      user_test_data: {
-        id: data.id
-      },
-      percentExp: (data.exp * data.maxExp) / 100,
-      user_level: data.level,
-      user_str: data.str,
-      user_dex: data.dex,
-      user_luk: data.luk
+      user_test_data: data.data,
+      percentExp: (data.data.exp * data.data.maxExp) / 100,
+      user_level: data.data.level,
+      user_str: data.data.str,
+      user_dex: data.data.dex,
+      user_luk: data.data.luk
     });
   }
 
@@ -73,13 +74,11 @@ export default class Profile extends Component {
             level={this.state.user_level}
             status='Level'
           />
-          {this.state.user_id} <br />
-          
-          user_id: {this.state.id} <br />
-          test_user_id: {this.state.user_test_data.id} <br />
-          team: {this.state.team} <br />
-          energy: {this.state.energy} <br />
-          max_energy: {this.state.maxEnergy} <br />
+          {this.state.isLogin}
+          user_id: {this.state.user_test_data.id} <br />
+          team: {this.state.user_test_data.team} <br />
+          energy: {this.state.user_test_data.energy} <br />
+          max_energy: {this.state.user_test_data.maxEnergy} <br />
           <Character level={this.state.user_level} />{' '}
           <Progressbar
             color='warning'
