@@ -73,10 +73,10 @@ export default class Profile extends Component {
           />
           {this.state.user_id} <br />
           
-          user_id: {this.state.user_test_data.id} <br />
-          team: {this.state.user_test_data.team} <br />
-          energy: {this.state.user_test_data.energy} <br />
-          max_energy: {this.state.user_test_data.maxEnergy} <br />
+          user_id: {this.state.id} <br />
+          team: {this.state.team} <br />
+          energy: {this.state.energy} <br />
+          max_energy: {this.state.maxEnergy} <br />
           <Character level={this.state.user_level} />{' '}
           <Progressbar
             color='warning'
