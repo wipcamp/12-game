@@ -3,12 +3,12 @@ import styled from 'styled-components'
 import { Nav } from "reactstrap";
 
 const StyledMenu = styled.nav`
-  display: inline-block
   flex-direction: column;
   justify-content: center;
   background: red;
-  transform: ${({ open }) => open ? 'translateX(80vw)' : 'translateX(100vw)'};
+  transform: ${({ open }) => open ? 'translateX(73em)' : 'translateX(100em)'};
   height: 100vh;
+  width: 300px;
   padding: 2rem;
   position: absolute;
   transition: transform 0.3s ease-in-out;
@@ -21,19 +21,25 @@ const StyledMenu = styled.nav`
       display : inline-block;
     }
   }
+  
+  @media (max-width: 420px) {
+    transform: ${({ open }) => open ? 'translateX(0em)' : 'translateX(100em)'};
+    width: 100vw;
+  }
+
 `
 
 const Menu = ({ open }) => {
   return (
     <StyledMenu open={open}>
       <a href="/">
-        About us aeqwqdwedewfeqf
+        Profile
       </a>
       <a href="/">
-        Pricing
+        Scoreboard
         </a>
       <a href="/">
-        Contact
+        History
         </a>
     </StyledMenu>
   )
