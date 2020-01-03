@@ -51,7 +51,7 @@ export default class Profile extends Component {
     let data = await profileService.getProfile(id);
     this.setState({
       user_id : data.id,
-      user_test_data: data.data,
+      user_test_data: data,
       percentExp: (data.exp * data.maxExp) / 100,
       user_level: data.level,
       user_str: data.str,
@@ -74,6 +74,7 @@ export default class Profile extends Component {
           {this.state.user_id} <br />
           
           user_id: {this.state.id} <br />
+          test_user_id: {this.state.user_test_data.id} <br />
           team: {this.state.team} <br />
           energy: {this.state.energy} <br />
           max_energy: {this.state.maxEnergy} <br />
