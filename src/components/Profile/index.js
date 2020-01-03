@@ -15,8 +15,6 @@ const liff = window.liff;
 export default class Profile extends Component {
   state = {
     user_id: "U0d2f062bb2921e6f1e48d70c7a030ab2",
-    user_id1: "",
-    user_id2: "",
     user_test_data: {},
     sample_id: 1,
     percentExp: 0,
@@ -53,14 +51,12 @@ export default class Profile extends Component {
     let data = await profileService.getProfile(id);
     this.setState({
       user_id : data.id,
-      // user_id1: data.data.id,
-      // user_id2: id,
       user_test_data: data.data,
-      percentExp: (data.data.exp * data.data.maxExp) / 100,
-      user_level: data.data.level,
-      user_str: data.data.str,
-      user_dex: data.data.dex,
-      user_luk: data.data.luk
+      percentExp: (data.exp * data.maxExp) / 100,
+      user_level: data.level,
+      user_str: data.str,
+      user_dex: data.dex,
+      user_luk: data.luk
     });
   }
 
@@ -76,8 +72,7 @@ export default class Profile extends Component {
             status='Level'
           />
           {this.state.user_id} <br />
-          {this.state.user_id1} <br />
-          {this.state.user_id2} <br />
+          
           user_id: {this.state.user_test_data.id} <br />
           team: {this.state.user_test_data.team} <br />
           energy: {this.state.user_test_data.energy} <br />
