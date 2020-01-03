@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './App.css';
-import Button from '@material-ui/core/Button';
+import '../../App.css';
+// import Button from '@material-ui/core/Button';
 
 const liff = window.liff;
 
@@ -23,7 +23,7 @@ class Test extends Component {
   }
 
   componentDidMount() {
-    liff.init({ liffId: '1579235015-DRJy4vn9' })
+    liff.init({ liffId: '1653691835-vZ4GNK7z' })
       .then(async () => {
         if (!liff.isLoggedIn()) {
           liff.login();
@@ -146,7 +146,7 @@ class Test extends Component {
               null
           }
           <div className="support">
-            <Button variant="contained" onClick={this.getProfile.bind(this)} style={{ marginRight: '20px' }} color="primary">
+            {/* <Button variant="contained" onClick={this.getProfile.bind(this)} style={{ marginRight: '20px' }} color="primary">
               Getdata INFO
             </Button>
             <Button variant="contained" onClick={this.sendMessage.bind(this)} style={{ marginRight: '20px' }}>
@@ -154,7 +154,7 @@ class Test extends Component {
             </Button>
             <Button variant="contained" onClick={this.closeLIFF.bind(this)} color="secondary">
               Close LIFF
-            </Button>
+            </Button> */}
           </div>
         </header>
       </div>
