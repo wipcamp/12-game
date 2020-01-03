@@ -44,7 +44,7 @@ export default class Profile extends Component {
 
   getProfile() {
     liff.getProfile().then(dataInfo => {
-      return dataInfo.userId
+      return dataInfo.userId;
     });
   }
 
@@ -77,6 +77,10 @@ export default class Profile extends Component {
       }
       status = 'Level' /
       >
+      <
+      p style = "color:aqua;" > This is UserId: {
+        this.state.user_test_data
+      } < /p>
       user_id: {
         this.state.user_test_data.id
       } < br / >
@@ -124,8 +128,8 @@ export default class Profile extends Component {
       status = 'luk' /
       >
       <
-      /CenterComponent>{' '} <
-      /div>
+      /CenterComponent>{' '} < /
+      div >
     );
   }
 }
