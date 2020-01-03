@@ -1,13 +1,11 @@
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 import profileService from '../../services/profileService';
 import Progressbar from './Progressbar';
 import Character from './Character';
 import styled from 'styled-components';
 import SideNavbar from './SideNavbar';
 
-const CenterComponent = styled.div `
+const CenterComponent = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
@@ -61,75 +59,41 @@ export default class Profile extends Component {
   }
 
   render() {
-    return ( <
-      div className = 'container' >
-      <
-      SideNavbar / >
-      <
-      CenterComponent >
-      <
-      Progressbar color = 'warning'
-      percent = {
-        this.state.percentExp
-      }
-      level = {
-        this.state.user_level
-      }
-      status = 'Level' /
-      >
-      <
-      p style = "color:aqua;" > This is UserId: {
-        this.state.user_test_data
-      } < /p>
-      user_id: {
-        this.state.user_test_data.id
-      } < br / >
-      team: {
-        this.state.user_test_data.team
-      } < br / >
-      energy: {
-        this.state.user_test_data.energy
-      } < br / >
-      max_energy: {
-        this.state.user_test_data.maxEnergy
-      } < br / >
-      <
-      Character level = {
-        this.state.user_level
-      }
-      />{' '} <
-      Progressbar color = 'warning'
-      percent = {
-        this.state.user_str
-      }
-      level = {
-        this.state.user_str
-      }
-      status = 'str' /
-      >
-      <
-      Progressbar color = 'warning'
-      percent = {
-        this.state.user_dex
-      }
-      level = {
-        this.state.user_dex
-      }
-      status = 'dex' /
-      >
-      <
-      Progressbar color = 'warning'
-      percent = {
-        this.state.user_luk * 10
-      }
-      level = {
-        this.state.user_luk
-      }
-      status = 'luk' /
-      >
-      <
-      /CenterComponent>{' '} < /
-      div >
+    return (
+      <div className='container'>
+        <SideNavbar />
+        <CenterComponent>
+          <Progressbar
+            color='warning'
+            percent={this.state.percentExp}
+            level={this.state.user_level}
+            status='Level'
+          />
+          <p style="aqua">user_id: {this.state.user_test_data.id}</p> <br />
+          team: {this.state.user_test_data.team} <br />
+          energy: {this.state.user_test_data.energy} <br />
+          max_energy: {this.state.user_test_data.maxEnergy} <br />
+          <Character level={this.state.user_level} />{' '}
+          <Progressbar
+            color='warning'
+            percent={this.state.user_str}
+            level={this.state.user_str}
+            status='str'
+          />
+          <Progressbar
+            color='warning'
+            percent={this.state.user_dex}
+            level={this.state.user_dex}
+            status='dex'
+          />
+          <Progressbar
+            color='warning'
+            percent={this.state.user_luk * 10}
+            level={this.state.user_luk}
+            status='luk'
+          />
+        </CenterComponent>{' '}
+      </div>
     );
   }
 }
