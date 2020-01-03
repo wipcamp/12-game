@@ -14,6 +14,7 @@ const CenterComponent = styled.div`
 const liff = window.liff;
 export default class Profile extends Component {
   state = {
+    user_id: 1,
     user_test_data: {},
     sample_id: 1,
     percentExp: 0,
@@ -49,6 +50,7 @@ export default class Profile extends Component {
   async getProfileData(id) {
     let data = await profileService.getProfile(id);
     this.setState({
+      user_id : data.data.id,
       user_test_data: data.data,
       percentExp: (data.data.exp * data.data.maxExp) / 100,
       user_level: data.data.level,
@@ -69,6 +71,7 @@ export default class Profile extends Component {
             level={this.state.user_level}
             status='Level'
           />
+          {this.state.user_id} <br />
           user_id: {this.state.user_test_data.id} <br />
           team: {this.state.user_test_data.team} <br />
           energy: {this.state.user_test_data.energy} <br />
