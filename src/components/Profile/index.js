@@ -42,7 +42,7 @@ export default class Profile extends Component {
       .catch(err => {
         console.log(err);
       });
-    this.getProfileData(this.getProfile());
+    // this.getProfileData(this.getProfile());
   }
 
   getProfile() {
@@ -74,6 +74,7 @@ export default class Profile extends Component {
             level={this.state.user_level}
             status='Level'
           />
+          <p onClick={this.getProfileData(this.getProfile)}>get data</p>
           {this.state.isLogin}
           user_id: {this.state.user_test_data.id} <br />
           team: {this.state.user_test_data.team} <br />
