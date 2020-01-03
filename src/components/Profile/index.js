@@ -21,8 +21,7 @@ export default class Profile extends Component {
     user_level: 0,
     user_str: 0,
     user_dex: 0,
-    user_luk: 0,
-    isLogin: false
+    user_luk: 0
   };
 
   componentDidMount() {
@@ -33,9 +32,6 @@ export default class Profile extends Component {
       })
       .then(async () => {
         if (!liff.isLoggedIn()) {
-          this.setState({
-            isLogin: true
-          })
           liff.login();
         }
       })
@@ -47,7 +43,9 @@ export default class Profile extends Component {
 
   getProfile() {
     liff.getProfile().then(dataInfo => {
-      return dataInfo.userId;
+      this.setState({
+        user_id: dataInfo.userId
+      })
     });
   }
 
@@ -74,9 +72,8 @@ export default class Profile extends Component {
             level={this.state.user_level}
             status='Level'
           />
-          <p onClick={this.getProfileData(this.getProfile)}>get data</p>
-          {this.state.isLogin}
-          user_id: {this.state.user_test_data.id} <br />
+          <p onClick={this.getProfile().bind(this)}>get data</p>
+          user_id: {this.state.user_test_data.id}{this.state.user_id} <br />
           team: {this.state.user_test_data.team} <br />
           energy: {this.state.user_test_data.energy} <br />
           max_energy: {this.state.user_test_data.maxEnergy} <br />
