@@ -69,7 +69,7 @@ export default class Profile extends Component {
             level={this.state.user_level}
             status='Level'
           />
-          <p style="aqua">user_id: {this.state.user_test_data.id}</p> <br />
+          user_id: {this.state.user_test_data.id} <br />
           team: {this.state.user_test_data.team} <br />
           energy: {this.state.user_test_data.energy} <br />
           max_energy: {this.state.user_test_data.maxEnergy} <br />
