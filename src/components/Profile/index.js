@@ -50,7 +50,7 @@ export default class Profile extends Component {
   async getProfileData(id) {
     let data = await profileService.getProfile(id);
     this.setState({
-      user_id : data.data.id,
+      user_id : data.id,
       user_test_data: data.data,
       percentExp: (data.data.exp * data.data.maxExp) / 100,
       user_level: data.data.level,
