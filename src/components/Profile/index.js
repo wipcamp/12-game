@@ -72,8 +72,8 @@ export default class Profile extends Component {
             level={this.state.user_level}
             status='Level'
           />
-          <p onClick={this.getProfile().bind(this)}>get data</p>
-          user_id: {this.state.user_test_data.id}{this.state.user_id} <br />
+          <p onClick={this.getProfile()}>get data</p>
+          user_id: {this.state.user_test_data.id} <br /> {this.state.user_id} <br />
           team: {this.state.user_test_data.team} <br />
           energy: {this.state.user_test_data.energy} <br />
           max_energy: {this.state.user_test_data.maxEnergy} <br />
