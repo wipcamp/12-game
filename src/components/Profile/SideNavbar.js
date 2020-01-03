@@ -12,6 +12,7 @@ const StyledMenu = styled.nav`
   padding: 2rem;
   position: absolute;
   transition: transform 0.3s ease-in-out;
+  z-index: 1;
 
     &:hover {
       color: #343078;
