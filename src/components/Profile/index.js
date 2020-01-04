@@ -33,21 +33,26 @@ export default class Profile extends Component {
       .then(async () => {
         if (!liff.isLoggedIn()) {
           liff.login();
+          liff.getProfile().then(dataInfo => {
+            this.setState({
+              user_id: dataInfo.userId
+            })
+          });      
         }
       })
       .catch(err => {
         console.log(err);
       });
-    // this.getProfileData(this.getProfile());
+    // this.getProfileData(await this.getProfile());
   }
 
-  getProfile() {
-    liff.getProfile().then(dataInfo => {
-      this.setState({
-        user_id: dataInfo.userId
-      })
-    });
-  }
+  // getProfile() {
+  //   liff.getProfile().then(dataInfo => {
+  //     this.setState({
+  //       user_id: dataInfo.userId
+  //     })
+  //   });
+  // }
 
   async getProfileData() {
     let data = await profileService.getProfile(this.state.user_id); 
