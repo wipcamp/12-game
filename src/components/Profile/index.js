@@ -9,8 +9,16 @@ const CenterComponent = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
+  width: 70vw;
   transform: translate(-50%, -50%);
 `;
+
+const EnergyProgressbar = styled(Progressbar)`
+top: 5%;
+right: 2rem;
+display: flex;
+`
+
 const liff = window.liff;
 export default class Profile extends Component {
   state = {
@@ -21,7 +29,8 @@ export default class Profile extends Component {
     user_level: 0,
     user_str: 0,
     user_dex: 0,
-    user_luk: 0
+    user_luk: 0,
+    user_energy:0
   };
 
   componentDidMount() {
@@ -59,7 +68,8 @@ export default class Profile extends Component {
       user_level: data.data.level,
       user_str: data.data.str,
       user_dex: data.data.dex,
-      user_luk: data.data.luk
+      user_luk: data.data.luk,
+      user_energy:data.data.energy
     });
   }
 
@@ -68,6 +78,14 @@ export default class Profile extends Component {
       <div>
       <div className="container">
         <CenterComponent>
+        <EnergyProgressbar
+            style={{ flex: 1, marginRight: 12, height: 20, paddingVertical: 20 }}
+            color='warning'
+            percent={(this.state.user_test_data.energy/this.state.user_test_data.maxEnergy)*100}
+            level={this.state.user_energy}
+            status='energy'
+          />
+          user_name: {this.state.user_test_data.name} <br />
           <Progressbar
             color='warning'
             percent={this.state.percentExp}
@@ -76,10 +94,7 @@ export default class Profile extends Component {
           />
           <p onClick={this.getProfile.bind(this)} >Get user</p>
           <p onClick={this.getProfileData.bind(this)} >Get DATA</p>
-          user_id: {this.state.user_test_data.id} <br /> {this.state.user_id} <br />
           team: {this.state.user_test_data.team} <br />
-          energy: {this.state.user_test_data.energy} <br />
-          max_energy: {this.state.user_test_data.maxEnergy} <br />
           <Character level={this.state.user_level} />{' '}
           <Progressbar
             color='warning'
