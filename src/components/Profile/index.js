@@ -11,12 +11,16 @@ const CenterComponent = styled.div`
   left: 50%;
   width: 70vw;
   transform: translate(-50%, -50%);
+  ${props => props.energy && `
+  top: 30qq%;
+  left: 50%;
+  `}
 `;
 
-const EnergyProgressbar = styled(Progressbar)`
-top: 5%;
-right: 2rem;
-display: flex;
+const EnergyProgressbar = styled(CenterComponent)`
+position: adsolute;
+top: -15%;
+left: 85vw;
 `
 
 const liff = window.liff;
@@ -30,11 +34,11 @@ export default class Profile extends Component {
     user_str: 0,
     user_dex: 0,
     user_luk: 0,
-    user_energy:0
+    user_energy: 0
   };
 
   componentDidMount() {
-     this.getProfileData(this.state.sample_id);
+    this.getProfileData(this.state.sample_id);
     // liff
     //   .init({
     //     liffId: '1653691835-vZ4GNK7z'
@@ -60,7 +64,7 @@ export default class Profile extends Component {
 
   async getProfileData(id) {
     console.log(id)
-    let data = await profileService.getProfile(id); 
+    let data = await profileService.getProfile(id);
     console.log(data)
     this.setState({
       user_test_data: data.data,
@@ -69,53 +73,58 @@ export default class Profile extends Component {
       user_str: data.data.str,
       user_dex: data.data.dex,
       user_luk: data.data.luk,
-      user_energy:data.data.energy
+      user_energy: data.data.energy
     });
   }
 
   render() {
     return (
       <div>
-      <div className="container">
-        <CenterComponent>
-        <EnergyProgressbar
-            style={{ flex: 1, marginRight: 12, height: 20, paddingVertical: 20 }}
-            color='warning'
-            percent={(this.state.user_test_data.energy/this.state.user_test_data.maxEnergy)*100}
-            level={this.state.user_energy}
-            status='energy'
-          />
-          user_name: {this.state.user_test_data.name} <br />
-          <Progressbar
-            color='warning'
-            percent={this.state.percentExp}
-            level={this.state.user_level}
-            status='Level'
-          />
-          <p onClick={this.getProfile.bind(this)} >Get user</p>
-          <p onClick={this.getProfileData.bind(this)} >Get DATA</p>
-          team: {this.state.user_test_data.team} <br />
-          <Character level={this.state.user_level} />{' '}
-          <Progressbar
-            color='warning'
-            percent={this.state.user_str}
-            level={this.state.user_str}
-            status='str'
-          />
-          <Progressbar
-            color='warning'
-            percent={this.state.user_dex}
-            level={this.state.user_dex}
-            status='dex'
-          />
-          <Progressbar
-            color='warning'
-            percent={this.state.user_luk * 10}
-            level={this.state.user_luk}
-            status='luk'
-          />
-        </CenterComponent>{' '}
-      </div>
+        <div className="container">
+          <CenterComponent>
+            <EnergyProgressbar>
+              <Progressbar
+                energy
+                style={{ height: 10, width: 50, marginTop: 10 }}
+                color='warning'
+                percent={(this.state.user_test_data.energy / this.state.user_test_data.maxEnergy) * 100}
+                level={this.state.user_energy}
+                status='energy'
+              />
+            </EnergyProgressbar>
+            user_name: {this.state.user_test_data.name} <br />
+            <Progressbar
+              color='warning'
+              percent={this.state.percentExp}
+              level={this.state.user_level}
+              status='Level'
+            />
+            {/*
+            <p onClick={this.getProfile.bind(this)} >Get user</p>
+            <p onClick={this.getProfileData.bind(this)} >Get DATA</p>
+            */}
+            team: {this.state.user_test_data.team} <br />
+            <Character level={this.state.user_level} />{' '}
+            <Progressbar
+              color='warning'
+              percent={this.state.user_str}
+              level={this.state.user_str}
+              status='str'
+            />
+            <Progressbar
+              color='warning'
+              percent={this.state.user_dex}
+              level={this.state.user_dex}
+              status='dex'
+            />
+            <Progressbar
+              color='warning'
+              percent={this.state.user_luk * 10}
+              level={this.state.user_luk}
+              status='luk'
+            />
+          </CenterComponent>{' '}
+        </div>
       </div>
     );
   }
