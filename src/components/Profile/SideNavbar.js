@@ -33,15 +33,21 @@ const StyledMenu = styled.nav`
 const Menu = ({ open }) => {
   return (
     <StyledMenu open={open}>
-      <a href="/">
-        Profile
-      </a>
-      <a href="/">
-        Scoreboard
+      <div d-flex>
+        <a href="/">
+          Profile
         </a>
-      <a href="/">
-        History
+      </div>
+      <div d-flex>
+        <a href="/">
+          Profile
         </a>
+      </div>
+      <div d-flex>
+        <a href="/">
+          Profile
+        </a>
+      </div>
     </StyledMenu>
   )
 }
@@ -58,7 +64,7 @@ const StyledBurger = styled.button`
   background: transparent;
   border: none;
   cursor: pointer;
-  z-index: 10;
+  z-index: 2;
 
   &:focus {
     outline: none;
@@ -104,7 +110,7 @@ const SideNavbar = () => {
   const node = React.useRef();
   return (
     <div>
-      <div ref={node}>
+      <div ref={node} d-flex>
         <Burger open={open} setOpen={setOpen} />
         <Menu open={open} setOpen={setOpen} />
       </div>
