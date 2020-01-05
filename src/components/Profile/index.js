@@ -25,19 +25,19 @@ export default class Profile extends Component {
   };
 
   componentDidMount() {
-    // this.getProfileData(this.state.sample_id);
-    liff
-      .init({
-        liffId: '1653691835-vZ4GNK7z'
-      })
-      .then(async () => {
-        if (!liff.isLoggedIn()) {
-          liff.login();
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
+     this.getProfileData(this.state.sample_id);
+    // liff
+    //   .init({
+    //     liffId: '1653691835-vZ4GNK7z'
+    //   })
+    //   .then(async () => {
+    //     if (!liff.isLoggedIn()) {
+    //       liff.login();
+    //     }
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
     // this.getProfileData(this.getProfile());
   }
 
@@ -49,10 +49,12 @@ export default class Profile extends Component {
     });
   }
 
-  async getProfileData() {
-    let data = await profileService.getProfile(this.state.user_id); 
+  async getProfileData(id) {
+    console.log(id)
+    let data = await profileService.getProfile(id); 
+    console.log(data)
     this.setState({
-      user_test_data: data,
+      user_test_data: data.data,
       percentExp: (data.data.exp * data.data.maxExp) / 100,
       user_level: data.data.level,
       user_str: data.data.str,
@@ -64,7 +66,6 @@ export default class Profile extends Component {
   render() {
     return (
       <div>
-        <SideNavbar/>
       <div className="container">
         <CenterComponent>
           <Progressbar
