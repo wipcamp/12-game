@@ -29,11 +29,11 @@ export default class Progressbar extends Component {
   render() {
     return (
       <div className="row d-flex">
-        <div className="col-sm-3">
+        <div className="col-md-5">
           {this.state.status} : {this.state.level}
         </div>
-        <div className="col-sm-12">
-          <Progress style={{ flex: 1, marginRight: 12, height: 2, paddingVertical: 20 }}  value={this.state.percent} color={this.state.color} />
+        <div className="col-md-7">
+          <Progress style={this.props.style==null?{ flex: 1, marginRight: 12, height: 2, paddingVertical: 20 }:this.props.style}  value={this.state.percent} color={this.state.color} />
         </div>
       </div>
     );
