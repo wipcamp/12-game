@@ -7,6 +7,13 @@ import styled from 'styled-components'
 //     paddingVertical: 20;
 //   `
 
+const Status = styled.div`
+  width : 60px;
+  overflow : hidden;
+  margin-right : 10px;
+  height : 30px;
+`
+
 export default class Progressbar extends Component {
   state = {
     status: this.props.status,
@@ -28,12 +35,12 @@ export default class Progressbar extends Component {
 
   render() {
     return (
-      <div className="row d-flex">
-        <div className="col-md-5">
+      <div className="d-flex">
+        <Status>
           {this.state.status} : {this.state.level}
-        </div>
-        <div className="col-md-7">
-          <Progress style={this.props.style==null?{ flex: 1, marginRight: 12, height: 2, paddingVertical: 20 }:this.props.style}  value={this.state.percent} color={this.state.color} />
+        </Status>
+        <div >
+          <Progress style={this.props.style==null?{marginTop:10, height: 5, paddingVertical: 20 , width:200}:this.props.style}  value={this.state.percent} color={this.state.color} />
         </div>
       </div>
     );
