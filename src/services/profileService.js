@@ -6,6 +6,7 @@ const profileService = {
         let res = await api.get(`/profile?id=${lineId}`)
         return res;
     },
+    // getProfileByUserId
   
   }
   

@@ -1,41 +1,63 @@
-import React, { Component } from "react";
-import profileService from "../../services/profileService";
-import Progressbar from "./Progressbar";
-import Character from "./Character"
-import styled from 'styled-components'
-import SideNavbar from './SideNavbar'
+import React, { Component } from 'react';
+import profileService from '../../services/profileService';
+import Progressbar from './Progressbar';
+import Character from './Character';
+import styled from 'styled-components';
+import SideNavbar from './SideNavbar';
 
 const CenterComponent = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-`
-
+`;
+const liff = window.liff;
 export default class Profile extends Component {
   state = {
+    user_id: 1,
     user_test_data: {},
     sample_id: 1,
     percentExp: 0,
-    user_level : 0,
-    user_str : 0,
-    user_dex : 0,
-    user_luk : 0
+    user_level: 0,
+    user_str: 0,
+    user_dex: 0,
+    user_luk: 0
   };
 
   componentDidMount() {
-    this.getProfileData(this.state.sample_id);
+    // this.getProfileData(this.state.sample_id);
+    liff
+      .init({
+        liffId: '1653691835-vZ4GNK7z'
+      })
+      .then(async () => {
+        if (!liff.isLoggedIn()) {
+          liff.login();
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    // this.getProfileData(this.getProfile());
   }
 
-  async getProfileData(id) {
-    let data = await profileService.getProfile(id);
+  getProfile() {
+    liff.getProfile().then(dataInfo => {
+      this.setState({
+        user_id: dataInfo.userId
+      })
+    });
+  }
+
+  async getProfileData() {
+    let data = await profileService.getProfile(this.state.user_id); 
     this.setState({
-      user_test_data: data.data,
-      percentExp: (data.data.exp*data.data.maxExp)/100,
-      user_level : data.data.level,
-      user_str : data.data.str,
-      user_dex : data.data.dex,
-      user_luk : data.data.luk
+      user_test_data: data,
+      percentExp: (data.data.exp * data.data.maxExp) / 100,
+      user_level: data.data.level,
+      user_str: data.data.str,
+      user_dex: data.data.dex,
+      user_luk: data.data.luk
     });
   }
 
@@ -45,40 +67,38 @@ export default class Profile extends Component {
         <SideNavbar/>
       <div className="container">
         <CenterComponent>
-        <Progressbar
-          color="warning"
-          percent={this.state.percentExp}
-          level = {this.state.user_level}
-          status="Level"
-        />
-        user_id : {this.state.user_test_data.id}
-        <br />
-        team : {this.state.user_test_data.team}
-        <br />
-        energy : {this.state.user_test_data.energy}
-        <br />
-        max_energy : {this.state.user_test_data.maxEnergy}
-        <br />
-        <Character level={this.state.user_level}/>
-        <Progressbar
-          color="warning"
-          percent={this.state.user_str}
-          level = {this.state.user_str}
-          status="str"
-        />
-        <Progressbar
-          color="warning"
-          percent={this.state.user_dex}
-          level = {this.state.user_dex}
-          status="dex"
-        />
-        <Progressbar
-          color="warning"
-          percent={this.state.user_luk*10}
-          level = {this.state.user_luk}
-          status="luk"
-        />
-        </CenterComponent>
+          <Progressbar
+            color='warning'
+            percent={this.state.percentExp}
+            level={this.state.user_level}
+            status='Level'
+          />
+          <p onClick={this.getProfile.bind(this)} >Get user</p>
+          <p onClick={this.getProfileData.bind(this)} >Get DATA</p>
+          user_id: {this.state.user_test_data.id} <br /> {this.state.user_id} <br />
+          team: {this.state.user_test_data.team} <br />
+          energy: {this.state.user_test_data.energy} <br />
+          max_energy: {this.state.user_test_data.maxEnergy} <br />
+          <Character level={this.state.user_level} />{' '}
+          <Progressbar
+            color='warning'
+            percent={this.state.user_str}
+            level={this.state.user_str}
+            status='str'
+          />
+          <Progressbar
+            color='warning'
+            percent={this.state.user_dex}
+            level={this.state.user_dex}
+            status='dex'
+          />
+          <Progressbar
+            color='warning'
+            percent={this.state.user_luk * 10}
+            level={this.state.user_luk}
+            status='luk'
+          />
+        </CenterComponent>{' '}
       </div>
       </div>
     );
