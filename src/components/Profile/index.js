@@ -41,8 +41,9 @@ export default class Profile extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div>
         <SideNavbar/>
+      <div className="container">
         <CenterComponent>
         <Progressbar
           color="warning"
@@ -78,6 +79,7 @@ export default class Profile extends Component {
           status="luk"
         />
         </CenterComponent>
+      </div>
       </div>
     );
   }
