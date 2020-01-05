@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import CharacterController from './CharacterController'
 import FlareComponent from 'flare-react';
+import styled from 'styled-components'
 
+const CenterComponent = styled.div`
+  margin-left: -5%;
+`;
 
 export default class Character extends Component {
     state = {
@@ -49,9 +53,9 @@ export default class Character extends Component {
       }
     }
     return (
-      <div>
-        <FlareComponent controller={this.state.characterController} width={200} height={200} file={data}/>
-      </div>
+      <CenterComponent>
+        <FlareComponent controller={this.state.characterController} width={300} height={300} file={data}/>
+      </CenterComponent>
     );
   }
 
