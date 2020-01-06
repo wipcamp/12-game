@@ -27,18 +27,20 @@ const liff = window.liff;
 export default class Profile extends Component {
   state = {
     user_id: 1,
-    user_test_data: {},
-    sample_id: 1,
-    percentExp: 0,
     user_level: 0,
     user_str: 0,
     user_dex: 0,
     user_luk: 0,
-    user_energy: 0
+    user_energy: 0,
+    user_max_energy: 0,
+    user_name: "",
+    user_team_name: "",
+    user_exp: 0,
+    user_max_exp: 0
   };
 
   componentDidMount() {
-    this.getProfileData(this.state.sample_id);
+    this.getProfileData(this.state.user_id);
     // liff
     //   .init({
     //     liffId: '1653691835-vZ4GNK7z'
@@ -66,14 +68,18 @@ export default class Profile extends Component {
     console.log(id)
     let data = await profileService.getProfile(id);
     console.log(data)
+    let userGame = data.data
     this.setState({
-      user_test_data: data.data,
-      percentExp: (data.data.exp * data.data.maxExp) / 100,
-      user_level: data.data.level,
-      user_str: data.data.str,
-      user_dex: data.data.dex,
-      user_luk: data.data.luk,
-      user_energy: data.data.energy
+      user_level: userGame.level,
+      user_str: userGame.str,
+      user_dex: userGame.dex,
+      user_luk: userGame.luk,
+      user_energy: userGame.energy,
+      user_max_energy: userGame.maxEnergy,
+      user_name: userGame.name,
+      user_team_name: userGame.team.teamName,
+      user_exp: userGame.exp,
+      user_max_exp: userGame.maxExp
     });
   }
 
@@ -87,15 +93,15 @@ export default class Profile extends Component {
                 energy
                 style={{ height: 10, width: 50, marginTop: 10 }}
                 color='warning'
-                percent={(this.state.user_test_data.energy / this.state.user_test_data.maxEnergy) * 100}
+                percent={(this.state.user_energy / this.state.user_max_energy) * 100}
                 level={this.state.user_energy}
                 status='energy'
               />
             </EnergyProgressbar>
-            user_name: {this.state.user_test_data.name} <br />
+            user_name: {this.state.user_name} <br />
             <Progressbar
               color='warning'
-              percent={this.state.percentExp}
+              percent={this.state.user_exp}
               level={this.state.user_level}
               status='Level'
             />
@@ -103,7 +109,7 @@ export default class Profile extends Component {
             <p onClick={this.getProfile.bind(this)} >Get user</p>
             <p onClick={this.getProfileData.bind(this)} >Get DATA</p>
             */}
-            team: {this.state.user_test_data.team} <br />
+            team: {this.state.user_team_name} <br />
             <Character level={this.state.user_level} />{' '}
             <Progressbar
               color='warning'
