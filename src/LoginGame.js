@@ -12,9 +12,7 @@ export default class LoginGame extends Component {
     async lineLogin() {
         // let lineResponse = await LineService.lineLogin();
         //  console.log(process.env.REACT_APP_LINE_API_PATH)
-        window.location.href=`https://access.line.me/oauth2/v2.1/authorize?response_type=code&
-        client_id=1653724802&redirect_uri=https://game.freezer.wip.camp&
-        state=gensthandstoreincookie&scope=openid%20email%20profile&nonce=gensth`
+        window.location.href=`https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653724802&redirect_uri=https://game.freezer.wip.camp/login&state=gensthandstoreincookie&scope=openid%20email%20profile&nonce=gensth`
       }
 
     async findUserGame(userId){
@@ -44,7 +42,9 @@ export default class LoginGame extends Component {
 
       componentDidMount(){
          const codeFromLineApi = window.location.search.substr(1).split(`&`)
-        console.log(codeFromLineApi)
+        console.log(JSON.parse(codeFromLineApi[0]))
+        
+
       }
 
     render() {
