@@ -12,6 +12,7 @@
     "lodash": "^4.17.15",
     "ramda": "^0.26.1",
     "react": "^16.12.0",
+    "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
     "react-progressbar": "^15.4.1",
     "react-router-dom": "^5.1.2",

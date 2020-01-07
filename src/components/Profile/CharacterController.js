@@ -33,7 +33,6 @@ export default class CharacterController extends FlareComponent.Controller
         walk.apply(walkTime % walk.duration, artboard, 1.0);
         // if you want to slowly disable the head bobbing (musicWalk animation) you could ramp down the 
         // final argument (the mix argument) to 0.0 over some time. For now we're mixing at full strength.
-        console.log(walkTime)    
         if(walkTime>=10){
             return false;
         }

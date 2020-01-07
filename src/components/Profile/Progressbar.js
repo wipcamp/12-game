@@ -1,5 +1,18 @@
 import React, { Component } from "react";
 import { Progress } from "reactstrap";
+import styled from 'styled-components'
+
+// const ProgressBar = styled(Progress)`
+//     height: 2px; 
+//     paddingVertical: 20;
+//   `
+
+const Status = styled.div`
+  width : 60px;
+  overflow : hidden;
+  margin-right : 10px;
+  height : 30px;
+`
 
 export default class Progressbar extends Component {
   state = {
@@ -21,15 +34,13 @@ export default class Progressbar extends Component {
   }
 
   render() {
-    console.log(this.state.percent);
-    console.log(this.state.level);
     return (
-      <div className="row d-flex">
-        <div className="col-sm-3">
+      <div className="d-flex">
+        <Status>
           {this.state.status} : {this.state.level}
-        </div>
-        <div className="col-sm-12">
-          <Progress value={this.state.percent} color={this.state.color} />
+        </Status>
+        <div >
+          <Progress style={this.props.style==null?{marginTop:10, height: 5, paddingVertical: 20 , width:'50vw'}:this.props.style}  value={this.state.percent} color={this.state.color} />
         </div>
       </div>
     );
