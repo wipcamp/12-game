@@ -13,7 +13,7 @@ export default class LoginGame extends Component {
         // let lineResponse = await LineService.lineLogin();
         //  console.log(process.env.REACT_APP_LINE_API_PATH)
         window.location.href=`https://access.line.me/oauth2/v2.1/authorize?response_type=code&
-        client_id=1653703435&redirect_uri=https://game.freezer.wip.camp&
+        client_id=1653724802&redirect_uri=https://game.freezer.wip.camp&
         state=gensthandstoreincookie&scope=openid%20email%20profile&nonce=gensth`
       }
 
