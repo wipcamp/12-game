@@ -3,7 +3,7 @@ import api from '../utils/apiLineService'
 
 const profileService = {
     lineLogin : async (code) => {
-        let res = await api.post(`/gameauth/?code=${code}`)
+        let res = await api.get(`/authForGame/?code=${code}`)
         return res;
     },
   
