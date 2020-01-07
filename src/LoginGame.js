@@ -42,8 +42,11 @@ export default class LoginGame extends Component {
 
       componentDidMount(){
          const codeFromLineApi = window.location.search.substr(1).split(`&`)
+         if(codeFromLineApi[0]){
+            //  console.log(codeFromLineApi)
         console.log(JSON.parse(codeFromLineApi[0]))
-        
+        LineService.lineLogin(JSON.parse(codeFromLineApi[0]))
+         }
 
       }
 
