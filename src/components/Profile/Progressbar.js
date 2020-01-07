@@ -40,7 +40,7 @@ export default class Progressbar extends Component {
           {this.state.status} : {this.state.level}
         </Status>
         <div >
-          <Progress style={this.props.style==null?{marginTop:10, height: 5, paddingVertical: 20 , width:200}:this.props.style}  value={this.state.percent} color={this.state.color} />
+          <Progress style={this.props.style==null?{marginTop:10, height: 5, paddingVertical: 20 , width:'50vw'}:this.props.style}  value={this.state.percent} color={this.state.color} />
         </div>
       </div>
     );
