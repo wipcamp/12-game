@@ -3,7 +3,7 @@ import profileService from '../../services/profileService';
 import Progressbar from './Progressbar';
 import Character from './Character';
 import styled from 'styled-components';
-import SideNavbar from './SideNavbar';
+import Menubar from './Menubar';
 
 const CenterComponent = styled.div`
   position: fixed;
@@ -11,10 +11,6 @@ const CenterComponent = styled.div`
   left: 50%;
   width: 70vw;
   transform: translate(-50%, -50%);
-  ${props => props.energy && `
-  top: 30qq%;
-  left: 50%;
-  `}
 `;
 
 const EnergyProgressbar = styled(CenterComponent)`
@@ -26,7 +22,7 @@ left: 85vw;
 const liff = window.liff;
 export default class Profile extends Component {
   state = {
-    user_id: 1,
+    user_id: "1",
     user_level: 0,
     user_str: 0,
     user_dex: 0,
@@ -90,8 +86,7 @@ export default class Profile extends Component {
           <CenterComponent>
             <EnergyProgressbar>
               <Progressbar
-                energy
-                style={{ height: 10, width: 50, marginTop: 10 }}
+                style={{ height: 10, width: 50, marginTop: '17%'}}
                 color='warning'
                 percent={(this.state.user_energy / this.state.user_max_energy) * 100}
                 level={this.state.user_energy}
@@ -131,7 +126,8 @@ export default class Profile extends Component {
             />
           </CenterComponent>{' '}
         </div>
-      </div>
+        <Menubar/>
+        </div>
     );
   }
 }
