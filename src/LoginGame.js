@@ -51,7 +51,7 @@ export default class LoginGame extends Component {
         if (search) {
             const codeFromLineApi = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
             console.log(codeFromLineApi)
-            this.getTokenFromLineApi(codeFromLineApi)
+            this.getTokenFromLineApi(codeFromLineApi.code)
         }
         // console.log(search)
         // if (codeFromLineApi[0]) {
