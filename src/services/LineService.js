@@ -2,8 +2,8 @@ import api from '../utils/apiLineService'
 // import Cookies from './CookieService'
 
 const lineService = {
-    lineLogin : async (code) => {
-        let res = await api.get(`/authForGame?code=${code}`)
+    lineLogin : async (code,nonce) => {
+        let res = await api.get(`/authForGame?code=${code}&nonce=${nonce}`)
         return res;
     },
   
