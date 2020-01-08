@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import LineService from "./services/LineService";
-import ProfileService from "./services/profileService";
-import App from "./App.js";
+import LineService from "../../services/LineService";
+import ProfileService from "../../services/profileService";
+import App from "../../App.js";
 
 export default class LoginGame extends Component {
     state = {

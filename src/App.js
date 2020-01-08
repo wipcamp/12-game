@@ -1,7 +1,7 @@
 import React from 'react';
 import Profile from './components/Profile/index'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import LoginGame from './LoginGame';
+import LoginGame from './components/LineLogin/index';
 
 function App() {
   return (
