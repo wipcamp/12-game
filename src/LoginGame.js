@@ -20,6 +20,11 @@ export default class LoginGame extends Component {
         return userDataResponse
     }
 
+    async getTokenFromLineApi(code){
+        const token = await LineService.lineLogin(code)
+        console.log(token)
+    }
+
     checkUserRouting(lineResponse) {
         if (lineResponse != null) {
             let data = this.findUserGame(lineResponse)
@@ -46,7 +51,7 @@ export default class LoginGame extends Component {
         if (search) {
             const codeFromLineApi = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
             console.log(codeFromLineApi)
-            LineService.lineLogin(codeFromLineApi.code)
+            this.getTokenFromLineApi(codeFromLineApi)
         }
         // console.log(search)
         // if (codeFromLineApi[0]) {
