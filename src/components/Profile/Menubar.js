@@ -22,11 +22,12 @@ export default class Menubar extends Component {
         this.setState({ showModal: true });
     }
 
-    getMinigamePage = (id) => {
+    async getMinigamePage(id){
             this.setState({ showModal: false });
-            profileService.useEnergy(id);
+            await profileService.useEnergy(id);
+            this.props.newEnergy();
             console.log(profileService.getProfile(id))
-            window.location.replace("http://localhost:3000/login");
+            //window.location.replace("http://localhost:3000/login");
     }
 
     getScoreBoardPage() {
