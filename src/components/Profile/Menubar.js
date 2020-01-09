@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Navbar from 'react-bootstrap/Navbar'
 import styled from 'styled-components';
 import Modal from 'react-bootstrap/Modal'
+import profileService from '../../services/profileService';
 
 const StyledNavbar = styled(Navbar)`
     background-color : red;
@@ -21,8 +22,19 @@ export default class Menubar extends Component {
         this.setState({ showModal: true });
     }
 
-    getMinigamePage() {
-        window.location.replace("http://localhost:3000/login");
+    getMinigamePage = (id) => {
+            this.setState({ showModal: false });
+            profileService.useEnergy(id);
+            console.log(profileService.getProfile(id))
+            window.location.replace("http://localhost:3000/login");
+    }
+
+    getScoreBoardPage() {
+        window.location.replace("")
+    }
+
+    getHistoryPage() {
+        window.location.replace("")
     }
 
     render() {
@@ -48,7 +60,7 @@ export default class Menubar extends Component {
                                 alt="React Bootstrap logo"
                             />
                         </button>
-                        <button className="btn btn-link" onClick={function () { console.log("click") }}>
+                        <button className="btn btn-link" onClick={this.getScoreBoardPage}>
                             <img
                                 src="https://img.icons8.com/cute-clipart/64/000000/map.png"
                                 width="30"
@@ -57,7 +69,7 @@ export default class Menubar extends Component {
                                 alt="React Bootstrap logo"
                             />
                         </button>
-                        <button className="btn btn-link" onClick={function () { console.log("click") }}>
+                        <button className="btn btn-link" onClick={this.getHistoryPage}>
                             <img
                                 src="https://img.icons8.com/color/48/000000/activity-history.png"
                                 width="30"
@@ -71,7 +83,7 @@ export default class Menubar extends Component {
                 <Modal show={this.state.showModal} onHide={this.handleClose} centered>
                     <Modal.Body>Use 1 energy to play minigame</Modal.Body>
                     <Modal.Footer>
-                        <button variant="secondary" onClick={this.handleClose, this.getMinigamePage}>
+                        <button variant="secondary" onClick={()=>this.getMinigamePage(this.props.user_id)}>
                             play
                         </button>
                         <button variant="primary" onClick={this.handleClose}>
