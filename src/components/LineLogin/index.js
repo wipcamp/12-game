@@ -22,8 +22,8 @@ export default class LoginGame extends Component {
     async getGenerateCode() {
         const stateGenerate = await LineService.getGenerateCode()
         const nonceGenerate = await LineService.getGenerateCode()
-        Cookies.set('state', stateGenerate.data);
-        Cookies.set('nonce', nonceGenerate.data)
+        Cookies.set('state', stateGenerate.data,{ path: loginGameUrl });
+        Cookies.set('nonce', nonceGenerate.data,{ path: loginGameUrl })
     }
 
     async findUserGame(userId) {
@@ -58,13 +58,16 @@ export default class LoginGame extends Component {
             console.log('response from line api : ' + resFromLineApi)
             if (this.checkStateLine(resFromLineApi.state)) {
                 this.getTokenFromLineApi(resFromLineApi.code, Cookies.get('nonce'))
-                Cookies.remove('state');
-                Cookies.remove('nonce');
+                Cookies.remove('state',{ path: loginGameUrl });
+                Cookies.remove('nonce',{ path: loginGameUrl });
             } else {
-                Cookies.remove('state');
-                Cookies.remove('nonce');
+                Cookies.remove('state',{ path: loginGameUrl });
+                Cookies.remove('nonce',{ path: loginGameUrl });
                 window.location.href = loginGameUrl
+                console.log('check nonce fail')
             }
+        }else{
+            console.log('fail from line api')
         }
     }
 
