@@ -63,8 +63,8 @@ export default class LoginGame extends Component {
             } else {
                 Cookies.remove('state',{ path: loginGameUrl });
                 Cookies.remove('nonce',{ path: loginGameUrl });
-                window.location.href = loginGameUrl
-                console.log('check nonce fail')
+                // window.location.href = loginGameUrl
+                console.log('check state fail')
             }
         }else{
             console.log('fail from line api')
