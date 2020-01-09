@@ -39,15 +39,11 @@ export default class LoginGame extends Component {
 
     checkStateLine(stateFromLine) {
         const stateInCookie = Cookies.get('state')
-        if (stateInCookie.length == 32) {
             if (stateInCookie === stateFromLine) {
                 return true
             } else {
                 return false
             }
-        } else {
-            return false
-        }
     }
 
 
