@@ -6,13 +6,26 @@ import App from "../../App.js";
 export default class LoginGame extends Component {
     state = {
         logedIn: false,
-        data: {}
+        data: {},
+        state: null,
+        nonce: null,
     }
 
     async lineLogin() {
         // let lineResponse = await LineService.lineLogin();
         //  console.log(process.env.REACT_APP_LINE_API_PATH)
         window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653724802&redirect_uri=https://game.freezer.wip.camp/login&state=gensthandstoreincookie&scope=openid%20email%20profile&nonce=gensth`
+    }
+
+    async getGenerateCode(){
+        let stateGenerate = await LineService.getGenerateCode()
+        let nonceGenerate = await LineService.getGenerateCode()
+        this.setState({
+            state : stateGenerate.data,
+            nonce : nonceGenerate.data
+        })
+        console.log(this.state.state)
+        console.log(this.state.nonce)
     }
 
     async findUserGame(userId) {
@@ -41,12 +54,14 @@ export default class LoginGame extends Component {
         }
     }
 
+
     handleClick() {
-        this.lineLogin()
+         this.lineLogin()
     }
 
     componentDidMount() {
         //  const codeFromLineApi = window.location.search.substr(1).split(`&`)
+        this.getGenerateCode();
         const search = window.location.search.substring(1);
         if (search) {
             const codeFromLineApi = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
@@ -67,7 +82,9 @@ export default class LoginGame extends Component {
         let componentDependOnLogedIn;
         if (!logedIn) {
             componentDependOnLogedIn = <div>
-                <center><button onClick={this.handleClick.bind(this)} >login line</button></center>
+                {this.state.state}<br/>
+                {this.state.nonce}
+        <center><button onClick={this.handleClick.bind(this)} >login line</button></center>
             </div>
         } else {
             componentDependOnLogedIn = <App data={this.state.data} />
