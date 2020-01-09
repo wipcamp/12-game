@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Navbar from 'react-bootstrap/Navbar'
 import styled from 'styled-components';
 import Modal from 'react-bootstrap/Modal'
+import profileService from '../../services/profileService';
 
 const StyledNavbar = styled(Navbar)`
     background-color : red;
@@ -21,15 +22,18 @@ export default class Menubar extends Component {
         this.setState({ showModal: true });
     }
 
-    getMinigamePage() {
-        window.location.replace("http://localhost:3000/login");
+    getMinigamePage = (id) => {
+            this.setState({ showModal: false });
+            profileService.useEnergy(id);
+            console.log(profileService.getProfile(id))
+            window.location.replace("http://localhost:3000/login");
     }
 
-    getScoreBoardPage(){
+    getScoreBoardPage() {
         window.location.replace("")
     }
 
-    getHistoryPage(){
+    getHistoryPage() {
         window.location.replace("")
     }
 
@@ -79,7 +83,7 @@ export default class Menubar extends Component {
                 <Modal show={this.state.showModal} onHide={this.handleClose} centered>
                     <Modal.Body>Use 1 energy to play minigame</Modal.Body>
                     <Modal.Footer>
-                        <button variant="secondary" onClick={this.handleClose, this.getMinigamePage}>
+                        <button variant="secondary" onClick={()=>this.getMinigamePage(this.props.user_id)}>
                             play
                         </button>
                         <button variant="primary" onClick={this.handleClose}>
