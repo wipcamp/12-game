@@ -19,11 +19,11 @@ export default class LoginGame extends Component {
         window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${loginGameUrl}&state=${Cookies.get('state')}&scope=openid%20email%20profile&nonce=${Cookies.get('nonce')}`
     }
 
-    async getGenerateCode(){
-        let stateGenerate = await LineService.getGenerateCode()
-        let nonceGenerate = await LineService.getGenerateCode()
-        Cookies.set('state', stateGenerate ,{ expires: 7 });
-        Cookies.set('nonce', nonceGenerate, { expires: 7 });
+    async getGenerateCode() {
+        const stateGenerate = await LineService.getGenerateCode()
+        const nonceGenerate = await LineService.getGenerateCode()
+        Cookies.set('state', stateGenerate.data);
+        Cookies.set('nonce', nonceGenerate.data)
     }
 
     async findUserGame(userId) {
@@ -31,54 +31,43 @@ export default class LoginGame extends Component {
         return userDataResponse
     }
 
-    async getTokenFromLineApi(code,nonce){
-        const token = await LineService.lineLogin(code,nonce)
-        console.log(token)
+    async getTokenFromLineApi(code, nonce) {
+        const token = await LineService.lineLogin(code, nonce)
+        console.log('token : '+token)
     }
 
-    checkUserRouting(lineResponse) {
-        if (lineResponse != null) {
-            let data = this.findUserGame(lineResponse)
-            if (data != null) {
-                this.setState({
-                    logedIn: true,
-                    data: data
-                })
-            } else {
-                window.location.href = 'https://reactjs.org/docs/conditional-rendering.html'
-            }
-        } else {
 
-        }
-    }
-
-    checkStateLine(stateFromLine){
+    checkStateLine(stateFromLine) {
         const stateInCookie = Cookies.get('state')
-        if(stateInCookie.length==32){
-            if(stateInCookie===stateFromLine){
+        if (stateInCookie.length == 32) {
+            if (stateInCookie === stateFromLine) {
                 return true
-            }else{
+            } else {
                 return false
             }
-        }else{
+        } else {
             return false
         }
     }
 
 
     handleClick() {
-         this.lineLogin()
+        this.lineLogin()
     }
 
     componentDidMount() {
         const search = window.location.search.substring(1);
         if (search) {
             const resFromLineApi = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
-            console.log('response from line api : '+resFromLineApi)
-            if(this.checkStateLine(resFromLineApi.state)){    
-            this.getTokenFromLineApi(resFromLineApi.code,Cookies.get('nonce'))
-            }else{
-                window.location.href=loginGameUrl
+            console.log('response from line api : ' + resFromLineApi)
+            if (this.checkStateLine(resFromLineApi.state)) {
+                this.getTokenFromLineApi(resFromLineApi.code, Cookies.get('nonce'))
+                Cookies.remove('state');
+                Cookies.remove('nonce');
+            } else {
+                Cookies.remove('state');
+                Cookies.remove('nonce');
+                window.location.href = loginGameUrl
             }
         }
     }
@@ -88,9 +77,9 @@ export default class LoginGame extends Component {
         let componentDependOnLogedIn;
         if (!logedIn) {
             componentDependOnLogedIn = <div>
-                {this.state.state}<br/>
+                {this.state.state}<br />
                 {this.state.nonce}
-        <center><button onClick={this.handleClick.bind(this)} >login line</button></center>
+                <center><button onClick={this.handleClick.bind(this)} >login line</button></center>
             </div>
         } else {
             componentDependOnLogedIn = <App data={this.state.data} />
