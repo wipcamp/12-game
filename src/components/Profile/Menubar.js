@@ -25,6 +25,14 @@ export default class Menubar extends Component {
         window.location.replace("http://localhost:3000/login");
     }
 
+    getScoreBoardPage(){
+        window.location.replace("")
+    }
+
+    getHistoryPage(){
+        window.location.replace("")
+    }
+
     render() {
         return (
             <div>
@@ -48,7 +56,7 @@ export default class Menubar extends Component {
                                 alt="React Bootstrap logo"
                             />
                         </button>
-                        <button className="btn btn-link" onClick={function () { console.log("click") }}>
+                        <button className="btn btn-link" onClick={this.getScoreBoardPage}>
                             <img
                                 src="https://img.icons8.com/cute-clipart/64/000000/map.png"
                                 width="30"
@@ -57,7 +65,7 @@ export default class Menubar extends Component {
                                 alt="React Bootstrap logo"
                             />
                         </button>
-                        <button className="btn btn-link" onClick={function () { console.log("click") }}>
+                        <button className="btn btn-link" onClick={this.getHistoryPage}>
                             <img
                                 src="https://img.icons8.com/color/48/000000/activity-history.png"
                                 width="30"
