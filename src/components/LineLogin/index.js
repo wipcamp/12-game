@@ -39,6 +39,8 @@ export default class LoginGame extends Component {
 
     checkStateLine(stateFromLine) {
         const stateInCookie = Cookies.get('state')
+        console.log('state from cookies : '+stateInCookie)
+        console.log('state from line res : '+stateFromLine)
             if (stateInCookie === stateFromLine) {
                 return true
             } else {
