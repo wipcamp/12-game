@@ -61,7 +61,6 @@ export default class Profile extends Component {
   }
 
   async getProfileData(id) {
-    console.log(id)
     let data = await profileService.getProfile(id);
     console.log(data)
     let userGame = data.data
@@ -105,7 +104,7 @@ export default class Profile extends Component {
             <p onClick={this.getProfileData.bind(this)} >Get DATA</p>
             */}
             team: {this.state.user_team_name} <br />
-            <Character level={this.state.user_level} />{' '}
+            <Character level={this.state.user_level} userExp={this.state.user_exp} maxExp={this.state.user_max_exp}/>{' '}
             <Progressbar
               color='warning'
               percent={this.state.user_str}
@@ -126,7 +125,7 @@ export default class Profile extends Component {
             />
           </CenterComponent>{' '}
         </div>
-        <Menubar/>
+        <Menubar user_id={this.state.user_id}/>
         </div>
     );
   }
