@@ -9,6 +9,10 @@ const gameUrl = 'https://game.freezer.wip.camp/'
 const clientId = '1653724802'
 export default class LoginGame extends Component {
 
+    state = {
+        isLoad : false
+    }
+
     async lineLogin() {
         const stateGenerate = await LineService.getGenerateCode()
         const nonceGenerate = await LineService.getGenerateCode()
@@ -60,6 +64,9 @@ export default class LoginGame extends Component {
     componentDidMount() {
         const search = window.location.search.substring(1);
         if (search) {
+            this.setState({
+                isLoad : true
+            })
             const resFromLineApi = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
             console.log('get state from response from line api : ' + resFromLineApi.state)
             if (this.checkStateLine(resFromLineApi.state)) {
@@ -67,19 +74,28 @@ export default class LoginGame extends Component {
                 // Cookies.remove('state', { path: loginGameUrl });
                 // Cookies.remove('nonce', { path: loginGameUrl });
             } else {
-                // Cookies.remove('state', { path: loginGameUrl });
-                // Cookies.remove('nonce', { path: loginGameUrl });
-                // window.location.href = loginGameUrl
+                Cookies.remove('state', { path: loginGameUrl });
+                Cookies.remove('nonce', { path: loginGameUrl });
+                window.location.href = loginGameUrl
                 console.log('check state fail')
             }
         } else {
+            this.setState({
+                isLoad : false
+            })
             console.log('fail from line api')
         }
     }
 
     render() {
+        let component 
+        if(this.state.isLoad){
+            component = <center>LOADING...</center>
+        }else{
+            component = <center><button onClick={this.handleClick.bind(this)} >login line</button></center>
+        }
         return (
-            <center><button onClick={this.handleClick.bind(this)} >login line</button></center>
+            component
         );
     }
 }
