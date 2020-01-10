@@ -30,6 +30,12 @@ export default class LoginGame extends Component {
         const objectResponse = await LineService.lineLogin(code, nonce)
         console.log('token : ' + objectResponse)
         // const data = objectResponse.data
+        console.log('1'+objectResponse.data.scope)
+        console.log('2'+bjectResponse.data.access_token)
+        console.log('3'+objectResponse.data.token_type)
+        console.log('4'+objectResponse.data.expires_in)
+        console.log('5'+objectResponse.data.id_token)
+        console.log('6'+objectResponse.data.userId)
         const tokenObject = {
             scope: objectResponse.data.scope,
             access_token: objectResponse.data.access_token,
@@ -37,11 +43,14 @@ export default class LoginGame extends Component {
             expires_in:objectResponse.data.expires_in,
             id_token:objectResponse.data.id_token,
         }
+        console.log('tokenObject'+tokenObject)
         Cookies.set('token',JSON.stringify(tokenObject))
         // const token = Cookies.get('token')
         // console.log('id_token'+token.id_token)
-        console.log('tokenObject ' + Cookies.getJSON('token'))
-        console.log('id ' + objectResponse.data.userId)
+        const getCookies = Cookies.getJSON('token')
+        console.log('tokenObjectInCookies ' + getCookies)
+        console.log('id from token Object ' + getCookies.id_token)
+        // console.log('id ' + objectResponse.data.userId)
         // window.location.href = gameUrl
     }
 
