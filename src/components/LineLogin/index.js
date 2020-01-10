@@ -31,7 +31,7 @@ export default class LoginGame extends Component {
         console.log('token : ' + objectResponse)
         // const data = objectResponse.data
         console.log('1'+objectResponse.data.scope)
-        console.log('2'+bjectResponse.data.access_token)
+        console.log('2'+objectResponse.data.access_token)
         console.log('3'+objectResponse.data.token_type)
         console.log('4'+objectResponse.data.expires_in)
         console.log('5'+objectResponse.data.id_token)
