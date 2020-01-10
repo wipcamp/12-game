@@ -52,7 +52,7 @@ export default class LoginGame extends Component {
         const search = window.location.search.substring(1);
         if (search) {
             const resFromLineApi = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
-            console.log('response from line api : ' + resFromLineApi)
+            console.log('get state from response from line api : ' + resFromLineApi.state)
             if (this.checkStateLine(resFromLineApi.state)) {
                 this.getTokenFromLineApi(resFromLineApi.code, Cookies.get('nonce'))
                 Cookies.remove('state',{ path: loginGameUrl });
