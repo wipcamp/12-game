@@ -5,28 +5,20 @@ import App from "../../App.js";
 import Cookies from 'js-cookie';
 
 const loginGameUrl = 'https://game.freezer.wip.camp/login'
+const gameUrl = 'https://game.freezer.wip.camp/'
 const clientId = '1653724802'
 export default class LoginGame extends Component {
-    state = {
-        logedIn: false,
-        data: {},
-    }
 
     async lineLogin() {
-        // let lineResponse = await LineService.lineLogin();
-        //  console.log(process.env.REACT_APP_LINE_API_PATH)
-        let promiseStateAndNonce = this.getGenerateCode()
-        Promise.resolve(promiseStateAndNonce).then(r =>{ return r.state})
-        window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${loginGameUrl}&state=${Promise.resolve(promiseStateAndNonce).then(r =>{ return r.state})}&scope=openid%20email%20profile&nonce=${Promise.resolve(promiseStateAndNonce).then(r =>{ return r.nonce})}`
-    }
-
-    async getGenerateCode() {
         const stateGenerate = await LineService.getGenerateCode()
         const nonceGenerate = await LineService.getGenerateCode()
-        Cookies.set('state', stateGenerate.data,{ path: loginGameUrl });
-        Cookies.set('nonce', nonceGenerate.data,{ path: loginGameUrl })
-        console.log(stateGenerate)
-        return {state:stateGenerate.data,nonce:nonceGenerate.data}
+        Cookies.set('state', stateGenerate.data, { path: loginGameUrl });
+        Cookies.set('nonce', nonceGenerate.data, { path: loginGameUrl })
+        const stateInCookies = Cookies.get('state')
+        const nonceInCookies = Cookies.get('nonce')
+        console.log(stateInCookies)
+        console.log(nonceInCookies)
+        window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${loginGameUrl}&state=${stateInCookies}&scope=openid%20email%20profile&nonce=${nonceInCookies}`
     }
 
     async findUserGame(userId) {
@@ -35,20 +27,29 @@ export default class LoginGame extends Component {
     }
 
     async getTokenFromLineApi(code, nonce) {
-        const token = await LineService.lineLogin(code, nonce)
-        console.log('token : '+token)
+        const objectResponse = await LineService.lineLogin(code, nonce)
+        const tokenObject = {
+            scope: objectResponse.data.scope,
+            access_token: objectResponse.data.access_token,
+            token_type:objectResponse.data.token_type,
+            expires_in:objectResponse.data.expires_in,
+            id_token:objectResponse.data.id_token,
+            userId:objectResponse.data.userId
+        }
+        Cookies.set('token',JSON.stringify(tokenObject))
+        window.location.href = gameUrl
     }
 
 
     checkStateLine(stateFromLine) {
         const stateInCookie = Cookies.get('state')
-        console.log('state from cookies : '+stateInCookie)
-        console.log('state from line res : '+stateFromLine)
-            if (stateInCookie === stateFromLine) {
-                return true
-            } else {
-                return false
-            }
+        console.log('state from cookies : ' + stateInCookie)
+        console.log('state from line res : ' + stateFromLine)
+        if (stateInCookie === stateFromLine) {
+            return true
+        } else {
+            return false
+        }
     }
 
 
@@ -60,37 +61,25 @@ export default class LoginGame extends Component {
         const search = window.location.search.substring(1);
         if (search) {
             const resFromLineApi = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
-            console.log('response from line api : ' + resFromLineApi)
+            console.log('get state from response from line api : ' + resFromLineApi.state)
             if (this.checkStateLine(resFromLineApi.state)) {
                 this.getTokenFromLineApi(resFromLineApi.code, Cookies.get('nonce'))
-                Cookies.remove('state',{ path: loginGameUrl });
-                Cookies.remove('nonce',{ path: loginGameUrl });
+                Cookies.remove('state', { path: loginGameUrl });
+                Cookies.remove('nonce', { path: loginGameUrl });
             } else {
-                Cookies.remove('state',{ path: loginGameUrl });
-                Cookies.remove('nonce',{ path: loginGameUrl });
+                Cookies.remove('state', { path: loginGameUrl });
+                Cookies.remove('nonce', { path: loginGameUrl });
                 // window.location.href = loginGameUrl
                 console.log('check state fail')
             }
-        }else{
+        } else {
             console.log('fail from line api')
         }
     }
 
     render() {
-        const logedIn = this.state.logedIn
-        let componentDependOnLogedIn;
-        if (!logedIn) {
-            componentDependOnLogedIn = <div>
-                {this.state.state}<br />
-                {this.state.nonce}
-                <center><button onClick={this.handleClick.bind(this)} >login line</button></center>
-            </div>
-        } else {
-            componentDependOnLogedIn = <App data={this.state.data} />
-        }
-
         return (
-            componentDependOnLogedIn
+            <center><button onClick={this.handleClick.bind(this)} >login line</button></center>
         );
     }
 }

@@ -4,7 +4,9 @@ import Progressbar from './Progressbar';
 import Character from './Character';
 import styled from 'styled-components';
 import Menubar from './Menubar';
+import Cookies from 'js-cookie';
 
+const loginGameUrl = 'https://game.freezer.wip.camp/login'
 const CenterComponent = styled.div`
   position: fixed;
   top: 50%;
@@ -22,7 +24,7 @@ left: 85vw;
 const liff = window.liff;
 export default class Profile extends Component {
   state = {
-    user_id: "1",
+    user_id: "",
     user_level: 0,
     user_str: 0,
     user_dex: 0,
@@ -36,7 +38,17 @@ export default class Profile extends Component {
   };
 
   componentDidMount() {
-    this.getProfileData(this.state.user_id);
+    const tokenCookies = Cookies.getJSON('token')
+    console.log(tokenCookies)
+    if(tokenCookies){
+      console.log('checkCookiesPass')
+      this.setState({
+        user_id : tokenCookies.userId
+      })
+      this.getProfileData(this.state.user_id);
+    }else{
+      window.location.href = loginGameUrl
+    }
     // liff
     //   .init({
     //     liffId: '1653691835-vZ4GNK7z'
