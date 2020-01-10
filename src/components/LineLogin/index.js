@@ -29,12 +29,19 @@ export default class LoginGame extends Component {
     async getTokenFromLineApi(code, nonce) {
         const objectResponse = await LineService.lineLogin(code, nonce)
         console.log('token : ' + objectResponse)
-        const data = objectResponse.data
-        // Cookies.set('token',data)
+        // const data = objectResponse.data
+        Cookies.set('token', {
+            scope: objectResponse.data.scope,
+            access_token: objectResponse.data.access_token,
+            token_type:objectResponse.data.token_type,
+            expires_in:objectResponse.data.expires_in,
+            id_token:objectResponse.data.id_token,
+            userId:objectResponse.data.userId
+        })
         // const token = Cookies.get('token')
         // console.log('id_token'+token.id_token)
-        console.log('tokenObject '+objectResponse.data)
-        console.log('id '+objectResponse.data.id_token)
+        console.log('tokenObject ' + Cookies.getJSON('token'))
+        console.log('id ' + objectResponse.data.id_token)
         // window.location.href = gameUrl
     }
 
