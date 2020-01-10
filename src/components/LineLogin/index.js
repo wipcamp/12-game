@@ -13,20 +13,12 @@ export default class LoginGame extends Component {
     }
 
     async lineLogin() {
-        // let lineResponse = await LineService.lineLogin();
-        //  console.log(process.env.REACT_APP_LINE_API_PATH)
-        let promiseStateAndNonce = this.getGenerateCode()
-        Promise.resolve(promiseStateAndNonce).then(r =>{ return r.state})
-        window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${loginGameUrl}&state=${Promise.resolve(promiseStateAndNonce).then(r =>{ return r.state})}&scope=openid%20email%20profile&nonce=${Promise.resolve(promiseStateAndNonce).then(r =>{ return r.nonce})}`
-    }
-
-    async getGenerateCode() {
         const stateGenerate = await LineService.getGenerateCode()
         const nonceGenerate = await LineService.getGenerateCode()
         Cookies.set('state', stateGenerate.data,{ path: loginGameUrl });
         Cookies.set('nonce', nonceGenerate.data,{ path: loginGameUrl })
-        console.log(stateGenerate)
-        return {state:stateGenerate.data,nonce:nonceGenerate.data}
+        //console.log(Cookies.get('state'))
+         window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${loginGameUrl}&state=${Cookies.get('state')}&scope=openid%20email%20profile&nonce=${Cookies.get('state')}`
     }
 
     async findUserGame(userId) {
