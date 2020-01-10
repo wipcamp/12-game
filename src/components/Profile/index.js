@@ -78,6 +78,16 @@ export default class Profile extends Component {
     });
   }
 
+  async getNewEnergy(id){
+    console.log(id)
+    let data = await profileService.getProfile(id);
+    console.log(data)
+    this.setState({
+      user_energy : data.data.energy,
+    })
+    console.log(this.state.user_energy)
+  }
+
   render() {
     return (
       <div>
@@ -125,7 +135,7 @@ export default class Profile extends Component {
             />
           </CenterComponent>{' '}
         </div>
-        <Menubar user_id={this.state.user_id}/>
+        <Menubar user_id={this.state.user_id} newEnergy={()=>this.getNewEnergy(this.state.user_id)}/>
         </div>
     );
   }
