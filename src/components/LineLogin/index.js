@@ -30,10 +30,11 @@ export default class LoginGame extends Component {
         const objectResponse = await LineService.lineLogin(code, nonce)
         console.log('token : ' + objectResponse)
         const data = objectResponse.data
-        Cookies.set('token',data)
-        const token = Cookies.get('token')
-        console.log('id_token'+token.id_token)
-        console.log('tokenObject'+data)
+        // Cookies.set('token',data)
+        // const token = Cookies.get('token')
+        // console.log('id_token'+token.id_token)
+        console.log('tokenObject '+objectResponse.data)
+        console.log('id '+objectResponse.data.id_token)
         // window.location.href = gameUrl
     }
 
