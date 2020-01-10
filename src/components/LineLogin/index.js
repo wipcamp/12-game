@@ -21,7 +21,7 @@ export default class LoginGame extends Component {
         const nonceInCookies = Cookies.get('nonce')
         console.log(stateInCookies)
         console.log(nonceInCookies)
-        // window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${loginGameUrl}&state=${Cookies.get('state')}&scope=openid%20email%20profile&nonce=${Cookies.get('state')}`
+        window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${loginGameUrl}&state=${stateInCookies}&scope=openid%20email%20profile&nonce=${nonceInCookies}`
     }
 
     async findUserGame(userId) {
