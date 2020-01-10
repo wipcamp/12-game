@@ -43,8 +43,10 @@ export default class Profile extends Component {
     if(tokenCookies){
       console.log('checkCookiesPass')
       console.log('userId in cookies : '+tokenCookies.userId)
+      const userId = tokenCookies.userId
+      console.log('userId : '+userId)
       this.setState({
-        user_id : tokenCookies.userId
+        user_id : userId
       })
       console.log('state : '+this.state.user_id)
       this.getProfileData(this.state.user_id);
