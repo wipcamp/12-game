@@ -37,7 +37,7 @@ export default class LoginGame extends Component {
             expires_in:objectResponse.data.expires_in,
             id_token:objectResponse.data.id_token,
         }
-        Cookies.set('token',tokenObject)
+        Cookies.set('token',JSON.stringify(tokenObject))
         // const token = Cookies.get('token')
         // console.log('id_token'+token.id_token)
         console.log('tokenObject ' + Cookies.getJSON('token'))
