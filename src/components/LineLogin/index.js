@@ -75,20 +75,8 @@ export default class LoginGame extends Component {
     }
 
     render() {
-        const logedIn = this.state.logedIn
-        let componentDependOnLogedIn;
-        if (!logedIn) {
-            componentDependOnLogedIn = <div>
-                {this.state.state}<br />
-                {this.state.nonce}
-                <center><button onClick={this.handleClick.bind(this)} >login line</button></center>
-            </div>
-        } else {
-            componentDependOnLogedIn = <App data={this.state.data} />
-        }
-
         return (
-            componentDependOnLogedIn
+            <center><button onClick={this.handleClick.bind(this)} >login line</button></center>
         );
     }
 }
