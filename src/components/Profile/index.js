@@ -45,6 +45,7 @@ export default class Profile extends Component {
       this.setState({
         user_id : tokenCookies.userId
       })
+      console.log(this.state.user_id)
       this.getProfileData(this.state.user_id);
     }else{
       window.location.href = loginGameUrl
