@@ -15,10 +15,13 @@ export default class LoginGame extends Component {
     async lineLogin() {
         const stateGenerate = await LineService.getGenerateCode()
         const nonceGenerate = await LineService.getGenerateCode()
-        Cookies.set('state', stateGenerate.data,{ path: loginGameUrl });
-        Cookies.set('nonce', nonceGenerate.data,{ path: loginGameUrl })
-        //console.log(Cookies.get('state'))
-         window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${loginGameUrl}&state=${Cookies.get('state')}&scope=openid%20email%20profile&nonce=${Cookies.get('state')}`
+        Cookies.set('state', stateGenerate.data, { path: loginGameUrl });
+        Cookies.set('nonce', nonceGenerate.data, { path: loginGameUrl })
+        const stateInCookies = Cookies.get('state')
+        const nonceInCookies = Cookies.get('nonce')
+        console.log(stateInCookies)
+        console.log(nonceInCookies)
+        // window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${loginGameUrl}&state=${Cookies.get('state')}&scope=openid%20email%20profile&nonce=${Cookies.get('state')}`
     }
 
     async findUserGame(userId) {
@@ -28,19 +31,19 @@ export default class LoginGame extends Component {
 
     async getTokenFromLineApi(code, nonce) {
         const token = await LineService.lineLogin(code, nonce)
-        console.log('token : '+token)
+        console.log('token : ' + token)
     }
 
 
     checkStateLine(stateFromLine) {
         const stateInCookie = Cookies.get('state')
-        console.log('state from cookies : '+stateInCookie)
-        console.log('state from line res : '+stateFromLine)
-            if (stateInCookie === stateFromLine) {
-                return true
-            } else {
-                return false
-            }
+        console.log('state from cookies : ' + stateInCookie)
+        console.log('state from line res : ' + stateFromLine)
+        if (stateInCookie === stateFromLine) {
+            return true
+        } else {
+            return false
+        }
     }
 
 
@@ -55,15 +58,15 @@ export default class LoginGame extends Component {
             console.log('get state from response from line api : ' + resFromLineApi.state)
             if (this.checkStateLine(resFromLineApi.state)) {
                 this.getTokenFromLineApi(resFromLineApi.code, Cookies.get('nonce'))
-                Cookies.remove('state',{ path: loginGameUrl });
-                Cookies.remove('nonce',{ path: loginGameUrl });
+                Cookies.remove('state', { path: loginGameUrl });
+                Cookies.remove('nonce', { path: loginGameUrl });
             } else {
-                Cookies.remove('state',{ path: loginGameUrl });
-                Cookies.remove('nonce',{ path: loginGameUrl });
+                Cookies.remove('state', { path: loginGameUrl });
+                Cookies.remove('nonce', { path: loginGameUrl });
                 // window.location.href = loginGameUrl
                 console.log('check state fail')
             }
-        }else{
+        } else {
             console.log('fail from line api')
         }
     }
