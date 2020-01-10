@@ -5,12 +5,9 @@ import App from "../../App.js";
 import Cookies from 'js-cookie';
 
 const loginGameUrl = 'https://game.freezer.wip.camp/login'
+const gameUrl = 'https://game.freezer.wip.camp/'
 const clientId = '1653724802'
 export default class LoginGame extends Component {
-    state = {
-        logedIn: false,
-        data: {},
-    }
 
     async lineLogin() {
         const stateGenerate = await LineService.getGenerateCode()
@@ -30,8 +27,14 @@ export default class LoginGame extends Component {
     }
 
     async getTokenFromLineApi(code, nonce) {
-        const token = await LineService.lineLogin(code, nonce)
-        console.log('token : ' + token)
+        const objectResponse = await LineService.lineLogin(code, nonce)
+        console.log('token : ' + objectResponse)
+        const data = objectResponse.data
+        Cookies.set('token',data)
+        const token = Cookies.get('token')
+        console.log('id_token'+token.id_token)
+        console.log('tokenObject'+data)
+        // window.location.href = gameUrl
     }
 
 
