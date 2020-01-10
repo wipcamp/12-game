@@ -64,11 +64,11 @@ export default class LoginGame extends Component {
             console.log('get state from response from line api : ' + resFromLineApi.state)
             if (this.checkStateLine(resFromLineApi.state)) {
                 this.getTokenFromLineApi(resFromLineApi.code, Cookies.get('nonce'))
-                Cookies.remove('state', { path: loginGameUrl });
-                Cookies.remove('nonce', { path: loginGameUrl });
+                // Cookies.remove('state', { path: loginGameUrl });
+                // Cookies.remove('nonce', { path: loginGameUrl });
             } else {
-                Cookies.remove('state', { path: loginGameUrl });
-                Cookies.remove('nonce', { path: loginGameUrl });
+                // Cookies.remove('state', { path: loginGameUrl });
+                // Cookies.remove('nonce', { path: loginGameUrl });
                 // window.location.href = loginGameUrl
                 console.log('check state fail')
             }
