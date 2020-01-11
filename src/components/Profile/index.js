@@ -24,7 +24,7 @@ left: 85vw;
 const liff = window.liff;
 export default class Profile extends Component {
   state = {
-    user_id: "",
+    user_id: "1",
     user_level: 0,
     user_str: 0,
     user_dex: 0,
@@ -38,17 +38,20 @@ export default class Profile extends Component {
   };
 
   componentDidMount() {
-    const tokenCookies = Cookies.getJSON('token')
-    console.log(tokenCookies)
-    if(tokenCookies){
-      console.log('checkCookiesPass')
-      this.setState({
-        user_id : tokenCookies.userId
-      })
-      this.getProfileData(this.state.user_id);
-    }else{
-      window.location.href = loginGameUrl
-    }
+    // const tokenCookies = Cookies.getJSON('token')
+    // console.log(tokenCookies)
+    // if(tokenCookies){
+    //   console.log('checkCookiesPass')
+    //   this.setState({
+    //     user_id : tokenCookies.userId
+    //   })
+    //   this.getProfileData(this.state.user_id);
+    // }else{
+    //   window.location.href = loginGameUrl
+    // }
+
+    this.getProfileData("1")
+    
     // liff
     //   .init({
     //     liffId: '1653691835-vZ4GNK7z'
@@ -62,6 +65,11 @@ export default class Profile extends Component {
     //     console.log(err);
     //   });
     // this.getProfileData(this.getProfile());
+  }
+
+  addEnergy(){
+    //ส่งเวลาปัจจุบันไปเช็คกับเวลาอัพเดท ที่หลังบ้าน
+    console.log("addEnergy");
   }
 
   getProfile() {
@@ -88,6 +96,13 @@ export default class Profile extends Component {
       user_exp: userGame.exp,
       user_max_exp: userGame.maxExp
     });
+    if(this.state.user_max_energy>this.state.user_energy){
+      let date = new Date(); 
+      console.log(date)
+      this.addEnergy()
+    }else{
+      console.log("energy is full")
+    }
   }
 
   async getNewEnergy(id){
