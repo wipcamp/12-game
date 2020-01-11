@@ -23,6 +23,7 @@ left: 85vw;
 
 const liff = window.liff;
 export default class Profile extends Component {
+  
   state = {
     user_id: "1",
     user_level: 0,
@@ -40,19 +41,18 @@ export default class Profile extends Component {
 
   componentDidMount() {
     // const tokenCookies = Cookies.getJSON('token')
-    // console.log(tokenCookies)
+    // console.log('tokenObject : '+tokenCookies)
     // if(tokenCookies){
     //   console.log('checkCookiesPass')
-    //   this.setState({
-    //     user_id : tokenCookies.userId
-    //   })
-    //   this.getProfileData(this.state.user_id);
+    //   console.log('userId in cookies : '+tokenCookies.userId)
+    //   const userId = tokenCookies.userId
+    //   console.log('userId : '+userId)
+    //   //console.log('state : '+this.state.user_id)
+    //   this.getProfileData(userId);
     // }else{
     //   window.location.href = loginGameUrl
     // }
-
-    this.getProfileData("1")
-    
+    this.getProfileData(this.state.user_id);
     // liff
     //   .init({
     //     liffId: '1653691835-vZ4GNK7z'
@@ -83,9 +83,10 @@ export default class Profile extends Component {
 
   async getProfileData(id) {
     let data = await profileService.getProfile(id);
-    console.log(data)
+    console.log('game data : '+data)
     let userGame = data.data
     this.setState({
+      user_id : userGame.id,
       user_level: userGame.level,
       user_str: userGame.str,
       user_dex: userGame.dex,
@@ -104,6 +105,7 @@ export default class Profile extends Component {
     }else{
       console.log("energy is full")
     }
+    console.log('game data.data : '+userGame)
   }
 
   async getNewEnergy(id){
