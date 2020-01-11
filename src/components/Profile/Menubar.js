@@ -31,18 +31,6 @@ export default class Menubar extends Component {
                 console.log("current date"+new Date())
                 console.log("setCooldownFirstTime"+date)
                 this.props.setCooldownTime(date);
-            }else{
-                let current_time = new Date();
-                if(cooldown_time>current_time){
-                    let remaining = Math.abs(cooldown_time - current_time);
-                    let min = Math.floor(remaining / 60000);
-                    let sec = ((remaining % 60000) / 1000).toFixed(0);
-                    console.log("remaining" + remaining)
-                    console.log("toTime"+ min + ":" + (sec < 10 ? '0' : '') + sec)
-                }else{
-                    //addEnergymethod
-                    console.log("addEnergy")
-                }
             }
             this.setState({ showModal: false });
             await profileService.useEnergy(id);
