@@ -48,6 +48,7 @@ export default class Profile extends Component {
 
   componentDidMount() {
     console.log('tokenObject : ' + tokenCookies)
+    const tokenCookies = Cookies.getJSON('token')
     if (tokenCookies) {
       console.log('checkCookiesPass')
       console.log('state : ' + this.state.user_id)
