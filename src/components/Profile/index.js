@@ -36,7 +36,7 @@ export default class Profile extends Component {
     user_team_name: "",
     user_exp: 0,
     user_max_exp: 0,
-    cooldown_time : new Date(2020, 0, 11, 17, 0, 0)
+    cooldown_time : new Date()
   };
 
   componentDidMount() {
@@ -53,6 +53,10 @@ export default class Profile extends Component {
     //   window.location.href = loginGameUrl
     // }
     this.getProfileData(this.state.user_id);
+    let date = new Date(2020, 0, 11, 17, 0, 0);
+    this.setState({
+      cooldown_time : date
+    })
     // liff
     //   .init({
     //     liffId: '1653691835-vZ4GNK7z'
@@ -83,7 +87,7 @@ export default class Profile extends Component {
 
   async getProfileData(id) {
     let data = await profileService.getProfile(id);
-    console.log('game data : '+data)
+    //console.log('game data : '+data)
     let userGame = data.data
     this.setState({
       user_id : userGame.id,
@@ -100,12 +104,11 @@ export default class Profile extends Component {
     });
     if(this.state.user_max_energy>this.state.user_energy){
       let date = new Date(); 
-      console.log(date)
       this.addEnergy()
     }else{
       console.log("energy is full")
     }
-    console.log('game data.data : '+userGame)
+    //console.log('game data.data : '+userGame)
   }
 
   async getNewEnergy(id){
@@ -115,10 +118,18 @@ export default class Profile extends Component {
     this.setState({
       user_energy : data.data.energy,
     })
-    console.log(this.state.user_energy)
+  }
+
+  setCooldownTime(time){
+    this.setState({
+      cooldown_time : time
+    })
+    console.log("setting complete")
+    console.log("new cooldown"+this.state.cooldown_time)
   }
 
   render() {
+    console.log(this.state.cooldown_time)
     return (
       <div>
         <div className="container">
@@ -165,7 +176,12 @@ export default class Profile extends Component {
             />
           </CenterComponent>{' '}
         </div>
-        <Menubar user_data={this.state} user_id={this.state.user_id} newEnergy={()=>this.getNewEnergy(this.state.user_id)}/>
+        <Menubar 
+          user_data={this.state} 
+          user_id={this.state.user_id} 
+          newEnergy={()=>this.getNewEnergy(this.state.user_id)}
+          setCooldownTime={(time)=>this.setCooldownTime(time)}
+        />
         </div>
     );
   }
