@@ -23,34 +23,36 @@ left: 85vw;
 
 const liff = window.liff;
 export default class Profile extends Component {
-  state = {
-    user_id: "",
-    user_level: 0,
-    user_str: 0,
-    user_dex: 0,
-    user_luk: 0,
-    user_energy: 0,
-    user_max_energy: 0,
-    user_name: "",
-    user_team_name: "",
-    user_exp: 0,
-    user_max_exp: 0
-  };
+
+  constructor(props) {
+    super(props)
+    const tokenCookies = Cookies.getJSON('token')
+    console.log('userId in cookies : ' + tokenCookies.userId)
+    const userId = tokenCookies.userId
+    console.log('userId : ' + userId)
+    this.state = {
+      user_id: userId,
+      user_level: 0,
+      user_str: 0,
+      user_dex: 0,
+      user_luk: 0,
+      user_energy: 0,
+      user_max_energy: 0,
+      user_name: "",
+      user_team_name: "",
+      user_exp: 0,
+      user_max_exp: 0
+    }
+  }
+
 
   componentDidMount() {
-    const tokenCookies = Cookies.getJSON('token')
-    console.log('tokenObject : '+tokenCookies)
-    if(tokenCookies){
+    console.log('tokenObject : ' + tokenCookies)
+    if (tokenCookies) {
       console.log('checkCookiesPass')
-      console.log('userId in cookies : '+tokenCookies.userId)
-      const userId = tokenCookies.userId
-      console.log('userId : '+userId)
-      this.setState({
-        user_id : userId
-      })
-      console.log('state : '+this.state.user_id)
+      console.log('state : ' + this.state.user_id)
       this.getProfileData(this.state.user_id);
-    }else{
+    } else {
       window.location.href = loginGameUrl
     }
     // liff
@@ -94,12 +96,12 @@ export default class Profile extends Component {
     });
   }
 
-  async getNewEnergy(id){
+  async getNewEnergy(id) {
     console.log(id)
     let data = await profileService.getProfile(id);
     console.log(data)
     this.setState({
-      user_energy : data.data.energy,
+      user_energy: data.data.energy,
     })
     console.log(this.state.user_energy)
   }
@@ -111,7 +113,7 @@ export default class Profile extends Component {
           <CenterComponent>
             <EnergyProgressbar>
               <Progressbar
-                style={{ height: 10, width: 50, marginTop: '17%'}}
+                style={{ height: 10, width: 50, marginTop: '17%' }}
                 color='warning'
                 percent={(this.state.user_energy / this.state.user_max_energy) * 100}
                 level={this.state.user_energy}
@@ -130,7 +132,7 @@ export default class Profile extends Component {
             <p onClick={this.getProfileData.bind(this)} >Get DATA</p>
             */}
             team: {this.state.user_team_name} <br />
-            <Character level={this.state.user_level} userExp={this.state.user_exp} maxExp={this.state.user_max_exp}/>{' '}
+            <Character level={this.state.user_level} userExp={this.state.user_exp} maxExp={this.state.user_max_exp} />{' '}
             <Progressbar
               color='warning'
               percent={this.state.user_str}
@@ -151,8 +153,8 @@ export default class Profile extends Component {
             />
           </CenterComponent>{' '}
         </div>
-        <Menubar user_id={this.state.user_id} newEnergy={()=>this.getNewEnergy(this.state.user_id)}/>
-        </div>
+        <Menubar user_id={this.state.user_id} newEnergy={() => this.getNewEnergy(this.state.user_id)} />
+      </div>
     );
   }
 }
