@@ -26,7 +26,11 @@ export default class Menubar extends Component {
             const {user_energy , user_max_energy , user_id , cooldown_time} = this.props.user_data
             console.log("cooldown"+cooldown_time)
             if(user_energy == user_max_energy){
-                console.log("setCooldownFirstTime")
+                let date = new Date();
+                date.setHours(date.getHours()+1);
+                console.log("current date"+new Date())
+                console.log("setCooldownFirstTime"+date)
+                this.props.setCooldownTime(date);
             }else{
                 let current_time = new Date();
                 if(cooldown_time>current_time){
