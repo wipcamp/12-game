@@ -34,7 +34,8 @@ export default class Profile extends Component {
     user_name: "",
     user_team_name: "",
     user_exp: 0,
-    user_max_exp: 0
+    user_max_exp: 0,
+    cooldown_time : new Date(2020, 0, 11, 17, 0, 0)
   };
 
   componentDidMount() {
@@ -162,7 +163,7 @@ export default class Profile extends Component {
             />
           </CenterComponent>{' '}
         </div>
-        <Menubar user_id={this.state.user_id} newEnergy={()=>this.getNewEnergy(this.state.user_id)}/>
+        <Menubar user_data={this.state} user_id={this.state.user_id} newEnergy={()=>this.getNewEnergy(this.state.user_id)}/>
         </div>
     );
   }
