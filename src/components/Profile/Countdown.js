@@ -22,8 +22,10 @@ export default class Countdown extends Component {
         second: 0 ,
         minute :0
         });
-        clearInterval(this.intervalId);
         this.props.onTimeOut();
+        if(this.state.minute<0){
+            clearInterval(this.intervalId);
+        }
       }
     }
   
@@ -35,12 +37,23 @@ export default class Countdown extends Component {
       clearInterval(this.intervalId);
     }
 
+    componentWillReceiveProps(nextProps) {
+        const { minute } = this.props.minute;
+        const { second } = this.props.second;
+        if (nextProps.second !== second) {
+          this.setState({ second: nextProps.second});
+        }
+        if (nextProps.minute !== minute) {
+          this.setState({ minute: nextProps.minute });
+        }
+      }
+
     render() {
       const { second , minute} = this.state;
       if(minute != 999 && second != 999){
         return <div>{minute>9?minute:'0'+minute}:{second>9?second:'0'+second}</div>;
       }else{
-        return "Not started yet";
+        return null;
       }
     }
   }
