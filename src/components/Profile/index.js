@@ -89,8 +89,10 @@ export default class Profile extends Component {
     });
   }
 
-  getRemainingTime(cooldown_time) {
+  getRemainingTime(cooldown) {
+    let cooldown_time = new Date(cooldown);
     let current_time = new Date();
+    console.log("cool"+cooldown_time)
     if (cooldown_time >= current_time) {
       let remaining = Math.abs(cooldown_time - current_time);
       let min = Math.floor(remaining / 60000);
@@ -123,8 +125,11 @@ export default class Profile extends Component {
 
   async getProfileData(id) {
     let data = await profileService.getProfile(id);
+    let cooldown_time = await profileService.getCooldownTime(id);
     //console.log('game data : '+data)
     let userGame = data.data
+    let cooldownTime = cooldown_time.data
+    console.log(cooldownTime)
     this.setState({
       user_id: userGame.id,
       user_level: userGame.level,
@@ -137,12 +142,11 @@ export default class Profile extends Component {
       user_team_name: userGame.team.teamName,
       user_exp: userGame.exp,
       user_max_exp: userGame.maxExp,
-      time : null
+      cooldown_time : cooldownTime
     });
     if (this.state.user_max_energy > this.state.user_energy) {
       //let date = new Date();
-      console.log("getProfile")
-      this.getRemainingTime(this.state.cooldown_time)
+      this.getRemainingTime(cooldownTime)
       this.addEnergy()
     } else {
       console.log("energy is full")
@@ -159,10 +163,16 @@ export default class Profile extends Component {
     })
   }
 
-  setCooldownTime(time) {
+  async setCooldownTime(id) { 
+    await profileService.setCooldownTime(id);
+    let data = await profileService.getCooldownTime(id);
+    let cooldownTime = data.data;
     this.setState({
-      cooldown_time: time
+      cooldown_time : cooldownTime
     })
+    console.log(cooldownTime)
+
+    this.getRemainingTime(this.state.cooldown_time);
     console.log("setting complete")
     console.log("new cooldown" + this.state.cooldown_time)
   }
@@ -225,7 +235,7 @@ export default class Profile extends Component {
           user_data={this.state}
           user_id={this.state.user_id}
           newEnergy={() => this.getNewEnergy(this.state.user_id)}
-          setCooldownTime={(time) => this.setCooldownTime(time)}
+          setCooldownTime={() => this.setCooldownTime(this.state.user_id)}
           getRemainingTime={(time)=>this.getRemainingTime(time)}
         />
       </div>
