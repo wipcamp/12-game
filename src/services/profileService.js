@@ -9,6 +9,14 @@ const profileService = {
     useEnergy : async (lineId) => {
         let res = await api.post(`/useEnergy?id=${lineId}`)
         return res;
+    },
+    setCooldownTime : async (lineId) => {
+        let res = await api.post(`/setCooldownEnergyTime?id=${lineId}`)
+        return res;
+    },
+    getCooldownTime : async (lineId) => {
+        let res = await api.get(`/getCooldowntime?id=${lineId}`)
+        return res;
     }
     // getProfileByUserId
   
