@@ -78,7 +78,7 @@ export default class Profile extends Component {
   addEnergy() {
     //ส่งเวลาปัจจุบันไปเช็คกับเวลาอัพเดท ที่หลังบ้าน
     console.log("addEnergy"+this.state.cooldown_time);
-    this.getRemainingTime(this.state.cooldown_time);
+    //this.getRemainingTime(this.state.cooldown_time);
   }
 
   getProfile() {
@@ -155,12 +155,12 @@ export default class Profile extends Component {
   }
 
   async getNewEnergy(id) {
-    console.log(id)
     let data = await profileService.getProfile(id);
-    console.log(data)
+    console.log("get new")
     this.setState({
       user_energy: data.data.energy,
     })
+    this.getRemainingTime(this.state.cooldown_time)
   }
 
   async setCooldownTime(id) { 
@@ -236,7 +236,6 @@ export default class Profile extends Component {
           user_id={this.state.user_id}
           newEnergy={() => this.getNewEnergy(this.state.user_id)}
           setCooldownTime={() => this.setCooldownTime(this.state.user_id)}
-          getRemainingTime={(time)=>this.getRemainingTime(time)}
         />
       </div>
     );
