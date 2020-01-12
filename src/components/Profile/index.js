@@ -4,6 +4,7 @@ import Progressbar from './Progressbar';
 import Character from './Character';
 import styled from 'styled-components';
 import Menubar from './Menubar';
+import Countdown from './Countdown'
 import Cookies from 'js-cookie';
 
 const loginGameUrl = 'https://game.freezer.wip.camp/login'
@@ -52,11 +53,13 @@ export default class Profile extends Component {
     // }else{
     //   window.location.href = loginGameUrl
     // }
+
     this.getProfileData(this.state.user_id);
-    let date = new Date(2020, 0, 11, 21, 0, 0);
-    this.setState({
-      cooldown_time: date
-    })
+    // let date = new Date(2020, 0, 12, 11, 24, 0);
+    // this.setState({
+    //   cooldown_time: date
+    // })
+
     // liff
     //   .init({
     //     liffId: '1653691835-vZ4GNK7z'
@@ -74,7 +77,8 @@ export default class Profile extends Component {
 
   addEnergy() {
     //ส่งเวลาปัจจุบันไปเช็คกับเวลาอัพเดท ที่หลังบ้าน
-    console.log("addEnergy");
+    console.log("addEnergy"+this.state.cooldown_time);
+    this.getRemainingTime(this.state.cooldown_time);
   }
 
   getProfile() {
@@ -96,7 +100,9 @@ export default class Profile extends Component {
       console.log("remaining" + remaining)
       console.log("toTime" + min + ":" + (sec < 10 ? '0' : '') + sec)
       console.log(time)
-      return time;
+      this.setState({
+        time : time
+      })
     } else {
       let remaining = Math.abs(current_time - cooldown_time);
       let pre_min = Math.floor(remaining / 60000);
@@ -109,7 +115,9 @@ export default class Profile extends Component {
       console.log("remaining" + remaining)
       console.log("toTime" + min + ":" + (sec < 10 ? '0' : '') + sec)
       console.log(time)
-      return time;
+      this.setState({
+        time : time
+      })
     }
   }
 
@@ -128,10 +136,12 @@ export default class Profile extends Component {
       user_name: userGame.name,
       user_team_name: userGame.team.teamName,
       user_exp: userGame.exp,
-      user_max_exp: userGame.maxExp
+      user_max_exp: userGame.maxExp,
+      time : null
     });
     if (this.state.user_max_energy > this.state.user_energy) {
       //let date = new Date();
+      console.log("getProfile")
       this.getRemainingTime(this.state.cooldown_time)
       this.addEnergy()
     } else {
@@ -159,10 +169,16 @@ export default class Profile extends Component {
 
   render() {
     console.log(this.state.cooldown_time)
+    console.log("time"+this.state.time)
     return (
       <div>
         <div className="container">
           <CenterComponent>
+          <Countdown 
+          minute={this.state.time==null?999:this.state.time.min} 
+          second={this.state.time==null?999:this.state.time.sec}
+          onTimeOut={()=>this.addEnergy()}
+          />
             <EnergyProgressbar>
               <Progressbar
                 style={{ height: 10, width: 50, marginTop: '17%' }}
@@ -210,6 +226,7 @@ export default class Profile extends Component {
           user_id={this.state.user_id}
           newEnergy={() => this.getNewEnergy(this.state.user_id)}
           setCooldownTime={(time) => this.setCooldownTime(time)}
+          getRemainingTime={(time)=>this.getRemainingTime(time)}
         />
       </div>
     );
