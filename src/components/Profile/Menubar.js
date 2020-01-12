@@ -22,27 +22,31 @@ export default class Menubar extends Component {
         this.setState({ showModal: true });
     }
 
-    async getMinigamePage(id){
-            const {user_energy , user_max_energy , user_id , cooldown_time} = this.props.user_data
-            console.log("cooldown"+cooldown_time)
-            if(user_energy == user_max_energy){
-                let date = new Date();
-                date.setHours(date.getHours()+1);
-                console.log("current date"+new Date())
-                console.log("setCooldownFirstTime"+date)
-                this.props.setCooldownTime(date);
-            }
-            this.setState({ showModal: false });
-            await profileService.useEnergy(id);
-            //ส่งเวลาuse energyไปด้วย (เวลาที่กดuseEnergy ครั้งแรกที่ energyยังเป็นอยู่ max==energy)
-            //เวลาปจบ.-เวลาที่cooldownสำเร็จ สมมุติว่าตั้งcooldownไว้1ชม.แต่ผ่านไป2ชม. 
-            //เอาชม.การcooldown ไปหารกับอิค่าที่-มาได้ เหลือเศษเท่าไร เอาไปเป็นเวลา นับถอยหลังเอาจน.เต็มไปเพิ่มenergy*จำนวน
-            //เวลาปจบ.ไป+กับเศษเหลือ -> เวลาcooldown energyลูกถัดไป (เวลาใหม่ )
-            
-            this.props.newEnergy();
-            console.log(this.props.user_data.user_energy)
-            console.log(profileService.getProfile(id))
-            //window.location.replace("http://localhost:3000/login");
+    async getMinigamePage(id) {
+        const { user_energy, user_max_energy, user_id, cooldown_time } = this.props.user_data
+        console.log("cooldown" + cooldown_time)
+        if (user_energy == user_max_energy) {
+            let date = new Date();
+            date.setHours(date.getHours() + 1);
+            console.log("current date" + new Date())
+            console.log("setCooldownFirstTime" + date)
+            this.props.setCooldownTime(date);
+            console.log("remain in menu max")
+            this.props.getRemainingTime(date);
+        } else {
+            console.log("remain in menu")
+            this.props.getRemainingTime(cooldown_time);
+        }
+        this.setState({ showModal: false });
+        await profileService.useEnergy(id);
+        //ส่งเวลาuse energyไปด้วย (เวลาที่กดuseEnergy ครั้งแรกที่ energyยังเป็นอยู่ max==energy)
+        //เวลาปจบ.-เวลาที่cooldownสำเร็จ สมมุติว่าตั้งcooldownไว้1ชม.แต่ผ่านไป2ชม. 
+        //เอาชม.การcooldown ไปหารกับอิค่าที่-มาได้ เหลือเศษเท่าไร เอาไปเป็นเวลา นับถอยหลังเอาจน.เต็มไปเพิ่มenergy*จำนวน
+        //เวลาปจบ.ไป+กับเศษเหลือ -> เวลาcooldown energyลูกถัดไป (เวลาใหม่ )            
+        this.props.newEnergy();
+        console.log(this.props.user_data.user_energy)
+        console.log(profileService.getProfile(id))
+        //window.location.replace("http://localhost:3000/login");
     }
 
     getScoreBoardPage() {
@@ -100,7 +104,7 @@ export default class Menubar extends Component {
                 <Modal show={this.state.showModal} onHide={this.handleClose} centered>
                     <Modal.Body>Use 1 energy to play minigame</Modal.Body>
                     <Modal.Footer>
-                        <button variant="secondary" onClick={()=>this.getMinigamePage(this.props.user_id)}>
+                        <button variant="secondary" onClick={() => this.getMinigamePage(this.props.user_id)}>
                             play
                         </button>
                         <button variant="primary" onClick={this.handleClose}>
