@@ -33,9 +33,6 @@ export default class Menubar extends Component {
             this.props.setCooldownTime(date);
             console.log("remain in menu max")
             this.props.getRemainingTime(date);
-        } else {
-            console.log("remain in menu")
-            this.props.getRemainingTime(cooldown_time);
         }
         this.setState({ showModal: false });
         await profileService.useEnergy(id);
