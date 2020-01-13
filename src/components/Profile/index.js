@@ -37,7 +37,7 @@ export default class Profile extends Component {
     user_team_name: "",
     user_exp: 0,
     user_max_exp: 0,
-    cooldown_time: new Date()
+    cooldown_time: new Date(2020, 0, 13, 23, 40, 0)
   };
 
   componentDidMount() {
@@ -55,10 +55,6 @@ export default class Profile extends Component {
     // }
 
     this.getProfileData(this.state.user_id);
-    // let date = new Date(2020, 0, 12, 11, 24, 0);
-    // this.setState({
-    //   cooldown_time: date
-    // })
 
     // liff
     //   .init({
@@ -75,10 +71,37 @@ export default class Profile extends Component {
     // this.getProfileData(this.getProfile());
   }
 
-  addEnergy() {
-    //ส่งเวลาปัจจุบันไปเช็คกับเวลาอัพเดท ที่หลังบ้าน
-    console.log("addEnergy"+this.state.cooldown_time);
-    //this.getRemainingTime(this.state.cooldown_time);
+  async addEnergy(energyAdd) {
+    const { user_energy, user_max_energy, cooldown_time, user_id } = this.state
+    if (this.state.user_max_energy > (this.state.user_energy + energyAdd)) {
+      console.log("addEnergy" + energyAdd);
+      let totalEnergy = user_energy + energyAdd;
+      await profileService.setEnergy(user_id, totalEnergy)
+      this.setCooldownTime(user_id);
+      this.getNewEnergy(user_id)
+      let data = await profileService.getCooldownTime(user_id);
+      let cooldownTime = data.data;
+      this.setState({
+        cooldown_time: cooldownTime
+      })
+    } else if (this.state.user_max_energy == this.state.user_energy + energyAdd) {
+      console.log("equals")
+      let totalEnergy = user_energy + energyAdd;
+      profileService.setEnergy(user_id, totalEnergy)
+      this.getNewEnergy(user_id)
+      this.setState({
+        cooldown_time: null
+      })
+    }
+    else {
+      console.log("add full energy" + (this.state.user_max_energy - this.state.user_energy))
+      let totalEnergy = user_max_energy;
+      profileService.setEnergy(user_id, totalEnergy)
+      this.getNewEnergy(user_id)
+      this.setState({
+        cooldown_time: null
+      })
+    }
   }
 
   getProfile() {
@@ -92,7 +115,7 @@ export default class Profile extends Component {
   getRemainingTime(cooldown) {
     let cooldown_time = new Date(cooldown);
     let current_time = new Date();
-    console.log("cool"+cooldown_time)
+    console.log("cool" + cooldown_time)
     if (cooldown_time >= current_time) {
       let remaining = Math.abs(cooldown_time - current_time);
       let min = Math.floor(remaining / 60000);
@@ -103,23 +126,24 @@ export default class Profile extends Component {
       console.log("toTime" + min + ":" + (sec < 10 ? '0' : '') + sec)
       console.log(time)
       this.setState({
-        time : time
+        time: time
       })
     } else {
       let remaining = Math.abs(current_time - cooldown_time);
       let pre_min = Math.floor(remaining / 60000);
       let pre_sec = ((remaining % 60000) / 1000).toFixed(0);
       let energy_add = Math.floor(pre_min / 60);
-      let min = pre_min % 60;
-      let sec = pre_sec;
-      let time = { min, sec , energy_add}
+      let min = 60 - (pre_min % 60);
+      let sec = 60 - (pre_sec);
+      let time = { min, sec, energy_add }
       console.log("เกินเวลาแร้วแม่")
       console.log("remaining" + remaining)
       console.log("toTime" + min + ":" + (sec < 10 ? '0' : '') + sec)
       console.log(time)
       this.setState({
-        time : time
+        time: time
       })
+      this.addEnergy(energy_add)
     }
   }
 
@@ -129,6 +153,7 @@ export default class Profile extends Component {
     //console.log('game data : '+data)
     let userGame = data.data
     let cooldownTime = cooldown_time.data
+    //let cooldownTime = this.state.cooldown_time
     console.log(cooldownTime)
     this.setState({
       user_id: userGame.id,
@@ -142,12 +167,11 @@ export default class Profile extends Component {
       user_team_name: userGame.team.teamName,
       user_exp: userGame.exp,
       user_max_exp: userGame.maxExp,
-      cooldown_time : cooldownTime
+      cooldown_time: cooldownTime
     });
     if (this.state.user_max_energy > this.state.user_energy) {
       //let date = new Date();
       this.getRemainingTime(cooldownTime)
-      this.addEnergy()
     } else {
       console.log("energy is full")
     }
@@ -163,12 +187,12 @@ export default class Profile extends Component {
     this.getRemainingTime(this.state.cooldown_time)
   }
 
-  async setCooldownTime(id) { 
+  async setCooldownTime(id) {
     await profileService.setCooldownTime(id);
     let data = await profileService.getCooldownTime(id);
     let cooldownTime = data.data;
     this.setState({
-      cooldown_time : cooldownTime
+      cooldown_time: cooldownTime
     })
     console.log(cooldownTime)
 
@@ -179,16 +203,16 @@ export default class Profile extends Component {
 
   render() {
     console.log(this.state.cooldown_time)
-    console.log("time"+this.state.time)
+    console.log("time" + this.state.time)
     return (
       <div>
         <div className="container">
           <CenterComponent>
-          <Countdown 
-          minute={this.state.time==null?999:this.state.time.min} 
-          second={this.state.time==null?999:this.state.time.sec}
-          onTimeOut={()=>this.addEnergy()}
-          />
+            <Countdown
+              minute={this.state.cooldown_time == null || this.state.time == null ? 999 : this.state.time.min}
+              second={this.state.cooldown_time == null || this.state.time == null ? 999 : this.state.time.sec}
+              onTimeOut={() => this.addEnergy(1)}
+            />
             <EnergyProgressbar>
               <Progressbar
                 style={{ height: 10, width: 50, marginTop: '17%' }}
