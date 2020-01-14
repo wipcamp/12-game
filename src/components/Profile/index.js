@@ -54,7 +54,7 @@ export default class Profile extends Component {
       window.location.href = loginGameUrl
     }
 
-    this.getProfileData(this.state.user_id);
+    //this.getProfileData(this.state.user_id);
 
     // liff
     //   .init({
