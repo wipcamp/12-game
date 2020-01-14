@@ -26,7 +26,7 @@ const liff = window.liff;
 export default class Profile extends Component {
 
   state = {
-    user_id: "1",
+    user_id: "",
     user_level: 0,
     user_str: 0,
     user_dex: 0,
@@ -41,18 +41,18 @@ export default class Profile extends Component {
   };
 
   componentDidMount() {
-    // const tokenCookies = Cookies.getJSON('token')
-    // console.log('tokenObject : '+tokenCookies)
-    // if(tokenCookies){
-    //   console.log('checkCookiesPass')
-    //   console.log('userId in cookies : '+tokenCookies.userId)
-    //   const userId = tokenCookies.userId
-    //   console.log('userId : '+userId)
-    //   //console.log('state : '+this.state.user_id)
-    //   this.getProfileData(userId);
-    // }else{
-    //   window.location.href = loginGameUrl
-    // }
+    const tokenCookies = Cookies.getJSON('token')
+    console.log('tokenObject : '+tokenCookies)
+    if(tokenCookies){
+      console.log('checkCookiesPass')
+      console.log('userId in cookies : '+tokenCookies.userId)
+      const userId = tokenCookies.userId
+      console.log('userId : '+userId)
+      //console.log('state : '+this.state.user_id)
+      this.getProfileData(userId);
+    }else{
+      window.location.href = loginGameUrl
+    }
 
     this.getProfileData(this.state.user_id);
 
