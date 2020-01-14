@@ -21,7 +21,7 @@ export default class LiffLogin extends Component {
         user_exp: 0,
         user_max_exp: 0,
         cooldown_time: null,
-        isLogedIn: false
+        isLogedIn: true
     };
 
     componentDidMount() {
