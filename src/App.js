@@ -1,7 +1,7 @@
 import React from 'react';
-import Profile from './components/Profile/index'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import LoginGame from './components/LineLogin/index';
+import LiffLogin from './components/LiffLogin/index';
+import LoginGame from './components/LineLogin/index'
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
           <LoginGame/>
         </Route>
         <Route exact path='/liffLogin'>
-          <LoginGame/>
+          <LiffLogin/>
         </Route>
       </Switch>
     </Router>
