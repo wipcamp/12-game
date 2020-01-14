@@ -10,7 +10,7 @@ const clientId = '1653724802'
 export default class LoginGame extends Component {
 
     state = {
-        isLoad : false
+        isLoad: false
     }
 
     async lineLogin() {
@@ -35,12 +35,12 @@ export default class LoginGame extends Component {
         const tokenObject = {
             scope: objectResponse.data.scope,
             access_token: objectResponse.data.access_token,
-            token_type:objectResponse.data.token_type,
-            expires_in:objectResponse.data.expires_in,
-            id_token:objectResponse.data.id_token,
-            userId:objectResponse.data.userId
+            token_type: objectResponse.data.token_type,
+            expires_in: objectResponse.data.expires_in,
+            id_token: objectResponse.data.id_token,
+            userId: objectResponse.data.userId
         }
-        Cookies.set('token',JSON.stringify(tokenObject))
+        Cookies.set('token', JSON.stringify(tokenObject))
         window.location.href = gameUrl
     }
 
@@ -65,33 +65,34 @@ export default class LoginGame extends Component {
         const search = window.location.search.substring(1);
         if (search) {
             this.setState({
-                isLoad : true
+                isLoad: true
             })
             const resFromLineApi = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
             console.log('get state from response from line api : ' + resFromLineApi.state)
-        //     if (this.checkStateLine(resFromLineApi.state)) {
-                this.getTokenFromLineApi(resFromLineApi.code, Cookies.get('nonce'))
-        //         // Cookies.remove('state', { path: loginGameUrl });
-        //         // Cookies.remove('nonce', { path: loginGameUrl });
-        //     } else {
-        //         Cookies.remove('state', { path: loginGameUrl });
-        //         Cookies.remove('nonce', { path: loginGameUrl });
-        //         window.location.href = loginGameUrl
-        //         console.log('check state fail')
-        //     }
-        // } else {
-        //     this.setState({
-        //         isLoad : false
-        //     })
-        //     console.log('fail from line api')
-        // }
+            //     if (this.checkStateLine(resFromLineApi.state)) {
+            this.getTokenFromLineApi(resFromLineApi.code, Cookies.get('nonce'))
+            //         // Cookies.remove('state', { path: loginGameUrl });
+            //         // Cookies.remove('nonce', { path: loginGameUrl });
+            //     } else {
+            //         Cookies.remove('state', { path: loginGameUrl });
+            //         Cookies.remove('nonce', { path: loginGameUrl });
+            //         window.location.href = loginGameUrl
+            //         console.log('check state fail')
+            //     }
+            // } else {
+            //     this.setState({
+            //         isLoad : false
+            //     })
+            //     console.log('fail from line api')
+            // }
+        }
     }
 
     render() {
-        let component 
-        if(this.state.isLoad){
+        let component
+        if (this.state.isLoad) {
             component = <center>LOADING...</center>
-        }else{
+        } else {
             component = <center><button onClick={this.handleClick.bind(this)} >login line</button></center>
         }
         return (
