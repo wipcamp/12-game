@@ -5,7 +5,7 @@ import Character from './Character';
 import styled from 'styled-components';
 import Menubar from './Menubar';
 import Countdown from './Countdown'
-import Cookies from 'js-cookie';
+
 
 const loginGameUrl = 'https://game.freezer.wip.camp/login'
 const CenterComponent = styled.div`
@@ -22,53 +22,31 @@ top: -15%;
 left: 85vw;
 `
 
-const liff = window.liff;
+
 export default class Profile extends Component {
 
   state = {
-    user_id: "",
-    user_level: 0,
-    user_str: 0,
-    user_dex: 0,
-    user_luk: 0,
-    user_energy: 0,
-    user_max_energy: 0,
-    user_name: "",
-    user_team_name: "",
-    user_exp: 0,
-    user_max_exp: 0,
-    cooldown_time: new Date(2020, 0, 13, 23, 40, 0)
+    user_id: this.props.profileData.user_id,
+    user_level: this.props.profileData.user_level,
+    user_str: this.props.profileData.user_str,
+    user_dex: this.props.profileData.user_dex,
+    user_luk: this.props.profileData.user_luk,
+    user_energy: this.props.profileData.user_energy,
+    user_max_energy: this.props.profileData.user_max_energy,
+    user_name: this.props.profileData.user_name,
+    user_team_name: this.props.profileData.user_team,
+    user_exp: this.props.profileData.user_exp,
+    user_max_exp: this.props.profileData.user_max_exp,
+    cooldown_time: this.props.profileData.cooldown_time
   };
 
-  componentDidMount() {
-    const tokenCookies = Cookies.getJSON('token')
-    console.log('tokenObject : '+tokenCookies)
-    if(tokenCookies){
-      console.log('checkCookiesPass')
-      console.log('userId in cookies : '+tokenCookies.userId)
-      const userId = tokenCookies.userId
-      console.log('userId : '+userId)
-      //console.log('state : '+this.state.user_id)
-      this.getProfileData(userId);
-    }else{
-      window.location.href = loginGameUrl
+  componentDidMount(){
+    if (this.state.user_max_energy > this.state.user_energy) {
+      //let date = new Date();
+      this.getRemainingTime(this.state.cooldown_time)
+    } else {
+      console.log("energy is full")
     }
-
-    //this.getProfileData(this.state.user_id);
-
-    // liff
-    //   .init({
-    //     liffId: '1653691835-vZ4GNK7z'
-    //   })
-    //   .then(async () => {
-    //     if (!liff.isLoggedIn()) {
-    //       liff.login();
-    //     }
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
-    // this.getProfileData(this.getProfile());
   }
 
   async addEnergy(energyAdd) {
@@ -104,13 +82,6 @@ export default class Profile extends Component {
     }
   }
 
-  getProfile() {
-    liff.getProfile().then(dataInfo => {
-      this.setState({
-        user_id: dataInfo.userId
-      })
-    });
-  }
 
   getRemainingTime(cooldown) {
     let cooldown_time = new Date(cooldown);
@@ -147,37 +118,6 @@ export default class Profile extends Component {
     }
   }
 
-  async getProfileData(id) {
-    let data = await profileService.getProfile(id);
-    let cooldown_time = await profileService.getCooldownTime(id);
-    //console.log('game data : '+data)
-    let userGame = data.data
-    let cooldownTime = cooldown_time.data
-    //let cooldownTime = this.state.cooldown_time
-    console.log(cooldownTime)
-    this.setState({
-      user_id: userGame.id,
-      user_level: userGame.level,
-      user_str: userGame.str,
-      user_dex: userGame.dex,
-      user_luk: userGame.luk,
-      user_energy: userGame.energy,
-      user_max_energy: userGame.maxEnergy,
-      user_name: userGame.name,
-      user_team_name: userGame.team.teamName,
-      user_exp: userGame.exp,
-      user_max_exp: userGame.maxExp,
-      cooldown_time: cooldownTime
-    });
-    if (this.state.user_max_energy > this.state.user_energy) {
-      //let date = new Date();
-      this.getRemainingTime(cooldownTime)
-    } else {
-      console.log("energy is full")
-    }
-    //console.log('game data.data : '+userGame)
-  }
-
   async getNewEnergy(id) {
     let data = await profileService.getProfile(id);
     console.log("get new")
@@ -186,7 +126,15 @@ export default class Profile extends Component {
     })
     this.getRemainingTime(this.state.cooldown_time)
   }
-
+  async getNewEnergy(id) {
+    let data = await profileService.getProfile(id);
+    console.log("get new")
+    this.setState({
+      user_energy: data.data.energy,
+    })
+    this.getRemainingTime(this.state.cooldown_time)
+  }
+  
   async setCooldownTime(id) {
     await profileService.setCooldownTime(id);
     let data = await profileService.getCooldownTime(id);

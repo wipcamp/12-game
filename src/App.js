@@ -10,9 +10,9 @@ function App() {
       <Router>
       <Switch>
         <Route exact path='/'>
-          <Profile/>
+          <LoginGame/>
         </Route>
-        <Route exact path='/login'>
+        <Route exact path='/liffLogin'>
           <LoginGame/>
         </Route>
       </Switch>
