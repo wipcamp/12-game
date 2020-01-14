@@ -4,19 +4,6 @@ import Profile from '../Profile/index';
 
 
 
-const CenterComponent = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 70vw;
-  transform: translate(-50%, -50%);
-`;
-
-const EnergyProgressbar = styled(CenterComponent)`
-position: adsolute;
-top: -15%;
-left: 85vw;
-`
 
 const liff = window.liff;
 export default class LiffLogin extends Component {
