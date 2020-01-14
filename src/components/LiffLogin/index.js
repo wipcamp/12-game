@@ -19,7 +19,7 @@ left: 85vw;
 `
 
 const liff = window.liff;
-export default class Profile extends Component {
+export default class LiffLogin extends Component {
 
     state = {
         user_id: "",
