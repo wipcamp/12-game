@@ -5,7 +5,7 @@ import Character from './Character';
 import styled from 'styled-components';
 import Menubar from './Menubar';
 import Countdown from './Countdown'
-
+import Cookies from 'js-cookie'
 
 const loginGameUrl = 'https://game.freezer.wip.camp/login'
 const CenterComponent = styled.div`
@@ -53,42 +53,20 @@ export default class Profile extends Component {
   };
 
   componentDidMount(){
-    this.getProfileData(this.state.user_id);
-    
-  }
+    const tokenCookies = Cookies.getJSON('token')
+    console.log('tokenObject : '+tokenCookies)
+    if(tokenCookies){
+      console.log('checkCookiesPass')
+      console.log('userId in cookies : '+tokenCookies.userId)
+      const userId = tokenCookies.userId
+      console.log('userId : '+userId)
+      //console.log('state : '+this.state.user_id)
+      this.getProfileData(userId);
+    }else{
+      window.location.href = loginGameUrl
+    }
 
-  async getProfileData(id) {
-    let data = await profileService.getProfile(id);
-    let cooldown_time = await profileService.getCooldownTime(id);
-    //console.log('game data : '+data)
-    let userGame = data.data
-    let cooldownTime = cooldown_time.data
-    //let cooldownTime = this.state.cooldown_time
-    console.log(cooldownTime)
-    this.setState({
-        user_id: userGame.id,
-        user_level: userGame.level,
-        user_str: userGame.str,
-        user_dex: userGame.dex,
-        user_luk: userGame.luk,
-        user_energy: userGame.energy,
-        user_max_energy: userGame.maxEnergy,
-        user_name: userGame.name,
-        user_team_name: userGame.team.teamName,
-        user_exp: userGame.exp,
-        user_max_exp: userGame.maxExp,
-        cooldown_time: cooldownTime,
-        isLogedIn: true
-    });
-    //console.log('game data.data : '+userGame)
-    if (this.state.user_max_energy > this.state.user_energy) {
-        //let date = new Date();
-        this.getRemainingTime(this.state.cooldown_time)
-      } else {
-        console.log("energy is full")
-      }
-      this.getProfileData(this.state.user_id);
-}
+  }
 
   async addEnergy(energyAdd) {
     const { user_energy, user_max_energy, cooldown_time, user_id } = this.state
@@ -188,6 +166,37 @@ export default class Profile extends Component {
     this.getRemainingTime(this.state.cooldown_time);
     console.log("setting complete")
     console.log("new cooldown" + this.state.cooldown_time)
+  }
+
+  async getProfileData(id) {
+    let data = await profileService.getProfile(id);
+    let cooldown_time = await profileService.getCooldownTime(id);
+    //console.log('game data : '+data)
+    let userGame = data.data
+    let cooldownTime = cooldown_time.data
+    //let cooldownTime = this.state.cooldown_time
+    console.log(cooldownTime)
+    this.setState({
+      user_id: userGame.id,
+      user_level: userGame.level,
+      user_str: userGame.str,
+      user_dex: userGame.dex,
+      user_luk: userGame.luk,
+      user_energy: userGame.energy,
+      user_max_energy: userGame.maxEnergy,
+      user_name: userGame.name,
+      user_team_name: userGame.team.teamName,
+      user_exp: userGame.exp,
+      user_max_exp: userGame.maxExp,
+      cooldown_time: cooldownTime
+    });
+    if (this.state.user_max_energy > this.state.user_energy) {
+      //let date = new Date();
+      this.getRemainingTime(cooldownTime)
+    } else {
+      console.log("energy is full")
+    }
+    //console.log('game data.data : '+userGame)
   }
 
   render() {
