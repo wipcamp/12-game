@@ -18,7 +18,11 @@ export default class LoginGame extends Component {
         const nonceGenerate = await LineService.getGenerateCode()
         Cookies.set('state', stateGenerate.data, { path: loginGameUrl });
         Cookies.set('nonce', nonceGenerate.data, { path: loginGameUrl })
-        const stateInCookies = Cookies.get('state')
+        if(stateGenerate==Cookies.get('state')){
+           const stateInCookies = Cookies.get('state')
+        }else{
+            const stateInCookies = "someThing"
+        }
         const nonceInCookies = Cookies.get('nonce')
         console.log(stateInCookies)
         console.log(nonceInCookies)
@@ -70,17 +74,16 @@ export default class LoginGame extends Component {
             })
             const resFromLineApi = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
             console.log('get state from response from line api : ' + resFromLineApi.state)
-            if (this.checkStateLine(resFromLineApi.state)) {
-                this.getTokenFromLineApi(resFromLineApi.code, Cookies.get('nonce'))
-                // Cookies.remove('state', { path: loginGameUrl });
-                // Cookies.remove('nonce', { path: loginGameUrl });
-            } else {
-                Cookies.remove('state', { path: loginGameUrl });
-                Cookies.remove('nonce', { path: loginGameUrl });
-                //window.location.href = loginGameUrl
-                window.location.href = 'www.google.com'
-                console.log('check state fail')
-            }
+            // if (this.checkStateLine(resFromLineApi.state)) {
+            //     this.getTokenFromLineApi(resFromLineApi.code, Cookies.get('nonce'))
+            //     // Cookies.remove('state', { path: loginGameUrl });
+            //     // Cookies.remove('nonce', { path: loginGameUrl });
+            // } else {
+            //     Cookies.remove('state', { path: loginGameUrl });
+            //     Cookies.remove('nonce', { path: loginGameUrl });
+            //     window.location.href = loginGameUrl
+            //     console.log('check state fail')
+            // }
         } else {
             this.setState({
                 isLoad: false
