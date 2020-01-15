@@ -18,10 +18,11 @@ export default class LoginGame extends Component {
         const nonceGenerate = await LineService.getGenerateCode()
         Cookies.set('state', stateGenerate.data, { path: loginGameUrl });
         Cookies.set('nonce', nonceGenerate.data, { path: loginGameUrl })
+        let stateInCookies
         if(stateGenerate==Cookies.get('state')){
-           const stateInCookies = Cookies.get('state')
+           stateInCookies = Cookies.get('state')
         }else{
-            const stateInCookies = "someThing"
+            stateInCookies = "someThing"
         }
         const nonceInCookies = Cookies.get('nonce')
         console.log(stateInCookies)
