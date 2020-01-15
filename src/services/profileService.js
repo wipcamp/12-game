@@ -21,6 +21,10 @@ const profileService = {
     setEnergy : async (lineId,energy) => {
         let res = await api.post(`/setEnergy?id=${lineId}&&energy=${energy}`)
         return res;
+    },
+    setVerifyCookies : async (state,nonce) => {
+        let res = await api.get(`/setVerifyCookies?state=${state}&nonce=${nonce}`)
+        return res
     }
     // getProfileByUserId
   
