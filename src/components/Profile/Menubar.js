@@ -11,6 +11,7 @@ const StyledNavbar = styled(Navbar)`
 export default class Menubar extends Component {
     state = {
         showModal: false,
+        user_energy: this.props.user_data.user_energy
     };
 
     handleClose = () => {
@@ -21,6 +22,13 @@ export default class Menubar extends Component {
     handleShow = () => {
         this.setState({ showModal: true });
     }
+
+    componentWillReceiveProps(nextProps) {
+        const { user_energy } = this.props.user_data.user_energy;
+        if (nextProps.user_data.user_energy !== user_energy) {
+          this.setState({ user_energy: nextProps.user_data.user_energy });
+        }
+      }
 
     async getMinigamePage(id) {
         const { user_energy, user_max_energy, user_id, cooldown_time } = this.props.user_data
@@ -48,7 +56,8 @@ export default class Menubar extends Component {
     }
 
     render() {
-        console.log(this.props.user_data)
+        console.log("user energy"+this.state.user_energy)
+        const { user_energy } = this.state
         return (
             <div>
                 <StyledNavbar fixed="bottom" className="justify-content-center">
@@ -92,9 +101,15 @@ export default class Menubar extends Component {
                     </div>
                 </StyledNavbar>
                 <Modal show={this.state.showModal} onHide={this.handleClose} centered>
-                    <Modal.Body>Use 1 energy to play minigame</Modal.Body>
+                    <Modal.Body>
+                        {(user_energy==0||user_energy==null)?"no energy":"Use 1 energy to play minigame"}
+                    </Modal.Body>
                     <Modal.Footer>
-                        <button variant="secondary" onClick={() => this.getMinigamePage(this.props.user_id)}>
+                        <button 
+                            style={{display:(user_energy==0||user_energy==null)?"none":"block"}} 
+                            variant="secondary" 
+                            onClick={() => this.getMinigamePage(this.props.user_id)}
+                        >
                             play
                         </button>
                         <button variant="primary" onClick={this.handleClose}>
