@@ -63,6 +63,7 @@ export default class LoginGame extends Component {
 
     componentDidMount() {
         const search = window.location.search.substring(1);
+        console.log(search)
         if (search) {
             this.setState({
                 isLoad: true
