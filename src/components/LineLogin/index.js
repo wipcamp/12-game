@@ -19,6 +19,8 @@ export default class LoginGame extends Component {
         Cookies.set('state', stateGenerate.data, { path: loginGameUrl });
         Cookies.set('nonce', nonceGenerate.data, { path: loginGameUrl })
         let stateInCookies = Cookies.get('state')
+        console.log('from cookies : '+Cookies.get('state'))
+        console.log('init stateInCookies : '+stateInCookies)
         if(stateGenerate==Cookies.get('state')){
            stateInCookies = Cookies.get('state')
         }else{
