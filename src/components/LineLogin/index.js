@@ -14,25 +14,22 @@ export default class LoginGame extends Component {
     }
 
     async lineLogin() {
-        // const stateGenerate = await LineService.getGenerateCode()
-        // const nonceGenerate = await LineService.getGenerateCode()
-        let resCookie = await ProfileService.setVerifyCookies("state","nonce")
-        if(resCookie){
-            console.log(resCookie)
-            console.log(resCookie.data)
-        }
-        // let stateInCookies = Cookies.get('state')
-        // console.log('from cookies : ' + Cookies.get('state'))
-        // console.log('init stateInCookies : ' + stateInCookies)
+        const stateGenerate = await LineService.getGenerateCode()
+        const nonceGenerate = await LineService.getGenerateCode()
+        Cookies.set('state',stateGenerate.data,{ expires: 7, path: loginGameUrl })
+        Cookies.set('nonce',nonceGenerate.data,{ expires: 7, path: loginGameUrl })
+        let stateInCookies = Cookies.get('state')
+        console.log('from cookies : ' + Cookies.get('state'))
+        console.log('init stateInCookies : ' + stateInCookies)
         // if (stateGenerate.data == Cookies.get('state')) {
 
         // } else {
         //     stateInCookies = "someThing"
         // }
-        // const nonceInCookies = Cookies.get('nonce')
-        // console.log(stateInCookies)
-        // console.log(nonceInCookies)
-        //window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${loginGameUrl}&state=${stateInCookies}&scope=openid%20email%20profile&nonce=${nonceInCookies}`
+        const nonceInCookies = Cookies.get('nonce')
+        console.log(stateInCookies)
+        console.log(nonceInCookies)
+        window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${loginGameUrl}&state=${stateInCookies}&scope=openid%20email%20profile&nonce=${nonceInCookies}`
     }
 
     async findUserGame(userId) {
@@ -42,6 +39,9 @@ export default class LoginGame extends Component {
 
     async getTokenFromLineApi(code, nonce) {
         const objectResponse = await LineService.lineLogin(code, nonce)
+        if(objectResponse==null){
+            window.location.href=loginGameUrl
+        }
         const tokenObject = {
             scope: objectResponse.data.scope,
             access_token: objectResponse.data.access_token,
@@ -75,21 +75,21 @@ export default class LoginGame extends Component {
         const search = window.location.search.substring(1);
         console.log(search)
         if (search) {
-            // this.setState({
-            //     isLoad: true
-            // })
-            // const resFromLineApi = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
-            // console.log('get state from response from line api : ' + resFromLineApi.state)
-            // if (this.checkStateLine(resFromLineApi.state)) {
-            //     this.getTokenFromLineApi(resFromLineApi.code, Cookies.get('nonce'))
-            //     // Cookies.remove('state', { path: loginGameUrl });
-            //     // Cookies.remove('nonce', { path: loginGameUrl });
-            // } else {
-            //     Cookies.remove('state', { path: loginGameUrl });
-            //     Cookies.remove('nonce', { path: loginGameUrl });
-            //     window.location.href = loginGameUrl
-            //     console.log('check state fail')
-            // }
+            this.setState({
+                isLoad: true
+            })
+            const resFromLineApi = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
+            console.log('get state from response from line api : ' + resFromLineApi.state)
+            if (this.checkStateLine(resFromLineApi.state)) {
+                this.getTokenFromLineApi(resFromLineApi.code, Cookies.get('nonce'))
+                // Cookies.remove('state', { path: loginGameUrl });
+                // Cookies.remove('nonce', { path: loginGameUrl });
+            } else {
+                Cookies.remove('state', { path: loginGameUrl });
+                Cookies.remove('nonce', { path: loginGameUrl });
+                window.location.href = loginGameUrl
+                console.log('check state fail')
+            }
         } else {
             this.setState({
                 isLoad: false
@@ -109,7 +109,7 @@ export default class LoginGame extends Component {
         return (
             <React.Fragment>
             {component}
-            { Cookies.get('state') }
+            {/* { Cookies.get('state') } */}
 
             </React.Fragment>
             
