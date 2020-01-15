@@ -18,7 +18,7 @@ export default class LoginGame extends Component {
         const nonceGenerate = await LineService.getGenerateCode()
         Cookies.set('state', stateGenerate.data, { path: loginGameUrl });
         Cookies.set('nonce', nonceGenerate.data, { path: loginGameUrl })
-        let stateInCookies
+        let stateInCookies = Cookies.get('state')
         if(stateGenerate==Cookies.get('state')){
            stateInCookies = Cookies.get('state')
         }else{
@@ -26,7 +26,7 @@ export default class LoginGame extends Component {
         }
         const nonceInCookies = Cookies.get('nonce')
         console.log(stateInCookies)
-        console.log(nonceInCookies)
+        // console.log(nonceInCookies)
         window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${loginGameUrl}&state=${stateInCookies}&scope=openid%20email%20profile&nonce=${nonceInCookies}`
     }
 
