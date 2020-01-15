@@ -145,14 +145,7 @@ export default class Profile extends Component {
     })
     this.getRemainingTime(this.state.cooldown_time)
   }
-  async getNewEnergy(id) {
-    let data = await profileService.getProfile(id);
-    console.log("get new")
-    this.setState({
-      user_energy: data.data.energy,
-    })
-    this.getRemainingTime(this.state.cooldown_time)
-  }
+  
   
   async setCooldownTime(id) {
     await profileService.setCooldownTime(id);
