@@ -14,19 +14,19 @@ export default class LoginGame extends Component {
     }
 
     async lineLogin() {
-        const stateGenerate = await LineService.getGenerateCode()
-        const nonceGenerate = await LineService.getGenerateCode()
-        ProfileService.setVerifyCookies(stateGenerate.data,nonceGenerate.data)
-        let stateInCookies = Cookies.get('state')
-        console.log('from cookies : ' + Cookies.get('state'))
-        console.log('init stateInCookies : ' + stateInCookies)
-        if (stateGenerate.data == Cookies.get('state')) {
+        // const stateGenerate = await LineService.getGenerateCode()
+        // const nonceGenerate = await LineService.getGenerateCode()
+        ProfileService.setVerifyCookies("state","nonce")
+        // let stateInCookies = Cookies.get('state')
+        // console.log('from cookies : ' + Cookies.get('state'))
+        // console.log('init stateInCookies : ' + stateInCookies)
+        // if (stateGenerate.data == Cookies.get('state')) {
 
-        } else {
-            stateInCookies = "someThing"
-        }
-        const nonceInCookies = Cookies.get('nonce')
-        console.log(stateInCookies)
+        // } else {
+        //     stateInCookies = "someThing"
+        // }
+        // const nonceInCookies = Cookies.get('nonce')
+        // console.log(stateInCookies)
         // console.log(nonceInCookies)
         //window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${loginGameUrl}&state=${stateInCookies}&scope=openid%20email%20profile&nonce=${nonceInCookies}`
     }
