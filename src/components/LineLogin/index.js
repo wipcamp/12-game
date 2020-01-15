@@ -77,16 +77,16 @@ export default class LoginGame extends Component {
             })
             const resFromLineApi = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
             console.log('get state from response from line api : ' + resFromLineApi.state)
-            // if (this.checkStateLine(resFromLineApi.state)) {
-            //     this.getTokenFromLineApi(resFromLineApi.code, Cookies.get('nonce'))
-            //     // Cookies.remove('state', { path: loginGameUrl });
-            //     // Cookies.remove('nonce', { path: loginGameUrl });
-            // } else {
-            //     Cookies.remove('state', { path: loginGameUrl });
-            //     Cookies.remove('nonce', { path: loginGameUrl });
-            //     window.location.href = loginGameUrl
-            //     console.log('check state fail')
-            // }
+            if (this.checkStateLine(resFromLineApi.state)) {
+                this.getTokenFromLineApi(resFromLineApi.code, Cookies.get('nonce'))
+                // Cookies.remove('state', { path: loginGameUrl });
+                // Cookies.remove('nonce', { path: loginGameUrl });
+            } else {
+                Cookies.remove('state', { path: loginGameUrl });
+                Cookies.remove('nonce', { path: loginGameUrl });
+                window.location.href = loginGameUrl
+                console.log('check state fail')
+            }
         } else {
             this.setState({
                 isLoad: false
