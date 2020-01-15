@@ -26,28 +26,69 @@ left: 85vw;
 export default class Profile extends Component {
 
   state = {
-    user_id: this.props.profileData.user_id,
-    user_level: this.props.profileData.user_level,
-    user_str: this.props.profileData.user_str,
-    user_dex: this.props.profileData.user_dex,
-    user_luk: this.props.profileData.user_luk,
-    user_energy: this.props.profileData.user_energy,
-    user_max_energy: this.props.profileData.user_max_energy,
-    user_name: this.props.profileData.user_name,
-    user_team_name: this.props.profileData.user_team,
-    user_exp: this.props.profileData.user_exp,
-    user_max_exp: this.props.profileData.user_max_exp,
-    cooldown_time: this.props.profileData.cooldown_time
+    // user_id: this.props.profileData.user_id,
+    // user_level: this.props.profileData.user_level,
+    // user_str: this.props.profileData.user_str,
+    // user_dex: this.props.profileData.user_dex,
+    // user_luk: this.props.profileData.user_luk,
+    // user_energy: this.props.profileData.user_energy,
+    // user_max_energy: this.props.profileData.user_max_energy,
+    // user_name: this.props.profileData.user_name,
+    // user_team_name: this.props.profileData.user_team,
+    // user_exp: this.props.profileData.user_exp,
+    // user_max_exp: this.props.profileData.user_max_exp,
+    // cooldown_time: this.props.profileData.cooldown_time
+    user_id: "",
+    user_level: 0,
+    user_str: 0,
+    user_dex: 0,
+    user_luk: 0,
+    user_energy: 0,
+    user_max_energy: 0,
+    user_name: "",
+    user_team_name: "",
+    user_exp: 0,
+    user_max_exp: 0,
+    cooldown_time: new Date(2020, 0, 13, 23, 40, 0)
   };
 
   componentDidMount(){
-    if (this.state.user_max_energy > this.state.user_energy) {
-      //let date = new Date();
-      this.getRemainingTime(this.state.cooldown_time)
-    } else {
-      console.log("energy is full")
-    }
+    this.getProfileData(this.state.user_id);
+    
   }
+
+  async getProfileData(id) {
+    let data = await profileService.getProfile(id);
+    let cooldown_time = await profileService.getCooldownTime(id);
+    //console.log('game data : '+data)
+    let userGame = data.data
+    let cooldownTime = cooldown_time.data
+    //let cooldownTime = this.state.cooldown_time
+    console.log(cooldownTime)
+    this.setState({
+        user_id: userGame.id,
+        user_level: userGame.level,
+        user_str: userGame.str,
+        user_dex: userGame.dex,
+        user_luk: userGame.luk,
+        user_energy: userGame.energy,
+        user_max_energy: userGame.maxEnergy,
+        user_name: userGame.name,
+        user_team_name: userGame.team.teamName,
+        user_exp: userGame.exp,
+        user_max_exp: userGame.maxExp,
+        cooldown_time: cooldownTime,
+        isLogedIn: true
+    });
+    //console.log('game data.data : '+userGame)
+    if (this.state.user_max_energy > this.state.user_energy) {
+        //let date = new Date();
+        this.getRemainingTime(this.state.cooldown_time)
+      } else {
+        console.log("energy is full")
+      }
+      this.getProfileData(this.state.user_id);
+}
 
   async addEnergy(energyAdd) {
     const { user_energy, user_max_energy, cooldown_time, user_id } = this.state
