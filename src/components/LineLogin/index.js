@@ -46,15 +46,14 @@ export default class LoginGame extends Component {
 
 
     checkStateLine(stateFromLine) {
-        // const stateInCookie = Cookies.get('state')
-        // console.log('state from cookies : ' + stateInCookie)
-        // console.log('state from line res : ' + stateFromLine)
-        // if (stateInCookie === stateFromLine) {
-        //     return true
-        // } else {
-        //     return false
-        // }
-        return true
+        const stateInCookie = Cookies.get('state')
+        console.log('state from cookies : ' + stateInCookie)
+        console.log('state from line res : ' + stateFromLine)
+        if (stateInCookie == stateFromLine) {
+            return true
+        } else {
+            return false
+        }
     }
 
 
@@ -78,7 +77,8 @@ export default class LoginGame extends Component {
             } else {
                 Cookies.remove('state', { path: loginGameUrl });
                 Cookies.remove('nonce', { path: loginGameUrl });
-                window.location.href = loginGameUrl
+                //window.location.href = loginGameUrl
+                window.location.href = 'www.google.com'
                 console.log('check state fail')
             }
         } else {
