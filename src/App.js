@@ -9,11 +9,11 @@ function App() {
       <header className="App-header">
       <Router>
       <Switch>
-        <Route exact path='/'>
-          <LoginGame/>
-        </Route>
         <Route exact path='/liffLogin'>
-          <LiffLogin/>
+          <LoginGame />
+        </Route>
+        <Route exact path='/'>
+          <LiffLogin />
         </Route>
       </Switch>
     </Router>
