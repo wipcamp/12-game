@@ -52,19 +52,49 @@ export default class Profile extends Component {
     cooldown_time: new Date(2020, 0, 13, 23, 40, 0)
   };
 
-  componentDidMount(){
-    this.getProfileData('Uaceff1fcb505e79d4e06d9d95deabbbb')
-    // const tokenCookies = Cookies.getJSON('token')
-    // console.log('tokenObject : '+tokenCookies)
-    //  if(tokenCookies){
-    //    console.log('checkCookiesPass')
-    //    console.log('userId in cookies : '+tokenCookies.userId)
-    //    const userId = tokenCookies.userId
-    //    console.log('userId : '+userId)
-    //   this.getProfileData(this.state.user_id);
-    //  }else{
-    //    window.location.href = loginGameUrl
-    //  }
+  componentDidMount() {
+    const tokenCookies = Cookies.getJSON('token')
+    console.log('tokenObject : ' + tokenCookies)
+    if (tokenCookies) {
+      const search = window.location.search.substring(1);
+      if (search) {
+        const verifyCodeMiniGame = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
+        const userId = verifyCodeMiniGame.userId
+        const verifyCode = verifyCodeMiniGame.verifyCode
+        const timeStart = verifyCodeMiniGame.timeStart
+        const score = verifyCodeMiniGame.score
+        const timePlay = verifyCodeMiniGame.timePlay
+        if (userId && verifyCode && timeStart && score && timePlay) {
+          const verifyMiniGameCookie = Cookies.get('verifyCode')
+          console.log(userId)
+          console.log(verifyCode)
+          console.log(timeStart)
+          console.log(score)
+          console.log(timePlay)
+          if (verifyMiniGameCookie == verifyCode) {
+            profileService.getExp(userId, score)
+            // let res = profileService.getExp(userId, score)
+            // if (res) {
+            //   Cookies.remove('verifyCode', { domain: 'game.freezer.wip.camp', path: '' })
+            //   console.log('checkCookiesPass')
+            //   console.log('userId in cookies : ' + tokenCookies.userId)
+            //   const userId = tokenCookies.userId
+            //   console.log('userId : ' + userId)
+            //   this.getProfileData(this.state.user_id);
+            //   return;
+            // }
+          }
+        }
+      }
+      Cookies.remove('verifyCode', { domain: 'game.freezer.wip.camp', path: '' })
+      console.log('checkCookiesPass')
+      console.log('userId in cookies : ' + tokenCookies.userId)
+      const userId = tokenCookies.userId
+      console.log('userId : ' + userId)
+      this.getProfileData(userId);
+    } else {
+      window.location.href = loginGameUrl
+    }
 
   }
 
@@ -106,7 +136,7 @@ export default class Profile extends Component {
     let cooldown_time = new Date(cooldown);
     let current_time = new Date();
     console.log("cool" + cooldown_time)
-    if(this.state.user_max_energy>this.state.user_energy){
+    if (this.state.user_max_energy > this.state.user_energy) {
       if (cooldown_time >= current_time) {
         let remaining = Math.abs(cooldown_time - current_time);
         let min = Math.floor(remaining / 60000);
@@ -136,7 +166,7 @@ export default class Profile extends Component {
         })
         this.addEnergy(energy_add)
       }
-    }else{
+    } else {
       console.log("full")
     }
   }
@@ -149,8 +179,8 @@ export default class Profile extends Component {
     })
     this.getRemainingTime(this.state.cooldown_time)
   }
-  
-  
+
+
   async setCooldownTime(id) {
     await profileService.setCooldownTime(id);
     let data = await profileService.getCooldownTime(id);
@@ -167,17 +197,18 @@ export default class Profile extends Component {
 
   async getProfileData(id) {
     let data = await profileService.getProfile(id);
+    //check if no data redirect to gamePr
     let cooldown_time = await profileService.getCooldownTime(id);
     //console.log('game data : '+data)
     let userGame = data.data
     console.log(data.data)
-    console.log('data.data.team '+data.data.team)
-    console.log('userGame.team '+userGame.team)
-    console.log('data.data.team.teamName '+data.data.team.teamName)
-    console.log('userGame.team.teamName '+userGame.team.teamName)
+    console.log('data.data.team ' + data.data.team)
+    console.log('userGame.team ' + userGame.team)
+    console.log('data.data.team.teamName ' + data.data.team.teamName)
+    console.log('userGame.team.teamName ' + userGame.team.teamName)
     const team = userGame.team
-    console.log('team '+team)
-    console.log('team.teamName '+team.teamName)
+    console.log('team ' + team)
+    console.log('team.teamName ' + team.teamName)
     let cooldownTime = cooldown_time.data
     //let cooldownTime = this.state.cooldown_time
     console.log(cooldownTime)

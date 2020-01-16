@@ -25,6 +25,10 @@ const profileService = {
     setVerifyCookies : async (state,nonce) => {
         let res = await api.get(`/setVerifyCookies?state=${state}&nonce=${nonce}`)
         return res
+    },
+    getExp : async (id,score) => {
+        let res = await api.put(`/gameOver?id=${id}&score=${score}`)
+        return res
     }
     // getProfileByUserId
   
