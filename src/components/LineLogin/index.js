@@ -16,8 +16,8 @@ export default class LoginGame extends Component {
     async lineLogin() {
         const stateGenerate = await LineService.getGenerateCode()
         const nonceGenerate = await LineService.getGenerateCode()
-        Cookies.set('state',stateGenerate.data,{ expires: 7, path: loginGameUrl })
-        Cookies.set('nonce',nonceGenerate.data,{ expires: 7, path: loginGameUrl })
+        Cookies.set('state',stateGenerate.data)
+        Cookies.set('nonce',nonceGenerate.data)
         let stateInCookies = Cookies.get('state')
         console.log('from cookies : ' + Cookies.get('state'))
         console.log('init stateInCookies : ' + stateInCookies)

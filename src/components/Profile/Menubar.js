@@ -33,7 +33,7 @@ export default class Menubar extends Component {
     async getMinigamePage(id) {
         const { user_energy, user_max_energy, user_id, cooldown_time } = this.props.user_data
         console.log("cooldown" + cooldown_time)
-        await profileService.useEnergy(id);       
+        // await profileService.useEnergy(id);       
         if (user_energy == user_max_energy) {
             let date = new Date();
             date.setHours(date.getHours() + 1);
@@ -43,7 +43,8 @@ export default class Menubar extends Component {
             console.log("remain in menu max")
         }
         this.setState({ showModal: false }); 
-        this.props.newEnergy();
+        window.location.href='http://localhost:3007'
+        // this.props.newEnergy();
         //window.location.replace("http://localhost:3001/login");
     }
 
