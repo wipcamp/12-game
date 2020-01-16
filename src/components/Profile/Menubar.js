@@ -46,7 +46,7 @@ export default class Menubar extends Component {
         // }
         this.setState({ showModal: false }); 
         const verifyMiniGame = await lineService.getGenerateCode()
-        Cookies.set('verifyCode',verifyMiniGame,{domain:'game.freezer.wip.camp',path: ''})
+        Cookies.set('verifyCode',verifyMiniGame.data,{domain:'game.freezer.wip.camp',path: ''})
         let startTime = new Date()
         window.location.href=`http://localhost:3007/?userId=${user_id}&verifyCode=${verifyMiniGame.data}&timeStart=${startTime.getTime()}`
         // this.props.newEnergy();
