@@ -5,7 +5,7 @@ import App from "../../App.js";
 import Cookies from 'js-cookie';
 
 const loginGameUrl = 'https://game.freezer.wip.camp/login'
-const gameUrl = 'https://game.freezer.wip.camp/'
+const gameUrl = 'https://game.freezer.wip.camp'
 const clientId = '1653724802'
 export default class LoginGame extends Component {
 
@@ -50,7 +50,7 @@ export default class LoginGame extends Component {
             id_token: objectResponse.data.id_token,
             userId: objectResponse.data.userId
         }
-        Cookies.set('token', JSON.stringify(tokenObject))
+        Cookies.set('token', JSON.stringify(tokenObject),{path: 'https://game.freezer.wip.camp',path: 'localhost:3007'})
         window.location.href = gameUrl
     }
 
