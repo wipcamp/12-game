@@ -38,7 +38,7 @@ export default class Profile extends Component {
     // user_exp: this.props.profileData.user_exp,
     // user_max_exp: this.props.profileData.user_max_exp,
     // cooldown_time: this.props.profileData.cooldown_time
-    user_id: "",q
+    user_id: "",
     user_level: 0,
     user_str: 0,
     user_dex: 0,

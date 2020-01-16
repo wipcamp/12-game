@@ -5,7 +5,7 @@ import App from "../../App.js";
 import Cookies from 'js-cookie';
 
 const loginGameUrl = 'https://game.freezer.wip.camp/login'
-const gameUrl = 'https://game.freezer.wip.camp/'
+const gameUrl = 'https://game.freezer.wip.camp'
 const clientId = '1653724802'
 export default class LoginGame extends Component {
 
@@ -16,8 +16,10 @@ export default class LoginGame extends Component {
     async lineLogin() {
         const stateGenerate = await LineService.getGenerateCode()
         const nonceGenerate = await LineService.getGenerateCode()
-        Cookies.set('state',stateGenerate.data,{ expires: 7, path: loginGameUrl })
-        Cookies.set('nonce',nonceGenerate.data,{ expires: 7, path: loginGameUrl })
+        Cookies.set('state',stateGenerate.data,{domain:'game.freezer.wip.camp',path: '/login'})
+        Cookies.set('nonce',nonceGenerate.data,{domain:'game.freezer.wip.camp',path: '/login'})
+        // Cookies.set('state',nonceGenerate.data,{domain:})
+        // Cookies.set('nonce',nonceGenerate.data,{path: '/login'})
         let stateInCookies = Cookies.get('state')
         console.log('from cookies : ' + Cookies.get('state'))
         console.log('init stateInCookies : ' + stateInCookies)
