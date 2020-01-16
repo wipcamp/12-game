@@ -53,17 +53,18 @@ export default class Profile extends Component {
   };
 
   componentDidMount(){
-    const tokenCookies = Cookies.getJSON('token')
-    console.log('tokenObject : '+tokenCookies)
-     if(tokenCookies){
-       console.log('checkCookiesPass')
-       console.log('userId in cookies : '+tokenCookies.userId)
-       const userId = tokenCookies.userId
-       console.log('userId : '+userId)
-      this.getProfileData(this.state.user_id);
-     }else{
-       window.location.href = loginGameUrl
-     }
+    this.getProfileData('Uaceff1fcb505e79d4e06d9d95deabbbb')
+    // const tokenCookies = Cookies.getJSON('token')
+    // console.log('tokenObject : '+tokenCookies)
+    //  if(tokenCookies){
+    //    console.log('checkCookiesPass')
+    //    console.log('userId in cookies : '+tokenCookies.userId)
+    //    const userId = tokenCookies.userId
+    //    console.log('userId : '+userId)
+    //   this.getProfileData(this.state.user_id);
+    //  }else{
+    //    window.location.href = loginGameUrl
+    //  }
 
   }
 
@@ -169,6 +170,7 @@ export default class Profile extends Component {
     let cooldown_time = await profileService.getCooldownTime(id);
     //console.log('game data : '+data)
     let userGame = data.data
+    console.log(data.data)
     console.log('data.data.team '+data.data.team)
     console.log('userGame.team '+userGame.team)
     console.log('data.data.team.teamName '+data.data.team.teamName)
