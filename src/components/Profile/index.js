@@ -90,17 +90,19 @@ export default class Profile extends Component {
               console.log('userId in cookies : ' + tokenCookies.userId)
               const userId = tokenCookies.userId
               console.log('userId : ' + userId)
+              this.getProfileData(userId)
             }
           }
         }
       }
-      if (!isDataChange) {
+      if (isDataChange==false) {
         Cookies.remove('verifyCode', { domain: 'game.freezer.wip.camp', path: '' })
         console.log('removed verifyCode')
         console.log('checkCookiesPass')
         console.log('userId in cookies : ' + tokenCookies.userId)
         const userId = tokenCookies.userId
         console.log('userId : ' + userId)
+        this.getProfileData(userId)
       }
     } else {
       window.location.href = loginGameUrl
