@@ -16,8 +16,8 @@ export default class LoginGame extends Component {
     async lineLogin() {
         const stateGenerate = await LineService.getGenerateCode()
         const nonceGenerate = await LineService.getGenerateCode()
-        Cookies.set('state',stateGenerate.data,{domain:gameUrl,path: '/login'})
-        Cookies.set('nonce',nonceGenerate.data,{domain:gameUrl,path: '/login'})
+        Cookies.set('state',stateGenerate.data,{domain:'game.freezer.wip.camp',path: '/login'})
+        Cookies.set('nonce',nonceGenerate.data,{domain:'game.freezer.wip.camp',path: '/login'})
         // Cookies.set('state',nonceGenerate.data,{domain:})
         // Cookies.set('nonce',nonceGenerate.data,{path: '/login'})
         let stateInCookies = Cookies.get('state')
@@ -52,7 +52,7 @@ export default class LoginGame extends Component {
             id_token: objectResponse.data.id_token,
             userId: objectResponse.data.userId
         }
-        Cookies.set('token', JSON.stringify(tokenObject),)
+        Cookies.set('token', JSON.stringify(tokenObject))
         window.location.href = gameUrl
     }
 
