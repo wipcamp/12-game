@@ -3,7 +3,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import styled from 'styled-components';
 import Modal from 'react-bootstrap/Modal'
 import profileService from '../../services/profileService';
-import lineService from '../../services/lineService';
+import lineService from '../../services/LineService';
 
 const StyledNavbar = styled(Navbar)`
     background-color : red;
