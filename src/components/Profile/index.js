@@ -56,8 +56,10 @@ export default class Profile extends Component {
     const tokenCookies = Cookies.getJSON('token')
     console.log('tokenObject : ' + tokenCookies)
     if (tokenCookies) {
+      console.log('loggedIn')
       const search = window.location.search.substring(1);
       if (search) {
+        console.log('searched')
         const verifyCodeMiniGame = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
         const userId = verifyCodeMiniGame.userId
         const verifyCode = verifyCodeMiniGame.verifyCode
@@ -65,14 +67,20 @@ export default class Profile extends Component {
         const score = verifyCodeMiniGame.score
         const timePlay = verifyCodeMiniGame.timePlay
         if (userId && verifyCode && timeStart && score && timePlay) {
+          console.log('have enough param')
           const verifyMiniGameCookie = Cookies.get('verifyCode')
+          console.log('verifyInCookies : '+verifyMiniGameCookie)
+          console.log('verify in param : '+verifyCode)
           console.log(userId)
           console.log(verifyCode)
           console.log(timeStart)
           console.log(score)
           console.log(timePlay)
           if (verifyMiniGameCookie == verifyCode) {
-            profileService.getExp(userId, score)
+            console.log('same code')
+            let res = profileService.getExp(userId, score)
+            console.log(res)
+            console.log(res.data)
             // let res = profileService.getExp(userId, score)
             // if (res) {
             //   Cookies.remove('verifyCode', { domain: 'game.freezer.wip.camp', path: '' })
@@ -87,6 +95,7 @@ export default class Profile extends Component {
         }
       }
       Cookies.remove('verifyCode', { domain: 'game.freezer.wip.camp', path: '' })
+      console.log('removed verifyCode')
       console.log('checkCookiesPass')
       console.log('userId in cookies : ' + tokenCookies.userId)
       const userId = tokenCookies.userId
