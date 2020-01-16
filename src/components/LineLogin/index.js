@@ -50,7 +50,7 @@ export default class LoginGame extends Component {
             id_token: objectResponse.data.id_token,
             userId: objectResponse.data.userId
         }
-        Cookies.set('token', JSON.stringify(tokenObject),{path: 'https://game.freezer.wip.camp',path: 'localhost:3007'})
+        Cookies.set('token', JSON.stringify(tokenObject))
         window.location.href = gameUrl
     }
 
