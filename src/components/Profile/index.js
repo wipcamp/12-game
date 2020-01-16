@@ -169,7 +169,13 @@ export default class Profile extends Component {
     let cooldown_time = await profileService.getCooldownTime(id);
     //console.log('game data : '+data)
     let userGame = data.data
+    console.log('data.data.team '+data.data.team)
+    console.log('userGame.team '+userGame.team)
+    console.log('data.data.team.teamName '+data.data.team.teamName)
+    console.log('userGame.team.teamName '+userGame.team.teamName)
     const team = userGame.team
+    console.log('team '+team)
+    console.log('team.teamName '+team.teamName)
     let cooldownTime = cooldown_time.data
     //let cooldownTime = this.state.cooldown_time
     console.log(cooldownTime)
