@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Modal from 'react-bootstrap/Modal'
 import profileService from '../../services/profileService';
 import lineService from '../../services/LineService';
+import Cookies from 'js-cookie';
 
 const StyledNavbar = styled(Navbar)`
     background-color : red;
@@ -45,6 +46,7 @@ export default class Menubar extends Component {
         // }
         this.setState({ showModal: false }); 
         const verifyMiniGame = await lineService.getGenerateCode()
+        Cookies.set('verifyCode',verifyMiniGame,{domain:'game.freezer.wip.camp',path: ''})
         let startTime = new Date()
         window.location.href=`http://localhost:3007?userId=${user_id}&verifyCode=${verifyMiniGame.data}&timeStart=${startTime}`
         // this.props.newEnergy();
