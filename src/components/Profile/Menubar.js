@@ -3,6 +3,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import styled from 'styled-components';
 import Modal from 'react-bootstrap/Modal'
 import profileService from '../../services/profileService';
+import lineService from '../../services/lineService';
 
 const StyledNavbar = styled(Navbar)`
     background-color : red;
@@ -32,18 +33,20 @@ export default class Menubar extends Component {
 
     async getMinigamePage(id) {
         const { user_energy, user_max_energy, user_id, cooldown_time } = this.props.user_data
-        console.log("cooldown" + cooldown_time)
+        // console.log("cooldown" + cooldown_time)
         // await profileService.useEnergy(id);       
-        if (user_energy == user_max_energy) {
-            let date = new Date();
-            date.setHours(date.getHours() + 1);
-            console.log("current date" + new Date())
-            console.log("setCooldownFirstTime" + date)
-            this.props.setCooldownTime();
-            console.log("remain in menu max")
-        }
+        // if (user_energy == user_max_energy) {
+        //     let date = new Date();
+        //     date.setHours(date.getHours() + 1);
+        //     console.log("current date" + new Date())
+        //     console.log("setCooldownFirstTime" + date)
+        //     this.props.setCooldownTime();
+        //     console.log("remain in menu max")
+        // }
         this.setState({ showModal: false }); 
-        window.location.href='http://localhost:3007'
+        const verifyMiniGame = await lineService.getGenerateCode()
+        let startTime = new Date()
+        window.location.href=`http://localhost:3007?${user_id}&${verifyMiniGame}&${startTime}`
         // this.props.newEnergy();
         //window.location.replace("http://localhost:3001/login");
     }
