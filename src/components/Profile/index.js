@@ -55,16 +55,15 @@ export default class Profile extends Component {
   componentDidMount(){
     const tokenCookies = Cookies.getJSON('token')
     console.log('tokenObject : '+tokenCookies)
-    if(tokenCookies){
-      console.log('checkCookiesPass')
-      console.log('userId in cookies : '+tokenCookies.userId)
-      const userId = tokenCookies.userId
-      console.log('userId : '+userId)
-      //console.log('state : '+this.state.user_id)
-      this.getProfileData(userId);
-    }else{
-      window.location.href = loginGameUrl
-    }
+     if(tokenCookies){
+       console.log('checkCookiesPass')
+       console.log('userId in cookies : '+tokenCookies.userId)
+       const userId = tokenCookies.userId
+       console.log('userId : '+userId)
+      this.getProfileData(this.state.user_id);
+     }else{
+       window.location.href = loginGameUrl
+     }
 
   }
 
@@ -106,34 +105,38 @@ export default class Profile extends Component {
     let cooldown_time = new Date(cooldown);
     let current_time = new Date();
     console.log("cool" + cooldown_time)
-    if (cooldown_time >= current_time) {
-      let remaining = Math.abs(cooldown_time - current_time);
-      let min = Math.floor(remaining / 60000);
-      let sec = ((remaining % 60000) / 1000).toFixed(0);
-      let time = { min, sec }
-      console.log("ยังไม่ถึงเวลา")
-      console.log("remaining" + remaining)
-      console.log("toTime" + min + ":" + (sec < 10 ? '0' : '') + sec)
-      console.log(time)
-      this.setState({
-        time: time
-      })
-    } else {
-      let remaining = Math.abs(current_time - cooldown_time);
-      let pre_min = Math.floor(remaining / 60000);
-      let pre_sec = ((remaining % 60000) / 1000).toFixed(0);
-      let energy_add = Math.floor(pre_min / 60);
-      let min = 60 - (pre_min % 60);
-      let sec = 60 - (pre_sec);
-      let time = { min, sec, energy_add }
-      console.log("เกินเวลาแร้วแม่")
-      console.log("remaining" + remaining)
-      console.log("toTime" + min + ":" + (sec < 10 ? '0' : '') + sec)
-      console.log(time)
-      this.setState({
-        time: time
-      })
-      this.addEnergy(energy_add)
+    if(this.state.user_max_energy>this.state.user_energy){
+      if (cooldown_time >= current_time) {
+        let remaining = Math.abs(cooldown_time - current_time);
+        let min = Math.floor(remaining / 60000);
+        let sec = ((remaining % 60000) / 1000).toFixed(0);
+        let time = { min, sec }
+        console.log("ยังไม่ถึงเวลา")
+        console.log("remaining" + remaining)
+        console.log("toTime" + min + ":" + (sec < 10 ? '0' : '') + sec)
+        console.log(time)
+        this.setState({
+          time: time
+        })
+      } else {
+        let remaining = Math.abs(current_time - cooldown_time);
+        let pre_min = Math.floor(remaining / 60000);
+        let pre_sec = ((remaining % 60000) / 1000).toFixed(0);
+        let energy_add = Math.floor(pre_min / 60);
+        let min = 60 - (pre_min % 60);
+        let sec = 60 - (pre_sec);
+        let time = { min, sec, energy_add }
+        console.log("เกินเวลาแร้วแม่")
+        console.log("remaining" + remaining)
+        console.log("toTime" + min + ":" + (sec < 10 ? '0' : '') + sec)
+        console.log(time)
+        this.setState({
+          time: time
+        })
+        this.addEnergy(energy_add)
+      }
+    }else{
+      console.log("full")
     }
   }
 
