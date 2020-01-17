@@ -119,22 +119,22 @@ export default class Profile extends Component {
       await profileService.setEnergy(user_id, totalEnergy)
       console.log('minRemain : '+this.state.time.min)
       console.log('secRemain : '+this.state.time.sec)
-      if (this.state.time.min == 0 && this.state.time.sec == 0) {
+      /*if (this.state.time.min == 0 && this.state.time.sec == 0) {
         const newCooldown = new Date()
         newCooldown.setHours(newCooldown.getHours() + 1)
         this.setCooldownTime(user_id,newCooldown.getTime())
       } else {
         const newCooldown = new Date()
         newCooldown.setMinutes(newCooldown.getMinutes() + this.state.time.min)
-        newCooldown.setSeconds(newCooldown.getSeconds() + this.state.time.sec)
-        this.setCooldownTime(user_id, newCooldown.getTime())
-      }
+        newCooldown.setSeconds(newCooldown.getSeconds() + this.state.time.sec)*/
+        this.setCooldownTime(user_id)
+      //}
       this.getNewEnergy(user_id)
-      let data = await profileService.getCooldownTime(user_id);
+      /*let data = await profileService.getCooldownTime(user_id);
       let cooldownTime = data.data;
       this.setState({
         cooldown_time: cooldownTime
-      })
+      })*/
     } else if (this.state.user_max_energy == this.state.user_energy + energyAdd) {
       console.log("equals")
       let totalEnergy = user_energy + energyAdd;
