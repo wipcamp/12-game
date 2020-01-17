@@ -11,7 +11,7 @@ const profileService = {
         return res;
     },
     setCooldownTime : async (lineId,remainTime) => {
-        let res = await api.post(`/setCooldownEnergyTime?id=${lineId}&remainTime=${remainTime}`)
+        let res = await api.put(`/setCooldownEnergyTime?id=${lineId}&remainTime=${remainTime}`)
         return res;
     },
     getCooldownTime : async (lineId) => {
