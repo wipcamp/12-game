@@ -124,7 +124,7 @@ export default class Profile extends Component {
       console.log('secRemain : '+this.state.time.sec)
       if (this.state.time.min == 0 && this.state.time.sec == 0) {
         const newCooldown = new Date()
-        newCooldown.setHours(newCooldown.getHours + 1)
+        newCooldown.setHours(newCooldown.getHours() + 1)
         this.setCooldownTime(user_id,newCooldown.getTime())
       } else {
         const newCooldown = new Date()
