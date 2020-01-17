@@ -148,6 +148,7 @@ export default class Profile extends Component {
     let cooldown_time = new Date(cooldown);
     let current_time = new Date();
     console.log("cool" + cooldown_time)
+    console.log("current"+current_time)
     if (this.state.user_max_energy > this.state.user_energy) {
       if (cooldown_time >= current_time) {
         let remaining = Math.abs(cooldown_time - current_time);
@@ -166,6 +167,8 @@ export default class Profile extends Component {
         let pre_min = Math.floor(remaining / 60000);
         let pre_sec = ((remaining % 60000) / 1000).toFixed(0);
         let energy_add = Math.floor(pre_min / 60);
+        console.log("energy_add"+Math.floor(pre_min / 60))
+        console.log(energy_add)
         let min = 60 - (pre_min % 60);
         let sec = 60 - (pre_sec);
         let time = { min, sec, energy_add }
@@ -189,7 +192,6 @@ export default class Profile extends Component {
     this.setState({
       user_energy: data.data.energy,
     })
-    this.getRemainingTime(this.state.cooldown_time)
   }
 
 
@@ -248,8 +250,6 @@ export default class Profile extends Component {
   }
 
   render() {
-    console.log(this.state.cooldown_time)
-    console.log("time" + this.state.time)
     return (
       <div>
         <div className="container">
