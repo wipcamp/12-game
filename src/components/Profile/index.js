@@ -49,7 +49,8 @@ export default class Profile extends Component {
     user_team_name: "",
     user_exp: 0,
     user_max_exp: 0,
-    cooldown_time: new Date(2020, 0, 13, 23, 40, 0)
+    cooldown_time: new Date(2020, 0, 13, 23, 40, 0),
+    time: {}
   };
 
   async componentDidMount() {
@@ -95,7 +96,7 @@ export default class Profile extends Component {
           }
         }
       }
-      if (isDataChange==false) {
+      if (isDataChange == false) {
         Cookies.remove('verifyCode', { domain: 'game.freezer.wip.camp', path: '' })
         console.log('removed verifyCode')
         console.log('checkCookiesPass')
@@ -116,8 +117,13 @@ export default class Profile extends Component {
       console.log("addEnergy" + energyAdd);
       let totalEnergy = user_energy + energyAdd;
       await profileService.setEnergy(user_id, totalEnergy)
-      if(this.state.time.min==null||this.state.time.sec==null){
-        this.setCooldownTime(user_id);
+      if (this.state.time.min == 0 && this.state.time.sec == 0) {
+        this.setCooldownTime(user_id, null)
+      } else {
+        const newCooldown = new Date()
+        newCooldown.setMinutes(newCooldown.getMinutes + this.state.time.min)
+        newCooldown.setSeconds(newCooldown.getSeconds + this.state.sec)
+        this.setCooldownTime(user_id, newCooldown)
       }
       this.getNewEnergy(user_id)
       let data = await profileService.getCooldownTime(user_id);
