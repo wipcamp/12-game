@@ -50,7 +50,7 @@ export default class Profile extends Component {
     user_exp: 0,
     user_max_exp: 0,
     cooldown_time: new Date(2020, 0, 13, 23, 40, 0),
-    time: {}
+    time: null
   };
 
   async componentDidMount() {
