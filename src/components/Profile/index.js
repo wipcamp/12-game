@@ -117,9 +117,6 @@ export default class Profile extends Component {
       console.log("addEnergy" + energyAdd);
       let totalEnergy = user_energy + energyAdd;
       await profileService.setEnergy(user_id, totalEnergy)
-      this.setState({
-        time: {min:0,sec:0}
-      })
       console.log('minRemain : '+this.state.time.min)
       console.log('secRemain : '+this.state.time.sec)
       if (this.state.time.min == 0 && this.state.time.sec == 0) {
