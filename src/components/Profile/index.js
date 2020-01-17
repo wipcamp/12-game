@@ -201,8 +201,8 @@ export default class Profile extends Component {
   }
 
 
-  async setCooldownTime(id) {
-    await profileService.setCooldownTime(id);
+  async setCooldownTime(id,remainTime) {
+    await profileService.setCooldownTime(id,remainTime);
     let data = await profileService.getCooldownTime(id);
     let cooldownTime = data.data;
     this.setState({
