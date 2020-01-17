@@ -121,8 +121,8 @@ export default class Profile extends Component {
         this.setCooldownTime(user_id, null)
       } else {
         const newCooldown = new Date()
-        newCooldown.setMinutes(newCooldown.getMinutes + this.state.time.min)
-        newCooldown.setSeconds(newCooldown.getSeconds + this.state.sec)
+        newCooldown.setMinutes(newCooldown.getMinutes() + this.state.time.min)
+        newCooldown.setSeconds(newCooldown.getSeconds() + this.state.time.sec)
         this.setCooldownTime(user_id, newCooldown)
       }
       this.getNewEnergy(user_id)
