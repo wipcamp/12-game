@@ -116,7 +116,9 @@ export default class Profile extends Component {
       console.log("addEnergy" + energyAdd);
       let totalEnergy = user_energy + energyAdd;
       await profileService.setEnergy(user_id, totalEnergy)
-      this.setCooldownTime(user_id);
+      if(this.state.time.min==null||this.state.time.sec==null){
+        this.setCooldownTime(user_id);
+      }
       this.getNewEnergy(user_id)
       let data = await profileService.getCooldownTime(user_id);
       let cooldownTime = data.data;
