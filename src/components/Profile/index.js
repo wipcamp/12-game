@@ -51,7 +51,7 @@ export default class Profile extends Component {
     user_max_exp: 0,
     cooldown_time: new Date(2020, 0, 13, 23, 40, 0),
     time: null,
-    energy_add : null
+    energy_add: null
   };
 
   async componentDidMount() {
@@ -101,10 +101,10 @@ export default class Profile extends Component {
         Cookies.remove('verifyCode', { domain: 'game.freezer.wip.camp', path: '' })
         console.log('removed verifyCode')
         console.log('checkCookiesPass')
-        // console.log('userId in cookies : ' + tokenCookies.userId)
-        // const userId = tokenCookies.userId
-        // console.log('userId : ' + userId)
-    this.getProfileData('Uaceff1fcb505e79d4e06d9d95deabbbb')
+        console.log('userId in cookies : ' + tokenCookies.userId)
+        const userId = tokenCookies.userId
+        console.log('userId : ' + userId)
+        this.getProfileData('userId')
       }
     } else {
       window.location.href = loginGameUrl
@@ -159,7 +159,7 @@ export default class Profile extends Component {
 
 
   getRemainingTime(cooldown) {
-    let { time , energy_add} = this.state
+    let { time, energy_add } = this.state
     let cooldown_time = new Date(cooldown);
     let current_time = new Date();
     console.log("cool" + cooldown_time)
@@ -178,7 +178,7 @@ export default class Profile extends Component {
             min: min,
             sec: sec,
           },
-          energy_add : null
+          energy_add: null
         })
         console.log(this.state.time)
       } else {
@@ -190,7 +190,7 @@ export default class Profile extends Component {
         console.log(pre_energy_add)
         let min = 60 - (pre_min % 60);
         let sec = 60 - (pre_sec);
-        if(min<=0){
+        if (min <= 0) {
           min = 0;
           sec = pre_sec;
         }
@@ -203,7 +203,7 @@ export default class Profile extends Component {
             min: min,
             sec: sec,
           },
-          energy_add : pre_energy_add
+          energy_add: pre_energy_add
         })
         this.addEnergy(pre_energy_add)
         console.log(this.state.time)
@@ -267,9 +267,9 @@ export default class Profile extends Component {
     }
   }
 
-  onTimeOut(){
+  onTimeOut() {
     this.setState({
-      energy_add : null 
+      energy_add: null
     })
     this.addEnergy(1)
   }
