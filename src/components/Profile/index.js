@@ -190,6 +190,10 @@ export default class Profile extends Component {
         console.log(pre_energy_add)
         let min = 60 - (pre_min % 60);
         let sec = 60 - (pre_sec);
+        if(min<=0){
+          min = 0;
+          sec = pre_sec;
+        }
         console.log("เกินเวลาแร้วแม่")
         console.log("remaining" + remaining)
         console.log("toTime" + min + ":" + (sec < 10 ? '0' : '') + sec)
