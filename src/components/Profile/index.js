@@ -190,15 +190,15 @@ export default class Profile extends Component {
         let pre_energy_add = Math.floor(pre_min / 60);
         console.log("energy_add" + Math.floor(pre_min / 60))
         console.log(pre_energy_add)
-        let min = 60 - (pre_min % 60);
+        let min = 59 - (pre_min % 60);
         let sec = 60 - (pre_sec);
         console.log("premin"+pre_min)
         console.log("presec"+pre_sec)
-        if (pre_min <= 0) {
-          console.log("เข้าแล้วเว้ย")
-          min = 0;
-          sec = pre_sec;
-        }
+        // if ((pre_min % 60) <= 0) {
+        //   console.log("เข้าแล้วเว้ย")
+        //   min = 0;
+        //   sec = pre_sec;
+        // }
         console.log("เกินเวลาแร้วแม่")
         console.log("remaining" + remaining)
         console.log("toTime" + min + ":" + (sec < 10 ? '0' : '') + sec)
@@ -209,9 +209,17 @@ export default class Profile extends Component {
             sec: sec,
           }
         })
-        current_time.setHours(current_time.getHours() + 1)
-        current_time.setMinutes(current_time.getMinutes() - min)
-        current_time.setSeconds(current_time.getSeconds() - sec)
+        // if(min>=60){
+        //   console.log("min>60")
+        //   current_time.setHours(current_time.getHours() + 1)
+        // current_time.setMinutes(current_time.getMinutes() - min)
+        // current_time.setSeconds(current_time.getSeconds() - sec)
+        // }else{
+          console.log("normal")
+         // current_time.setHours(current_time.getHours() + 1)
+        current_time.setMinutes(current_time.getMinutes() + min)
+        current_time.setSeconds(current_time.getSeconds() + sec)
+        // }
         console.log('newDate : ' + current_time)
         this.addEnergy(pre_energy_add, current_time.getTime())
         console.log(this.state.time)
