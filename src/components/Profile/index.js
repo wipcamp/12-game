@@ -112,7 +112,7 @@ export default class Profile extends Component {
 
   }
 
-  async addEnergy(energyAdd) {
+  async addEnergy(energyAdd, newCooldown) {
     const { user_energy, user_max_energy, cooldown_time, user_id } = this.state
     if (this.state.user_max_energy > (this.state.user_energy + energyAdd)) {
       console.log("addEnergy" + energyAdd);
@@ -126,9 +126,7 @@ export default class Profile extends Component {
         const newCooldown = new Date()
         newCooldown.setMinutes(newCooldown.getMinutes() + this.state.time.min)
         newCooldown.setSeconds(newCooldown.getSeconds() + this.state.time.sec)*/
-      if (this.state.energy_add == null) {
-        this.setCooldownTime(user_id)
-      }
+      this.setCooldownTime(user_id, newCooldown)
       //}
       this.getNewEnergy(user_id)
       // let data = await profileService.getCooldownTime(user_id);
@@ -202,10 +200,11 @@ export default class Profile extends Component {
           time: {
             min: min,
             sec: sec,
-          },
-          energy_add: pre_energy_add
+          }
         })
-        this.addEnergy(pre_energy_add)
+        let newDate = new Date(current_time.setMilliseconds(remaining))
+        console.log('newDate : ' + newDate)
+        this.addEnergy(pre_energy_add, newDate)
         console.log(this.state.time)
       }
     } else {
@@ -268,10 +267,9 @@ export default class Profile extends Component {
   }
 
   onTimeOut() {
-    this.setState({
-      energy_add: null
-    })
-    this.addEnergy(1)
+    const newDate = new Date()
+    newDate.setHours(newDate.getHours + 1)
+    this.addEnergy(1, newDate)
   }
 
   render() {
