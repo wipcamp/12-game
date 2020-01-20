@@ -243,6 +243,8 @@ export default class Profile extends Component {
     let userGame = data.data
     console.log(data.data)
     const team = userGame.team
+    console.log('team object : '+team)
+    console.log('team name : '+team.teamName)
     let cooldownTime = cooldown_time.data
     console.log(cooldownTime)
     this.setState({
