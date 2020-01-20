@@ -101,10 +101,10 @@ export default class Profile extends Component {
         Cookies.remove('verifyCode', { domain: 'game.freezer.wip.camp', path: '' })
         console.log('removed verifyCode')
         console.log('checkCookiesPass')
-        console.log('userId in cookies : ' + tokenCookies.userId)
-        const userId = tokenCookies.userId
-        console.log('userId : ' + userId)
-    this.getProfileData(userId)
+        // console.log('userId in cookies : ' + tokenCookies.userId)
+        // const userId = tokenCookies.userId
+        // console.log('userId : ' + userId)
+    this.getProfileData('Uaceff1fcb505e79d4e06d9d95deabbbb')
       }
     } else {
       window.location.href = loginGameUrl
@@ -165,7 +165,7 @@ export default class Profile extends Component {
     console.log("cool" + cooldown_time)
     console.log("current" + current_time)
     if (this.state.user_max_energy > this.state.user_energy) {
-      if (cooldown_time < current_time) {
+      if (cooldown_time >= current_time) {
         let remaining = Math.abs(cooldown_time - current_time);
         let min = Math.floor(remaining / 60000);
         let sec = ((remaining % 60000) / 1000).toFixed(0);
