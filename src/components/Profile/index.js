@@ -204,7 +204,7 @@ export default class Profile extends Component {
         })
         let newDate = new Date(current_time.setMilliseconds(remaining))
         console.log('newDate : ' + newDate)
-        this.addEnergy(pre_energy_add, newDate)
+        this.addEnergy(pre_energy_add, newDate.getTime())
         console.log(this.state.time)
       }
     } else {
@@ -222,8 +222,8 @@ export default class Profile extends Component {
   }
 
 
-  async setCooldownTime(id) {
-    await profileService.setCooldownTime(id);
+  async setCooldownTime(id,newDate) {
+    await profileService.setCooldownTime(id,newDate);
     let data = await profileService.getCooldownTime(id);
     let cooldownTime = data.data;
     this.setState({
@@ -269,7 +269,7 @@ export default class Profile extends Component {
   onTimeOut() {
     const newDate = new Date()
     newDate.setHours(newDate.getHours + 1)
-    this.addEnergy(1, newDate)
+    this.addEnergy(1, newDate.getTime())
   }
 
   render() {
