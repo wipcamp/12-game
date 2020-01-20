@@ -51,7 +51,7 @@ export default class Profile extends Component {
     user_max_exp: 0,
     cooldown_time: new Date(2020, 0, 13, 23, 40, 0),
     time: null,
-    energy_add: null
+    onTimeOut: false
   };
 
   async componentDidMount() {
@@ -104,7 +104,7 @@ export default class Profile extends Component {
         console.log('userId in cookies : ' + tokenCookies.userId)
         const userId = tokenCookies.userId
         console.log('userId : ' + userId)
-        this.getProfileData('userId')
+        this.getProfileData(userId)
       }
     } else {
       window.location.href = loginGameUrl
@@ -114,9 +114,13 @@ export default class Profile extends Component {
 
   async addEnergy(energyAdd, newCooldown) {
     const { user_energy, user_max_energy, cooldown_time, user_id } = this.state
-    if (this.state.user_max_energy > (this.state.user_energy + energyAdd)) {
-      console.log("addEnergy" + energyAdd);
-      let totalEnergy = user_energy + energyAdd;
+    const final_energy_add = this.state.onTimeOut==true?energyAdd:energyAdd+1;
+    this.setState({
+      onTimeOut : false
+    })
+    if (this.state.user_max_energy > (this.state.user_energy + final_energy_add)) {
+      console.log("addEnergy" + final_energy_add);
+      let totalEnergy = user_energy + final_energy_add;
       await profileService.setEnergy(user_id, totalEnergy)
       /*if (this.state.time.min == 0 && this.state.time.sec == 0) {
         const newCooldown = new Date()
@@ -134,9 +138,9 @@ export default class Profile extends Component {
       // this.setState({
       //   cooldown_time: cooldownTime
       // })
-    } else if (this.state.user_max_energy == this.state.user_energy + energyAdd) {
+    } else if (this.state.user_max_energy == this.state.user_energy + final_energy_add) {
       console.log("equals")
-      let totalEnergy = user_energy + energyAdd;
+      let totalEnergy = user_energy + final_energy_add;
       await profileService.setEnergy(user_id, totalEnergy)
       this.getNewEnergy(user_id)
       console.log(this.state.user_energy)
@@ -188,7 +192,10 @@ export default class Profile extends Component {
         console.log(pre_energy_add)
         let min = 60 - (pre_min % 60);
         let sec = 60 - (pre_sec);
-        if (min <= 0) {
+        console.log("premin"+pre_min)
+        console.log("presec"+pre_sec)
+        if (pre_min <= 0) {
+          console.log("เข้าแล้วเว้ย")
           min = 0;
           sec = pre_sec;
         }
@@ -202,9 +209,11 @@ export default class Profile extends Component {
             sec: sec,
           }
         })
-        let newDate = new Date(current_time.setMilliseconds(remaining))
-        console.log('newDate : ' + newDate)
-        this.addEnergy(pre_energy_add, newDate.getTime())
+        current_time.setHours(current_time.getHours() + 1)
+        current_time.setMinutes(current_time.getMinutes() - min)
+        current_time.setSeconds(current_time.getSeconds() - sec)
+        console.log('newDate : ' + current_time)
+        this.addEnergy(pre_energy_add, current_time.getTime())
         console.log(this.state.time)
       }
     } else {
@@ -269,9 +278,13 @@ export default class Profile extends Component {
   }
 
   onTimeOut() {
+    this.setState({
+      onTimeOut : true
+    })
     const newDate = new Date()
-    newDate.setHours(newDate.getHours + 1)
+    newDate.setHours(newDate.getHours() + 1)
     this.addEnergy(1, newDate.getTime())
+    console.log('getTime log: '+newDate.getTime())
   }
 
   render() {
