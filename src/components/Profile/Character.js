@@ -13,7 +13,7 @@ export default class Character extends Component {
         image_source: [
             {
               level: 10,
-              source: "/image/level2.flr"
+              source: "/image/level1.flr"
             },
             {
               level: 20,
@@ -25,7 +25,7 @@ export default class Character extends Component {
             },
             {
               level: 40,
-              source: "/image/level1.flr"
+              source: "/image/level2.flr"
             },
             {
               level: 50,
@@ -44,6 +44,7 @@ export default class Character extends Component {
           data = this.state.image_source[i-1].source
         }else{
           data = this.state.image_source[i].source
+          console.log(data)
         }
         i = this.state.image_source.length
       }else{
@@ -52,6 +53,7 @@ export default class Character extends Component {
         }
       }
     }
+    
     return (
       <CenterComponent>
         <FlareComponent controller={this.state.characterController} width={300} height={300} file={data}/>
