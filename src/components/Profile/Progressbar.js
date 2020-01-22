@@ -19,7 +19,8 @@ export default class Progressbar extends Component {
     status: this.props.status,
     percent: this.props.percent,
     color: this.props.color,
-    level: this.props.level
+    level: this.props.level,
+    isLevelUp: false
   };
 
   componentWillReceiveProps(nextProps) {
@@ -31,6 +32,24 @@ export default class Progressbar extends Component {
     if (nextProps.level !== level) {
       this.setState({ level: nextProps.level });
     }
+    if(this.props.isLevelUp!=null){
+      const { isLevelUp } = this.props.isLevelUp;
+      if (nextProps.isLevelUp !== isLevelUp) {
+        this.setState({ isLevelUp: nextProps.isLevelUp });
+      }
+    }
+  }
+
+  getUpdateButton(){
+    if(this.state.isLevelUp===true){
+      return(
+        <div>
+            <button>+</button>
+        </div>
+      )
+    }else{
+      return null;
+    }
   }
 
   render() {
@@ -40,8 +59,13 @@ export default class Progressbar extends Component {
           {this.state.status} : {this.state.level}
         </Status>
         <div >
-          <Progress style={this.props.style==null?{marginTop:10, height: 5, paddingVertical: 20 , width:'50vw'}:this.props.style}  value={this.state.percent} color={this.state.color} />
+          <Progress
+            style={this.props.style == null ? { marginTop: 10, height: 5, paddingVertical: 20, width: '50vw' } : this.props.style}
+            value={this.state.percent}
+            color={this.state.color}
+          />
         </div>
+        {this.props.isLevelUp==null?null:this.getUpdateButton()}
       </div>
     );
   }
