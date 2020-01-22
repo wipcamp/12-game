@@ -122,22 +122,8 @@ export default class Profile extends Component {
       console.log("addEnergy" + final_energy_add);
       let totalEnergy = user_energy + final_energy_add;
       await profileService.setEnergy(user_id, totalEnergy)
-      /*if (this.state.time.min == 0 && this.state.time.sec == 0) {
-        const newCooldown = new Date()
-        newCooldown.setHours(newCooldown.getHours() + 1)
-        this.setCooldownTime(user_id,newCooldown.getTime())
-      } else {
-        const newCooldown = new Date()
-        newCooldown.setMinutes(newCooldown.getMinutes() + this.state.time.min)
-        newCooldown.setSeconds(newCooldown.getSeconds() + this.state.time.sec)*/
       this.setCooldownTime(user_id, newCooldown)
-      //}
       this.getNewEnergy(user_id)
-      // let data = await profileService.getCooldownTime(user_id);
-      // let cooldownTime = data.data;
-      // this.setState({
-      //   cooldown_time: cooldownTime
-      // })
     } else if (this.state.user_max_energy == this.state.user_energy + final_energy_add) {
       console.log("equals")
       let totalEnergy = user_energy + final_energy_add;
@@ -161,7 +147,7 @@ export default class Profile extends Component {
 
 
   getRemainingTime(cooldown) {
-    let { time, energy_add } = this.state
+    let { time } = this.state
     let cooldown_time = new Date(cooldown);
     let current_time = new Date();
     console.log("cool" + cooldown_time)
@@ -180,7 +166,6 @@ export default class Profile extends Component {
             min: min,
             sec: sec,
           },
-          energy_add: null
         })
         console.log(this.state.time)
       } else {
@@ -194,11 +179,6 @@ export default class Profile extends Component {
         let sec = 60 - (pre_sec);
         console.log("premin"+pre_min)
         console.log("presec"+pre_sec)
-        // if ((pre_min % 60) <= 0) {
-        //   console.log("เข้าแล้วเว้ย")
-        //   min = 0;
-        //   sec = pre_sec;
-        // }
         console.log("เกินเวลาแร้วแม่")
         console.log("remaining" + remaining)
         console.log("toTime" + min + ":" + (sec < 10 ? '0' : '') + sec)
@@ -209,17 +189,8 @@ export default class Profile extends Component {
             sec: sec,
           }
         })
-        // if(min>=60){
-        //   console.log("min>60")
-        //   current_time.setHours(current_time.getHours() + 1)
-        // current_time.setMinutes(current_time.getMinutes() - min)
-        // current_time.setSeconds(current_time.getSeconds() - sec)
-        // }else{
-          console.log("normal")
-         // current_time.setHours(current_time.getHours() + 1)
         current_time.setMinutes(current_time.getMinutes() + min)
         current_time.setSeconds(current_time.getSeconds() + sec)
-        // }
         console.log('newDate : ' + current_time)
         this.addEnergy(pre_energy_add, current_time.getTime())
         console.log(this.state.time)
