@@ -51,6 +51,8 @@ export default class Profile extends Component {
     user_max_exp: 0,
     cooldown_time: new Date(2020, 0, 13, 23, 40, 0),
     time: null,
+    point: 0,
+    isLevelUp: false,
     onTimeOut: false
   };
 
@@ -247,12 +249,18 @@ export default class Profile extends Component {
       user_team_name: team.teamName,
       user_exp: userGame.exp,
       user_max_exp: userGame.maxExp,
+      point: userGame.point,
       cooldown_time: cooldownTime
     });
     if (this.state.user_max_energy > this.state.user_energy) {
       this.getRemainingTime(cooldownTime)
     } else {
       console.log("energy is full")
+    }
+    if(this.state.point>0){
+      this.setState({
+        isLevelUp : true
+      })
     }
   }
 
@@ -286,6 +294,7 @@ export default class Profile extends Component {
               />
             </EnergyProgressbar>
             user_name: {this.state.user_name} <br />
+            point: {this.state.point}
             <Progressbar
               color='warning'
               percent={this.state.user_exp}
@@ -299,18 +308,21 @@ export default class Profile extends Component {
             team: {this.state.user_team_name} <br />
             <Character level={this.state.user_level} userExp={this.state.user_exp} maxExp={this.state.user_max_exp} />{' '}
             <Progressbar
+              isLevelUp={this.state.isLevelUp}
               color='warning'
               percent={this.state.user_str}
               level={this.state.user_str}
               status='str'
             />
             <Progressbar
+              isLevelUp={this.state.isLevelUp}
               color='warning'
               percent={this.state.user_dex}
               level={this.state.user_dex}
               status='dex'
             />
             <Progressbar
+              isLevelUp={this.state.isLevelUp}
               color='warning'
               percent={this.state.user_luk * 10}
               level={this.state.user_luk}
