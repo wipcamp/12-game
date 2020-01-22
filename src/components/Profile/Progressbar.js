@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Progress } from "reactstrap";
 import styled from 'styled-components'
 import Modal from 'react-bootstrap/Modal'
+import profileService from '../../services/profileService';
 
 // const ProgressBar = styled(Progress)`
 //     height: 2px; 
@@ -17,6 +18,7 @@ const Status = styled.div`
 
 export default class Progressbar extends Component {
   state = {
+    user_id:null,
     status: this.props.status,
     percent: this.props.percent,
     color: this.props.color,
@@ -38,6 +40,12 @@ export default class Progressbar extends Component {
       const { isLevelUp } = this.props.isLevelUp;
       if (nextProps.isLevelUp !== isLevelUp) {
         this.setState({ isLevelUp: nextProps.isLevelUp });
+      }
+    }
+    if (this.props.user_id != null) {
+      const { user_id } = this.props.user_id;
+      if (nextProps.user_id !== user_id) {
+        this.setState({ user_id: nextProps.user_id });
       }
     }
   }
@@ -63,6 +71,12 @@ export default class Progressbar extends Component {
     this.setState({ showModal: true });
   }
 
+  async updateStatus(user_id,status,quantity){
+    await profileService.updateStatus(user_id,status,quantity); 
+    this.setState({ showModal: false });
+    this.props.getNewStatus();
+  }
+
   render() {
     return (
       <div className="d-flex">
@@ -84,7 +98,7 @@ export default class Progressbar extends Component {
           <Modal.Footer>
             <button
               variant="secondary"
-              onClick={this.handleClose}
+              onClick={()=>this.updateStatus(this.state.user_id,this.state.status,1)}
             >
               yes
             </button>
