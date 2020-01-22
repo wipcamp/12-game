@@ -6,7 +6,7 @@ export default class Countdown extends Component {
   state = { minute: this.props.minute, second: this.props.second }
 
   timer() {
-    if (minute != 999 && second != 999) {
+    if (this.state.minute != 999 && this.state.second != 999) {
       this.setState({
         second: this.state.second - 1
       });
