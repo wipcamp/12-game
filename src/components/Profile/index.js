@@ -274,6 +274,21 @@ export default class Profile extends Component {
     console.log('getTime log: '+newDate.getTime())
   }
 
+  async getNewStatus(userId){
+    let data = await profileService.getProfile(userId);
+    this.setState({
+      user_str: data.data.str,
+      user_dex: data.data.dex,
+      user_luk: data.data.luk,
+      point: data.data.point
+    })
+    if(this.state.point<=0){
+      this.setState({
+        isLevelUp : false
+      })
+    }
+  }
+
   render() {
     return (
       <div>
@@ -308,6 +323,8 @@ export default class Profile extends Component {
             team: {this.state.user_team_name} <br />
             <Character level={this.state.user_level} userExp={this.state.user_exp} maxExp={this.state.user_max_exp} />{' '}
             <Progressbar
+              getNewStatus={()=>this.getNewStatus(this.state.user_id)}
+              user_id={this.state.user_id}
               isLevelUp={this.state.isLevelUp}
               color='warning'
               percent={this.state.user_str}
@@ -315,6 +332,8 @@ export default class Profile extends Component {
               status='str'
             />
             <Progressbar
+              getNewStatus={()=>this.getNewStatus(this.state.user_id)}
+              user_id={this.state.user_id}
               isLevelUp={this.state.isLevelUp}
               color='warning'
               percent={this.state.user_dex}
@@ -322,6 +341,8 @@ export default class Profile extends Component {
               status='dex'
             />
             <Progressbar
+              getNewStatus={()=>this.getNewStatus(this.state.user_id)}
+              user_id={this.state.user_id}
               isLevelUp={this.state.isLevelUp}
               color='warning'
               percent={this.state.user_luk * 10}
