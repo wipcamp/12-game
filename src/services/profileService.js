@@ -10,10 +10,6 @@ const profileService = {
         let res = await api.post(`/useEnergy?id=${lineId}`)
         return res;
     },
-    /*setCooldownTime : async (lineId,remainTime) => {
-        let res = await api.put(`/setCooldownEnergyTime?id=${lineId}&remainTime=${remainTime}`)
-        return res;
-    },*/
     setCooldownTime : async (lineId,newDate) => {
         let res = await api.put(`/setCooldownEnergyTime?id=${lineId}&newDate=${newDate}`)
         return res;
@@ -33,7 +29,11 @@ const profileService = {
     getExp : async (id,score) => {
         let res = await api.put(`/gameOver?id=${id}&score=${score}`)
         return res
-    }
+    },
+    updateStatus : async (lineId,status,quantity) => {
+        let res = await api.put(`/updateStatus?id=${lineId}&status=${status}&quantity=${quantity}`)
+        return res;
+    },
     // getProfileByUserId
   
   }
