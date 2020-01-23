@@ -3,6 +3,7 @@ import LineService from "../../services/LineService";
 import ProfileService from "../../services/profileService";
 import App from "../../App.js";
 import Cookies from 'js-cookie';
+import styled from 'styled-components';
 
 const loginGameUrl = 'https://game.freezer.wip.camp/login'
 const gameUrl = 'https://game.freezer.wip.camp'
@@ -13,11 +14,13 @@ export default class LoginGame extends Component {
         isLoad: false
     }
 
+
+
     async lineLogin() {
         const stateGenerate = await LineService.getGenerateCode()
         const nonceGenerate = await LineService.getGenerateCode()
-        Cookies.set('state',stateGenerate.data,{domain:'game.freezer.wip.camp',path: '/login'})
-        Cookies.set('nonce',nonceGenerate.data,{domain:'game.freezer.wip.camp',path: '/login'})
+        Cookies.set('state', stateGenerate.data, { domain: 'game.freezer.wip.camp', path: '/login' })
+        Cookies.set('nonce', nonceGenerate.data, { domain: 'game.freezer.wip.camp', path: '/login' })
         // Cookies.set('state',nonceGenerate.data,{domain:})
         // Cookies.set('nonce',nonceGenerate.data,{path: '/login'})
         let stateInCookies = Cookies.get('state')
@@ -41,8 +44,8 @@ export default class LoginGame extends Component {
 
     async getTokenFromLineApi(code, nonce) {
         const objectResponse = await LineService.lineLogin(code, nonce)
-        if(objectResponse==null){
-            window.location.href=loginGameUrl
+        if (objectResponse == null) {
+            window.location.href = loginGameUrl
         }
         const tokenObject = {
             scope: objectResponse.data.scope,
@@ -100,22 +103,68 @@ export default class LoginGame extends Component {
         }
     }
 
-
     render() {
         let component
+
+        const ButtonContainer  = styled.div`
+            
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            
+            
+        `
+
+        const Button = styled.button`
+            background: #00C300;
+            color: #FFFFFF;
+            line-height: 1.5;
+            height: 55px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            transition: all 0.4s;
+            width: 100%;
+            font-weight: 500;
+
+            &:hover{
+                background: #00E000;
+            }
+
+            &:active{
+                background: #00B300;
+            }
+
+        `
+
+        const LineCI = styled.img`
+            height: 50px;
+            width: 50px;
+            margin-right: 6px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            margin-left: -7px;
+            border-right: 2px solid 00b300;
+        `
+
         if (this.state.isLoad) {
             component = <center>LOADING...</center>
         } else {
-            component = <center><button onClick={this.handleClick.bind(this)} >login line</button></center>
+            // component = <center><button style={lineButtonStyle} onClick={this.handleClick.bind(this)} >Log in with Line</button></center>
+
         }
         return (
-            <React.Fragment>
-            {component}
-            {/* { Cookies.get('state') } */}
-
-            </React.Fragment>
-            
-            
+            // <React.Fragment>
+            //     {component}
+            //     {/* { Cookies.get('state') } */}
+            // </React.Fragment>            
+            <ButtonContainer>
+                <Button>
+                    <LineCI src="/image/line_ci.png" /> <span>Log in with Line</span>
+                </Button>
+            </ButtonContainer>
         );
     }
 }
