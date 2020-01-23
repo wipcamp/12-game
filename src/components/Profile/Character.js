@@ -49,7 +49,7 @@ export default class Character extends Component {
          i = this.state.image_source.length
       }
       else{
-        if(i===this.state.image_source.length-1){
+        if(i==this.state.image_source.length-1){
           data = this.state.image_source[i].source
         }
       }
