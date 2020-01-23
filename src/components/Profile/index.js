@@ -57,60 +57,60 @@ export default class Profile extends Component {
   };
 
   async componentDidMount() {
-    let isDataChange = false
-    const tokenCookies = Cookies.getJSON('token')
-    console.log('tokenObject : ' + tokenCookies)
-    if (tokenCookies) {
-      console.log('loggedIn')
-      const search = window.location.search.substring(1);
-      if (search) {
-        console.log('searched')
-        const verifyCodeMiniGame = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
-        const userId = verifyCodeMiniGame.userId
-        const verifyCode = verifyCodeMiniGame.verifyCode
-        const timeStart = verifyCodeMiniGame.timeStart
-        const score = verifyCodeMiniGame.score
-        const timePlay = verifyCodeMiniGame.timePlay
-        if (userId && verifyCode && timeStart && score && timePlay) {
-          console.log('have enough param')
-          const verifyMiniGameCookie = Cookies.get('verifyCode')
-          console.log('verifyInCookies : ' + verifyMiniGameCookie)
-          console.log('verify in param : ' + verifyCode)
-          console.log(userId)
-          console.log(verifyCode)
-          console.log(timeStart)
-          console.log(score)
-          console.log(timePlay)
-          if (verifyMiniGameCookie == verifyCode) {
-            isDataChange = true
-            console.log('same code')
-            let res = await profileService.getExp(userId, score)
-            console.log(res)
-            console.log(res.data)
-            if (res) {
-              Cookies.remove('verifyCode', { domain: 'game.freezer.wip.camp', path: '' })
-              console.log('removed verifyCode')
-              console.log('checkCookiesPass')
-              console.log('userId in cookies : ' + tokenCookies.userId)
-              const userId = tokenCookies.userId
-              console.log('userId : ' + userId)
-              this.getProfileData(userId)
-            }
-          }
-        }
-      }
-      if (isDataChange == false) {
-        Cookies.remove('verifyCode', { domain: 'game.freezer.wip.camp', path: '' })
-        console.log('removed verifyCode')
-        console.log('checkCookiesPass')
-        console.log('userId in cookies : ' + tokenCookies.userId)
-        const userId = tokenCookies.userId
-        console.log('userId : ' + userId)
-        this.getProfileData(userId)
-      }
-    } else {
-      window.location.href = loginGameUrl
-    }
+    // let isDataChange = false
+    // const tokenCookies = Cookies.getJSON('token')
+    // console.log('tokenObject : ' + tokenCookies)
+    // if (tokenCookies) {
+    //   console.log('loggedIn')
+    //   const search = window.location.search.substring(1);
+    //   if (search) {
+    //     console.log('searched')
+    //     const verifyCodeMiniGame = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
+    //     const userId = verifyCodeMiniGame.userId
+    //     const verifyCode = verifyCodeMiniGame.verifyCode
+    //     const timeStart = verifyCodeMiniGame.timeStart
+    //     const score = verifyCodeMiniGame.score
+    //     const timePlay = verifyCodeMiniGame.timePlay
+    //     if (userId && verifyCode && timeStart && score && timePlay) {
+    //       console.log('have enough param')
+    //       const verifyMiniGameCookie = Cookies.get('verifyCode')
+    //       console.log('verifyInCookies : ' + verifyMiniGameCookie)
+    //       console.log('verify in param : ' + verifyCode)
+    //       console.log(userId)
+    //       console.log(verifyCode)
+    //       console.log(timeStart)
+    //       console.log(score)
+    //       console.log(timePlay)
+    //       if (verifyMiniGameCookie == verifyCode) {
+    //         isDataChange = true
+    //         console.log('same code')
+    //         let res = await profileService.getExp(userId, score)
+    //         console.log(res)
+    //         console.log(res.data)
+    //         if (res) {
+    //           Cookies.remove('verifyCode', { domain: 'game.freezer.wip.camp', path: '' })
+    //           console.log('removed verifyCode')
+    //           console.log('checkCookiesPass')
+    //           console.log('userId in cookies : ' + tokenCookies.userId)
+    //           const userId = tokenCookies.userId
+    //           console.log('userId : ' + userId)
+    //           this.getProfileData(userId)
+    //         }
+    //       }
+    //     }
+    //   }
+    //   if (isDataChange == false) {
+    //     Cookies.remove('verifyCode', { domain: 'game.freezer.wip.camp', path: '' })
+    //     console.log('removed verifyCode')
+    //     console.log('checkCookiesPass')
+    //     console.log('userId in cookies : ' + tokenCookies.userId)
+    //     const userId = tokenCookies.userId
+    //     console.log('userId : ' + userId)
+        this.getProfileData("1")
+    //   }
+    // } else {
+    //   window.location.href = loginGameUrl
+    // }
 
   }
 
@@ -239,7 +239,7 @@ export default class Profile extends Component {
     console.log(cooldownTime)
     this.setState({
       user_id: userGame.id,
-      user_level: userGame.level,
+      user_level: 21,
       user_str: userGame.str,
       user_dex: userGame.dex,
       user_luk: userGame.luk,
