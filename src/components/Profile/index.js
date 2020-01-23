@@ -1,6 +1,4 @@
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 import profileService from '../../services/profileService';
 import Progressbar from './Progressbar';
 import Character from './Character';
@@ -10,7 +8,7 @@ import Countdown from './Countdown'
 import Cookies from 'js-cookie'
 
 const loginGameUrl = 'https://game.freezer.wip.camp/login'
-const CenterComponent = styled.div `
+const CenterComponent = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
@@ -18,8 +16,7 @@ const CenterComponent = styled.div `
   transform: translate(-50%, -50%);
 `;
 
-const EnergyProgressbar = styled(CenterComponent)
-`
+const EnergyProgressbar = styled(CenterComponent)`
 position: adsolute;
 top: -15%;
 left: 85vw;
@@ -109,7 +106,7 @@ export default class Profile extends Component {
     //     console.log('userId in cookies : ' + tokenCookies.userId)
     //     const userId = tokenCookies.userId
     //     console.log('userId : ' + userId)
-    this.getProfileData("1")
+        this.getProfileData("1")
     //   }
     // } else {
     //   window.location.href = loginGameUrl
@@ -118,15 +115,10 @@ export default class Profile extends Component {
   }
 
   async addEnergy(energyAdd, newCooldown) {
-    const {
-      user_energy,
-      user_max_energy,
-      cooldown_time,
-      user_id
-    } = this.state
-    const final_energy_add = this.state.onTimeOut == true ? energyAdd : energyAdd + 1;
+    const { user_energy, user_max_energy, cooldown_time, user_id } = this.state
+    const final_energy_add = this.state.onTimeOut==true?energyAdd:energyAdd+1;
     this.setState({
-      onTimeOut: false
+      onTimeOut : false
     })
     if (this.state.user_max_energy > (this.state.user_energy + final_energy_add)) {
       console.log("addEnergy" + final_energy_add);
@@ -143,7 +135,8 @@ export default class Profile extends Component {
       this.setState({
         cooldown_time: null
       })
-    } else {
+    }
+    else {
       console.log("add full energy" + (this.state.user_max_energy - this.state.user_energy))
       let totalEnergy = user_max_energy;
       await profileService.setEnergy(user_id, totalEnergy)
@@ -156,9 +149,7 @@ export default class Profile extends Component {
 
 
   getRemainingTime(cooldown) {
-    let {
-      time
-    } = this.state
+    let { time } = this.state
     let cooldown_time = new Date(cooldown);
     let current_time = new Date();
     console.log("cool" + cooldown_time)
@@ -188,8 +179,8 @@ export default class Profile extends Component {
         console.log(pre_energy_add)
         let min = 59 - (pre_min % 60);
         let sec = 60 - (pre_sec);
-        console.log("premin" + pre_min)
-        console.log("presec" + pre_sec)
+        console.log("premin"+pre_min)
+        console.log("presec"+pre_sec)
         console.log("เกินเวลาแร้วแม่")
         console.log("remaining" + remaining)
         console.log("toTime" + min + ":" + (sec < 10 ? '0' : '') + sec)
@@ -221,8 +212,8 @@ export default class Profile extends Component {
   }
 
 
-  async setCooldownTime(id, newDate) {
-    await profileService.setCooldownTime(id, newDate);
+  async setCooldownTime(id,newDate) {
+    await profileService.setCooldownTime(id,newDate);
     let data = await profileService.getCooldownTime(id);
     let cooldownTime = data.data;
     this.setState({
@@ -242,13 +233,13 @@ export default class Profile extends Component {
     let userGame = data.data
     console.log(data.data)
     const team = userGame.team
-    console.log('team object : ' + team)
-    console.log('team name : ' + team.teamName)
+    console.log('team object : '+team)
+    console.log('team name : '+team.teamName)
     let cooldownTime = cooldown_time.data
     console.log(cooldownTime)
     this.setState({
       user_id: userGame.id,
-      user_level: 40,
+      user_level: 21,
       user_str: userGame.str,
       user_dex: userGame.dex,
       user_luk: userGame.luk,
@@ -266,24 +257,24 @@ export default class Profile extends Component {
     } else {
       console.log("energy is full")
     }
-    if (this.state.point > 0) {
+    if(this.state.point>0){
       this.setState({
-        isLevelUp: true
+        isLevelUp : true
       })
     }
   }
 
   onTimeOut() {
     this.setState({
-      onTimeOut: true
+      onTimeOut : true
     })
     const newDate = new Date()
     newDate.setHours(newDate.getHours() + 1)
     this.addEnergy(1, newDate.getTime())
-    console.log('getTime log: ' + newDate.getTime())
+    console.log('getTime log: '+newDate.getTime())
   }
 
-  async getNewStatus(userId) {
+  async getNewStatus(userId){
     let data = await profileService.getProfile(userId);
     this.setState({
       user_str: data.data.str,
@@ -291,158 +282,82 @@ export default class Profile extends Component {
       user_luk: data.data.luk,
       point: data.data.point
     })
-    if (this.state.point <= 0) {
+    if(this.state.point<=0){
       this.setState({
-        isLevelUp: false
+        isLevelUp : false
       })
     }
   }
 
   render() {
-    return ( <
-      div >
-      <
-      div className = "container" >
-      <
-      CenterComponent >
-      <
-      Countdown minute = {
-        this.state.cooldown_time == null || this.state.time == null ? 999 : this.state.time.min
-      }
-      second = {
-        this.state.cooldown_time == null || this.state.time == null ? 999 : this.state.time.sec
-      }
-      onTimeOut = {
-        () => this.onTimeOut()
-      }
-      /> <
-      EnergyProgressbar >
-      <
-      Progressbar style = {
-        {
-          height: 10,
-          width: 50,
-          marginTop: '17%'
-        }
-      }
-      color = 'warning'
-      percent = {
-        (this.state.user_energy / this.state.user_max_energy) * 100
-      }
-      level = {
-        this.state.user_energy
-      }
-      status = 'energy' /
-      >
-      <
-      /EnergyProgressbar>
-      user_name: {
-        this.state.user_name
-      } < br / >
-      point: {
-        this.state.point
-      } <
-      Progressbar color = 'warning'
-      percent = {
-        this.state.user_exp
-      }
-      level = {
-        this.state.user_level
-      }
-      status = 'Level' /
-      > {
-        /*
-                    <p onClick={this.getProfile.bind(this)} >Get user</p>
-                    <p onClick={this.getProfileData.bind(this)} >Get DATA</p>
-                    */
-      }
-      team: {
-        this.state.user_team_name
-      } < br / >
-      <
-      Character level = {
-        this.state.user_level
-      }
-      userExp = {
-        this.state.user_exp
-      }
-      maxExp = {
-        this.state.user_max_exp
-      }
-      />{' '} <
-      Progressbar getNewStatus = {
-        () => this.getNewStatus(this.state.user_id)
-      }
-      user_id = {
-        this.state.user_id
-      }
-      isLevelUp = {
-        this.state.isLevelUp
-      }
-      color = 'warning'
-      percent = {
-        this.state.user_str
-      }
-      level = {
-        this.state.user_str
-      }
-      status = 'str' /
-      >
-      <
-      Progressbar getNewStatus = {
-        () => this.getNewStatus(this.state.user_id)
-      }
-      user_id = {
-        this.state.user_id
-      }
-      isLevelUp = {
-        this.state.isLevelUp
-      }
-      color = 'warning'
-      percent = {
-        this.state.user_dex
-      }
-      level = {
-        this.state.user_dex
-      }
-      status = 'dex' /
-      >
-      <
-      Progressbar getNewStatus = {
-        () => this.getNewStatus(this.state.user_id)
-      }
-      user_id = {
-        this.state.user_id
-      }
-      isLevelUp = {
-        this.state.isLevelUp
-      }
-      color = 'warning'
-      percent = {
-        this.state.user_luk * 10
-      }
-      level = {
-        this.state.user_luk
-      }
-      status = 'luk' /
-      >
-      <
-      /CenterComponent>{' '} <
-      /div> <
-      Menubar user_data = {
-        this.state
-      }
-      user_id = {
-        this.state.user_id
-      }
-      newEnergy = {
-        () => this.getNewEnergy(this.state.user_id)
-      }
-      setCooldownTime = {
-        () => this.setCooldownTime(this.state.user_id)
-      }
-      /> <
-      /div>
+    return (
+      <div>
+        <div className="container">
+          <CenterComponent>
+            <Countdown
+              minute={this.state.cooldown_time == null || this.state.time == null ? 999 : this.state.time.min}
+              second={this.state.cooldown_time == null || this.state.time == null ? 999 : this.state.time.sec}
+              onTimeOut={() => this.onTimeOut()}
+            />
+            <EnergyProgressbar>
+              <Progressbar
+                style={{ height: 10, width: 50, marginTop: '17%' }}
+                color='warning'
+                percent={(this.state.user_energy / this.state.user_max_energy) * 100}
+                level={this.state.user_energy}
+                status='energy'
+              />
+            </EnergyProgressbar>
+            user_name: {this.state.user_name} <br />
+            point: {this.state.point}
+            <Progressbar
+              color='warning'
+              percent={this.state.user_exp}
+              level={this.state.user_level}
+              status='Level'
+            />
+            {/*
+            <p onClick={this.getProfile.bind(this)} >Get user</p>
+            <p onClick={this.getProfileData.bind(this)} >Get DATA</p>
+            */}
+            team: {this.state.user_team_name} <br />
+            <Character level={this.state.user_level} userExp={this.state.user_exp} maxExp={this.state.user_max_exp} />{' '}
+            <Progressbar
+              getNewStatus={()=>this.getNewStatus(this.state.user_id)}
+              user_id={this.state.user_id}
+              isLevelUp={this.state.isLevelUp}
+              color='warning'
+              percent={this.state.user_str}
+              level={this.state.user_str}
+              status='str'
+            />
+            <Progressbar
+              getNewStatus={()=>this.getNewStatus(this.state.user_id)}
+              user_id={this.state.user_id}
+              isLevelUp={this.state.isLevelUp}
+              color='warning'
+              percent={this.state.user_dex}
+              level={this.state.user_dex}
+              status='dex'
+            />
+            <Progressbar
+              getNewStatus={()=>this.getNewStatus(this.state.user_id)}
+              user_id={this.state.user_id}
+              isLevelUp={this.state.isLevelUp}
+              color='warning'
+              percent={this.state.user_luk * 10}
+              level={this.state.user_luk}
+              status='luk'
+            />
+          </CenterComponent>{' '}
+        </div>
+        <Menubar
+          user_data={this.state}
+          user_id={this.state.user_id}
+          newEnergy={() => this.getNewEnergy(this.state.user_id)}
+          setCooldownTime={() => this.setCooldownTime(this.state.user_id)}
+        />
+      </div>
     );
   }
 }
