@@ -13,7 +13,7 @@ export default class Character extends Component {
         image_source: [
             {
               level: 10,
-              source: "/image/level2.flr"
+              source: "/image/level1.flr"
             },
             {
               level: 20,
@@ -25,46 +25,61 @@ export default class Character extends Component {
             },
             {
               level: 40,
-              source: "/image/level1.flr"
+              source: "/image/level2.flr"
             },
             {
               level: 50,
               source: "/image/level1.flr"
             }
           ],
+          user_level:this.props.level
     }
   
     
   getProfileImage() {
-    console.log(this.props.level)
+    console.log(this.state.user_level)
     let data = null;
     for (let i = 0; i < this.state.image_source.length; i++) {
-      if (this.props.level<this.state.image_source[i].level) {
+      if (this.state.user_level<this.state.image_source[i].level) {
         if(i!=0){
           data = this.state.image_source[i-1].source
         }else{
           data = this.state.image_source[i].source
         }
-        i = this.state.image_source.length
-      }else{
-        if(i==this.state.image_source.length-1){
+         i = this.state.image_source.length
+      }
+      else{
+        if(i===this.state.image_source.length-1){
           data = this.state.image_source[i].source
         }
       }
     }
+    console.log(data)
     return (
       <CenterComponent>
-        <FlareComponent controller={this.state.characterController} width={300} height={300} file={data}/>
+        <FlareComponent onChange={this.handleChange} controller={this.state.characterController} width={300} height={300} file={data}/>
       </CenterComponent>
     );
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) { 
     const { level } = this.props.level;
     if (nextProps.level !== level) {
-      this.setState({ level: nextProps.level });
+      this.setState({ user_level: nextProps.level });
     }
   }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log(this.props.level)
+  //   return this.state.level != nextState.level;
+  // }
+
+  // componentDidUpdate(prevProps) {
+  //   // Typical usage (don't forget to compare props):
+  //   if (this.props.level !== prevProps.level) {
+  //     this.fetchData(this.props.level);
+  //   }
+  // }
 
     render() {
         return (
