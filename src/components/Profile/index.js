@@ -62,7 +62,7 @@ export default class Profile extends Component {
     let isDataChange = false
     const tokenCookies = Cookies.getJSON('token')
     console.log('tokenObject : ' + tokenCookies)
-    if (true) {
+    if (tokenCookies) {
       console.log('loggedIn')
       const search = window.location.search.substring(1);
       if (search) {
