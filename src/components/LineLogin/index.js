@@ -154,22 +154,22 @@ export default class LoginGame extends Component {
             component = <center>LOADING...</center>
         } else {
             // component = <center><button style={lineButtonStyle} onClick={this.handleClick.bind(this)} >Log in with Line</button></center>
-            component = <ButtonContainer>
-                <Button onClick={this.handleClick.bind(this)}>
-                    <LineCI src="/image/line_ci.png" /> <span>Log in with Line</span>
-                </Button>
-            </ButtonContainer>
-        }
-        return (
-            <React.Fragment>
-                {component}
-                {/* { Cookies.get('state') } */}
-            </React.Fragment>
-            // <ButtonContainer>
+            // component = <ButtonContainer>
             //     <Button onClick={this.handleClick.bind(this)}>
             //         <LineCI src="/image/line_ci.png" /> <span>Log in with Line</span>
             //     </Button>
             // </ButtonContainer>
+        }
+        return (
+            // <React.Fragment>
+            //     {component}
+            //     {/* { Cookies.get('state') } */}
+            // </React.Fragment>
+            <ButtonContainer>
+                <Button onClick={this.handleClick.bind(this)}>
+                    <LineCI src="/image/line_ci.png" /> <span>Log in with Line</span>
+                </Button>
+            </ButtonContainer>
         );
     }
 }
