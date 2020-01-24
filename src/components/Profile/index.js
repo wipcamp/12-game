@@ -8,6 +8,7 @@ import Countdown from './Countdown'
 import Cookies from 'js-cookie'
 
 const loginGameUrl = 'https://game.freezer.wip.camp/login'
+// const loginGameUrl = 'http://localhost:3000/login'
 const CenterComponent = styled.div`
   position: fixed;
   top: 50%;
@@ -57,60 +58,65 @@ export default class Profile extends Component {
   };
 
   async componentDidMount() {
-    // let isDataChange = false
-    // const tokenCookies = Cookies.getJSON('token')
-    // console.log('tokenObject : ' + tokenCookies)
-    // if (tokenCookies) {
-    //   console.log('loggedIn')
-    //   const search = window.location.search.substring(1);
-    //   if (search) {
-    //     console.log('searched')
-    //     const verifyCodeMiniGame = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
-    //     const userId = verifyCodeMiniGame.userId
-    //     const verifyCode = verifyCodeMiniGame.verifyCode
-    //     const timeStart = verifyCodeMiniGame.timeStart
-    //     const score = verifyCodeMiniGame.score
-    //     const timePlay = verifyCodeMiniGame.timePlay
-    //     if (userId && verifyCode && timeStart && score && timePlay) {
-    //       console.log('have enough param')
-    //       const verifyMiniGameCookie = Cookies.get('verifyCode')
-    //       console.log('verifyInCookies : ' + verifyMiniGameCookie)
-    //       console.log('verify in param : ' + verifyCode)
-    //       console.log(userId)
-    //       console.log(verifyCode)
-    //       console.log(timeStart)
-    //       console.log(score)
-    //       console.log(timePlay)
-    //       if (verifyMiniGameCookie == verifyCode) {
-    //         isDataChange = true
-    //         console.log('same code')
-    //         let res = await profileService.getExp(userId, score)
-    //         console.log(res)
-    //         console.log(res.data)
-    //         if (res) {
-    //           Cookies.remove('verifyCode', { domain: 'game.freezer.wip.camp', path: '' })
-    //           console.log('removed verifyCode')
-    //           console.log('checkCookiesPass')
-    //           console.log('userId in cookies : ' + tokenCookies.userId)
-    //           const userId = tokenCookies.userId
-    //           console.log('userId : ' + userId)
-    //           this.getProfileData(userId)
-    //         }
-    //       }
-    //     }
-    //   }
-    //   if (isDataChange == false) {
-    //     Cookies.remove('verifyCode', { domain: 'game.freezer.wip.camp', path: '' })
-    //     console.log('removed verifyCode')
-    //     console.log('checkCookiesPass')
-    //     console.log('userId in cookies : ' + tokenCookies.userId)
-    //     const userId = tokenCookies.userId
-    //     console.log('userId : ' + userId)
-        this.getProfileData("1")
-    //   }
-    // } else {
-    //   window.location.href = loginGameUrl
-    // }
+    // Cookies.set('userId','U0d2f062bb2921e6f1e48d70c7a030ab2')
+    let isDataChange = false
+    const tokenCookies = Cookies.getJSON('token')
+    console.log('tokenObject : ' + tokenCookies)
+    if (true) {
+      console.log('loggedIn')
+      const search = window.location.search.substring(1);
+      if (search) {
+      // if(false){
+        console.log('searched')
+        const verifyCodeMiniGame = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
+        const userId = verifyCodeMiniGame.userId
+        const verifyCode = verifyCodeMiniGame.verifyCode
+        const timeStart = verifyCodeMiniGame.timeStart
+        const score = verifyCodeMiniGame.score
+        const timePlay = verifyCodeMiniGame.timePlay
+        if (userId && verifyCode && timeStart && score && timePlay) {
+          console.log('have enough param')
+          const verifyMiniGameCookie = Cookies.get('verifyCode')
+          console.log('verifyInCookies : ' + verifyMiniGameCookie)
+          console.log('verify in param : ' + verifyCode)
+          console.log(userId)
+          console.log(verifyCode)
+          console.log(timeStart)
+          console.log(score)
+          console.log(timePlay)
+          if (verifyMiniGameCookie == verifyCode) {
+            isDataChange = true
+            console.log('same code')
+            let res = await profileService.getExp(userId, score)
+            console.log(res)
+            console.log(res.data)
+            if (res) {
+              Cookies.remove('verifyCode', { domain: 'game.freezer.wip.camp', path: '' })
+              console.log('removed verifyCode')
+              console.log('checkCookiesPass')
+              console.log('userId in cookies : ' + tokenCookies.userId)
+              // const userId = tokenCookies.userId
+              const userId = Cookies.get('userId')
+              console.log('userId : ' + userId)
+              this.getProfileData(userId)
+            }
+          }
+        }
+      }
+      if (isDataChange == false) {
+      // if (true) {
+        Cookies.remove('verifyCode', { domain: 'game.freezer.wip.camp', path: '' })
+        console.log('removed verifyCode')
+        console.log('checkCookiesPass')
+        // console.log('userId in cookies : ' + tokenCookies.userId)
+        // const userId = tokenCookies.userId
+        const userId = Cookies.get('userId')
+        console.log('userId : ' + userId)
+        this.getProfileData(userId)
+      }
+    } else {
+      window.location.href = loginGameUrl
+    }
 
   }
 
@@ -309,7 +315,7 @@ export default class Profile extends Component {
               />
             </EnergyProgressbar>
             user_name: {this.state.user_name} <br />
-            point: {this.state.point}
+            level: {this.state.user_level}
             <Progressbar
               color='warning'
               percent={this.state.user_exp}

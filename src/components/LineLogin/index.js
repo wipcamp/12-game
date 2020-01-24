@@ -35,6 +35,7 @@ export default class LoginGame extends Component {
         console.log(stateInCookies)
         console.log(nonceInCookies)
         window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${loginGameUrl}&state=${stateInCookies}&scope=openid%20email%20profile&nonce=${nonceInCookies}`
+
     }
 
     async findUserGame(userId) {
@@ -106,7 +107,7 @@ export default class LoginGame extends Component {
     render() {
         let component
 
-        const ButtonContainer  = styled.div`
+        const ButtonContainer = styled.div`
             
             display: flex;
             flex-wrap: wrap;
@@ -153,18 +154,22 @@ export default class LoginGame extends Component {
             component = <center>LOADING...</center>
         } else {
             // component = <center><button style={lineButtonStyle} onClick={this.handleClick.bind(this)} >Log in with Line</button></center>
-
-        }
-        return (
-            // <React.Fragment>
-            //     {component}
-            //     {/* { Cookies.get('state') } */}
-            // </React.Fragment>            
-            <ButtonContainer>
+            component = <ButtonContainer>
                 <Button onClick={this.handleClick.bind(this)}>
                     <LineCI src="/image/line_ci.png" /> <span>Log in with Line</span>
                 </Button>
             </ButtonContainer>
+        }
+        return (
+            <React.Fragment>
+                {component}
+                {/* { Cookies.get('state') } */}
+            </React.Fragment>
+            // <ButtonContainer>
+            //     <Button onClick={this.handleClick.bind(this)}>
+            //         <LineCI src="/image/line_ci.png" /> <span>Log in with Line</span>
+            //     </Button>
+            // </ButtonContainer>
         );
     }
 }
