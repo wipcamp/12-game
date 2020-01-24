@@ -161,7 +161,7 @@ export default class LoginGame extends Component {
             //     {/* { Cookies.get('state') } */}
             // </React.Fragment>            
             <ButtonContainer>
-                <Button>
+                <Button onClick={this.handleClick.bind(this)}>
                     <LineCI src="/image/line_ci.png" /> <span>Log in with Line</span>
                 </Button>
             </ButtonContainer>
