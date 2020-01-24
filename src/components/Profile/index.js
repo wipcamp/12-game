@@ -245,7 +245,7 @@ export default class Profile extends Component {
     console.log(cooldownTime)
     this.setState({
       user_id: userGame.id,
-      user_level: 21,
+      user_level: userGame.level,
       user_str: userGame.str,
       user_dex: userGame.dex,
       user_luk: userGame.luk,
