@@ -94,8 +94,8 @@ export default class Profile extends Component {
               Cookies.remove('verifyCode', { domain: 'game.freezer.wip.camp', path: '' })
               console.log('removed verifyCode')
               console.log('checkCookiesPass')
-              console.log('userId in cookies : ' + tokenCookies.userId)
               const userId = tokenCookies.userId
+              console.log('userId in cookies : ' + tokenCookies.userId)
               // const userId = Cookies.get('userId')
               console.log('userId : ' + userId)
               this.getProfileData(userId)
@@ -109,8 +109,8 @@ export default class Profile extends Component {
         console.log('removed verifyCode')
         console.log('checkCookiesPass')
         // console.log('userId in cookies : ' + tokenCookies.userId)
-        // const userId = tokenCookies.userId
-        const userId = Cookies.get('userId')
+        const userId = tokenCookies.userId
+        // const userId = Cookies.get('userId')
         console.log('userId : ' + userId)
         this.getProfileData(userId)
       }
