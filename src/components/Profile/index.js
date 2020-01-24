@@ -95,8 +95,8 @@ export default class Profile extends Component {
               console.log('removed verifyCode')
               console.log('checkCookiesPass')
               console.log('userId in cookies : ' + tokenCookies.userId)
-              // const userId = tokenCookies.userId
-              const userId = Cookies.get('userId')
+              const userId = tokenCookies.userId
+              // const userId = Cookies.get('userId')
               console.log('userId : ' + userId)
               this.getProfileData(userId)
             }
