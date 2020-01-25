@@ -34,8 +34,8 @@ export default class LiffLogin extends Component {
     }
 
 
-    async getProfile() {
-        liff.getProfile().then(dataInfo => {
+    getProfile() {
+        liff.getProfile().then(async (dataInfo) => {
             const responseCheckUser = await profileService.checkUser(dataInfo.userId)
             if (responseCheckUser.data) {
                 this.setState({
@@ -43,7 +43,7 @@ export default class LiffLogin extends Component {
                     isLogedIn: true
                 })
             } else {
-                window.location.href=`localhost:3007`
+                window.location.href = `http://localhost:3007`
             }
         });
     }
