@@ -40,13 +40,13 @@ export default class LiffLogin extends Component {
             .catch(err => {
                 console.log(err);
             });
-        // if (liff.isLoggedIn()) {
-        //     this.getProfile()
-        //     this.getProfileData();
-        //     console.log('test')
-        // } else {
-        //     window.location.href = 'http://localhost:3007'
-        // }
+        if (liff.isLoggedIn()) {
+            this.getProfile()
+            this.getProfileData();
+            console.log('test')
+        } else {
+            window.location.href = 'http://localhost:3007'
+        }
     }
 
 
