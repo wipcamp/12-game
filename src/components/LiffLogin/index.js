@@ -21,10 +21,13 @@ export default class LiffLogin extends Component {
         user_exp: 0,
         user_max_exp: 0,
         cooldown_time: null,
-        isLogedIn: true
+        isLogedIn: false
     };
 
     componentDidMount() {
+        if(liff){
+            console.log(liff)
+        }
         liff
             .init({
                 liffId: '1653691835-vZ4GNK7z'
@@ -37,11 +40,13 @@ export default class LiffLogin extends Component {
             .catch(err => {
                 console.log(err);
             });
-        if (liff.isLoggedIn()) {
-            this.getProfile()
-            this.getProfileData();
-
-        }
+        // if (liff.isLoggedIn()) {
+        //     this.getProfile()
+        //     this.getProfileData();
+        //     console.log('test')
+        // } else {
+        //     window.location.href = 'http://localhost:3007'
+        // }
     }
 
 
@@ -82,6 +87,8 @@ export default class LiffLogin extends Component {
     render() {
         if (this.state.isLogedIn) {
             return <Profile profileData={this.state} />
+        } else {
+            return <p>loading</p>
         }
     }
 }
