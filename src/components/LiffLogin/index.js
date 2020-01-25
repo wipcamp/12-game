@@ -34,15 +34,16 @@ export default class LiffLogin extends Component {
     }
 
 
-    getProfile() {
+    async getProfile() {
         liff.getProfile().then(dataInfo => {
-            if (profileService.checkUser(dataInfo.userId)) {
+            const responseCheckUser = await profileService.checkUser(dataInfo.userId)
+            if (responseCheckUser.data) {
                 this.setState({
                     user_id: dataInfo.userId,
                     isLogedIn: true
                 })
             } else {
-                window.location.href=`http://localhost:3007`
+                window.location.href=`localhost:3007`
             }
         });
     }
