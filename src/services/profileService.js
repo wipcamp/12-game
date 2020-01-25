@@ -34,6 +34,10 @@ const profileService = {
         let res = await api.put(`/updateStatus?id=${lineId}&status=${status}&quantity=${quantity}`)
         return res;
     },
+    checkUser : async (id) =>{
+        let res = await api.get(`/checkUser?id=${id}`)
+        return res;
+    }
     // getProfileByUserId
   
   }

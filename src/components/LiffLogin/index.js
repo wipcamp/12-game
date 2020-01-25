@@ -10,7 +10,7 @@ export default class LiffLogin extends Component {
 
     state = {
         user_id: "",
-        isLogedIn:false
+        isLogedIn: false
     };
 
     componentDidMount() {
@@ -23,8 +23,8 @@ export default class LiffLogin extends Component {
             })
             .then(async () => {
                 if (!liff.isLoggedIn()) {
-                    window.location.href=`http://localhost:3007`
-                }else{
+                    window.location.href = `http://localhost:3007`
+                } else {
                     this.getProfile()
                 }
             })
@@ -36,11 +36,14 @@ export default class LiffLogin extends Component {
 
     getProfile() {
         liff.getProfile().then(dataInfo => {
-            this.setState({
-                user_id: dataInfo.userId,
-                isLogedIn:true
-
-            })
+            if (profileService.checkUser(dataInfo.userId)) {
+                this.setState({
+                    user_id: dataInfo.userId,
+                    isLogedIn: true
+                })
+            } else {
+                window.location.href=`http://localhost:3007`
+            }
         });
     }
 
