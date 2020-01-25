@@ -60,9 +60,9 @@ export default class Profile extends Component {
   async componentDidMount() {
     // Cookies.set('userId','U0d2f062bb2921e6f1e48d70c7a030ab2')
     let isDataChange = false
-    const tokenCookies = Cookies.getJSON('token')
-    console.log('tokenObject : ' + tokenCookies)
-    if (tokenCookies) {
+    //const tokenCookies = Cookies.getJSON('token')
+    //console.log('tokenObject : ' + tokenCookies)
+    // if (tokenCookies) {
       console.log('loggedIn')
       const search = window.location.search.substring(1);
       if (search) {
@@ -94,8 +94,8 @@ export default class Profile extends Component {
               Cookies.remove('verifyCode', { domain: 'game.freezer.wip.camp', path: '' })
               console.log('removed verifyCode')
               console.log('checkCookiesPass')
-              const userId = tokenCookies.userId
-              console.log('userId in cookies : ' + tokenCookies.userId)
+              //const userId = tokenCookies.userId
+              //console.log('userId in cookies : ' + tokenCookies.userId)
               // const userId = Cookies.get('userId')
               console.log('userId : ' + userId)
               this.getProfileData(userId)
@@ -109,14 +109,14 @@ export default class Profile extends Component {
         console.log('removed verifyCode')
         console.log('checkCookiesPass')
         // console.log('userId in cookies : ' + tokenCookies.userId)
-        const userId = tokenCookies.userId
+        //const userId = tokenCookies.userId
         // const userId = Cookies.get('userId')
-        console.log('userId : ' + userId)
-        this.getProfileData(userId)
+        //console.log('userId : ' + userId)
+        this.getProfileData(this.props.profileId)
       }
-    } else {
-      window.location.href = loginGameUrl
-    }
+    // } else {
+    //   window.location.href = loginGameUrl
+    // }
 
   }
 
