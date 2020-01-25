@@ -23,9 +23,8 @@ export default class LiffLogin extends Component {
             })
             .then(async () => {
                 if (!liff.isLoggedIn()) {
-                    liff.login();
-                    this.getProfile()
-                } else {
+                    window.location.href=`http://localhost:3007`
+                }else{
                     this.getProfile()
                 }
             })
