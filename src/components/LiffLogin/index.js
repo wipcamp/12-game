@@ -37,12 +37,11 @@ export default class LiffLogin extends Component {
 
     getProfile() {
         liff.getProfile().then(dataInfo => {
-            // this.setState({
-            //     user_id: dataInfo.userId,
-            //     isLogedIn:true
+            this.setState({
+                user_id: dataInfo.userId,
+                isLogedIn:true
 
-            // })
-            console.log(dataInfo.userId)
+            })
         });
     }
 
