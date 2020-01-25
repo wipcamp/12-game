@@ -48,7 +48,7 @@ export default class Menubar extends Component {
         const verifyMiniGame = await lineService.getGenerateCode()
         Cookies.set('verifyCode',verifyMiniGame.data,{domain:'game.freezer.wip.camp',path: ''})
         let startTime = new Date()
-        window.location.href=`http://localhost:3007/?userId=${user_id}&verifyCode=${verifyMiniGame.data}&timeStart=${startTime.getTime()}`
+        window.location.href=`10.5.12.93:3007/?userId=${user_id}&verifyCode=${verifyMiniGame.data}&timeStart=${startTime.getTime()}`
         // window.location.href=`line://app/1653691835-yMpVz5YX/?userId=${user_id}&verifyCode=${verifyMiniGame.data}&timeStart=${startTime.getTime()}`
         // this.props.newEnergy(); 
         //window.location.replace("http://localhost:3001/login");
