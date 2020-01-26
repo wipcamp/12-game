@@ -7,6 +7,7 @@ const CenterComponent = styled.div`
   margin-left: -5%;
 `;
 
+
 export default class Character extends Component {
     state = {
         characterController : new CharacterController(),
@@ -35,6 +36,14 @@ export default class Character extends Component {
           user_level:this.props.level
     }
   
+  getImageSize(){
+    let size = 300;
+    if(window.screen.width<=320){
+      size = 250;
+    }
+    console.log(size)
+    return size;
+  }
     
   getProfileImage() {
     console.log(this.state.user_level)
@@ -57,7 +66,13 @@ export default class Character extends Component {
     console.log(data)
     return (
       <CenterComponent>
-        <FlareComponent onChange={this.handleChange} controller={this.state.characterController} width={300} height={300} file={data}/>
+        <FlareComponent 
+          onChange={this.handleChange} 
+          controller={this.state.characterController} 
+          width={this.getImageSize()} 
+          height={this.getImageSize()} 
+          file={data}
+        />
       </CenterComponent>
     );
   }
