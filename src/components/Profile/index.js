@@ -18,9 +18,22 @@ const CenterComponent = styled.div`
 `;
 
 const EnergyProgressbar = styled(CenterComponent)`
-position: adsolute;
-top: -15%;
-left: 85vw;
+@media (min-width:300px) {
+  top: -9%;
+  left: 115%;
+}
+@media (min-width:375px) {
+  top: -9%;
+  left: 85vw;
+}
+@media (min-width:375px) and (min-height:700px) {
+  top: -13%;
+  left: 85vw;
+}
+@media (min-width:375px) and (min-height:800px) {
+  top: -22%;
+  left: 85vw;
+}
 `
 
 
@@ -314,7 +327,7 @@ export default class Profile extends Component {
                 status='energy'
               />
             </EnergyProgressbar>
-            user_name: {this.state.user_name} <br />
+            {this.state.user_name} <br />
             level: {this.state.user_level}
             <Progressbar
               color='warning'
