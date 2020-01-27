@@ -3,8 +3,6 @@ import profileService from '../../services/profileService';
 import Profile from '../Profile/index';
 
 
-
-
 const liff = window.liff;
 export default class LiffLogin extends Component {
 
@@ -23,7 +21,8 @@ export default class LiffLogin extends Component {
             })
             .then(async () => {
                 if (!liff.isLoggedIn()) {
-                    window.location.href = `http://localhost:3007`
+                    liff.login()
+                    // window.location.href = `http://localhost:3007`
                 } else {
                     this.getProfile()
                 }
@@ -43,7 +42,8 @@ export default class LiffLogin extends Component {
                     isLogedIn: true
                 })
             } else {
-                window.location.href = `http://localhost:3007`
+                console.log(dataInfo.userId)
+                // window.location.href = `http://localhost:3007`
             }
         });
     }
