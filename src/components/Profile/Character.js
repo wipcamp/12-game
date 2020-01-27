@@ -39,7 +39,7 @@ export default class Character extends Component {
   getImageSize(){
     let size = 300;
     if(window.screen.width<=320){
-      size = 250;
+      size = 230;
     }
     console.log(size)
     return size;
