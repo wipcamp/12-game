@@ -4,14 +4,9 @@ import styled from 'styled-components'
 import Modal from 'react-bootstrap/Modal'
 import profileService from '../../services/profileService';
 
-// const ProgressBar = styled(Progress)`
-//     height: 2px; 
-//     paddingVertical: 20;
-//   `
-
 const Status = styled.div`
-  width : 60px;
-  overflow : hidden;
+  width : 50px;
+  overflow : none;
   margin-right : 10px;
   height : 30px;
 `
@@ -81,7 +76,7 @@ export default class Progressbar extends Component {
     return (
       <div className="d-flex">
         <Status>
-          {this.state.status} : {this.state.level}
+          {this.state.status}
         </Status>
         <div >
           <Progress
