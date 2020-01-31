@@ -7,7 +7,7 @@ import styled from 'styled-components';
 
 const loginGameUrl = 'https://game.freezer.wip.camp/login'
 const gameUrl = 'https://game.freezer.wip.camp'
-const clientId = '1653724802'
+const clientId = '1653703435'
 export default class LoginGame extends Component {
 
     state = {
