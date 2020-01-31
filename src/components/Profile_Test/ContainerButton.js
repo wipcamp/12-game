@@ -3,10 +3,10 @@ import Icon from './Icon'
 import styled from 'styled-components'
 
 const Container = styled.div`
-    position: absolute;
+    position: relative;
     width: 100%;
     margin: auto;
-    bottom: 0%;
+    top: 90%;
     
 `
 export default class ContainerButton extends Component {

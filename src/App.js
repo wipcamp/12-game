@@ -7,7 +7,7 @@ import Profile from './components/Profile_Test/index'
 function App() {
   return (
     <div className="App">
-      {/* <header className="App-header">
+      <header className="App-header">
         <Router>
           <Switch>
             <Route exact path='/login'>
@@ -18,8 +18,8 @@ function App() {
             </Route>
           </Switch>
         </Router>
-      </header> */}
-      <Profile />
+      </header>
+      {/* <Profile /> */}
     </div>
   );
 }

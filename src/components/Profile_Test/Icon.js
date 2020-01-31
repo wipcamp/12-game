@@ -25,7 +25,7 @@ const Icon = (props) => {
     
     return(
         <React.Fragment>
-            <Img class="icon" src={props.src} alt={props.alt}/>
+            <Img className="icon" src={props.src} alt={props.alt}/>
         </React.Fragment>
     )
 }

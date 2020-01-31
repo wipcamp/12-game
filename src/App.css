@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  /* background-color: #282c34; */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -37,11 +37,15 @@
   }
 }
 
+.bg {
+  background: linear-gradient(180deg, #272065 0%, #841561 100%);
+}
+
 .icon:first-child {
   margin-left: 5%;
   margin-right: 0%
 }
 
 .icon:last-child {
-  margin-right: 5%
+  margin-right: 10%
 }

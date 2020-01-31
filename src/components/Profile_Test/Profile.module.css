@@ -1,22 +1,22 @@
 .cstatus {
-    position: absolute;
+    position: relative;
     width: 120px;
     height: 55px;
     background-color: black;
-    top: 10px;
-    left: 10px;
+    margin-left: 2%;
+    margin-top: 2%;
 }
 
 .cprofile {
-    position: absolute;
+    position: relative;
     width: 120px;
     height: 50px;
     background-color: aqua;
-    right: 10px;
-    top: 10px;
+    margin-top: 2%;
+    margin-right: 2%;
 }
 
 .bg {
     background-image: linear-gradient(180deg, #272065 0%, #841561 100%);
-    background-color: #841561;
+    /* background-color: #841561; */
 }
