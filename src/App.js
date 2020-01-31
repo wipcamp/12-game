@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import LoginGame from './components/LineLogin/index'
 import Liff from './components/LiffLogin/index'
-import Profile from './components/Profile_Test/index'
 
 function App() {
   return (
@@ -19,7 +18,6 @@ function App() {
           </Switch>
         </Router>
       </header>
-      {/* <Profile /> */}
     </div>
   );
 }
