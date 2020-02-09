@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import GageBar from './GageBar'
 
 const liff = window.liff;
 
@@ -40,6 +41,7 @@ export default class MiniGame2 extends Component {
       }else{       
         return (
           <div>
+              <GageBar/>
               <h1>minigame 2 page</h1>
           </div>
         );
