@@ -5,6 +5,7 @@ import Modal from 'react-bootstrap/Modal'
 import profileService from '../../services/profileService';
 import lineService from '../../services/LineService';
 import Cookies from 'js-cookie';
+import MiniGame2 from '../MiniGame2/index';
 
 const StyledNavbar = styled(Navbar)`
     background-color : red;
@@ -44,6 +45,7 @@ export default class MiniGameModal extends Component {
             console.log("play game1")
         }else if(game="game2"){
             console.log("play game 2")
+                window.location.replace("/MiniGame2?userId="+this.props.user_data.user_id);
         }
         const verifyMiniGame = await lineService.getGenerateCode()
         Cookies.set('verifyCode',verifyMiniGame.data,{domain:'game.freezer.wip.camp',path: ''})
@@ -74,7 +76,7 @@ export default class MiniGameModal extends Component {
                         <div className="d-flex justify-content-center">
                             <button className="btn btn-link m-2" onClick={()=>this.handleShow("game1")}>
                                 <img
-                                    src="https://img.icons8.com/cute-clipart/64/000000/home.png"
+                                    src="https://img.icons8.com/cute-clipart/64/000000/controller.png"
                                     width="100"
                                     height="100"
                                     className="d-inline-block align-top"
