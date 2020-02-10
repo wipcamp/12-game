@@ -15,17 +15,29 @@ export default class LottieController extends Component {
     state = {
         isStopped: false,
         isPause: false,
-        animationData: animationData1
-    }
-    
-    handleAnimationData(){
-        if(this.state.animationData === animationData1){
-            this.setState({animationData: animationData2})
-        }else {
-            this.setState({animationData: animationData1})
-        }
+        user_level: 20,
+        animationData: '',
+        animationDatas: [
+            {
+                level: 10,
+                animationData: animationData1
+            },
+            {
+                level: 20,
+                animationData: animationData2
+            }
+        ]
     }
 
+    componentDidMount(){
+        this.getProfileAnimation(this.state.user_level)
+    }
+    
+    getProfileAnimation(level){
+        this.setState({animationData: this.state.animationDatas[Math.floor(level/10)-1].animationData})
+    }
+
+    
     render() {
         const defaultOptions = {
             loop: true,
@@ -36,16 +48,18 @@ export default class LottieController extends Component {
             }
         }
         
+        console.log(Math.floor(15/10))
         console.log(defaultOptions.animationData)
 
         return (
             <React.Fragment>
                 <Lottie options={defaultOptions}
-                height={400}
-                width={800} />
+                height={100}
+                width={100} 
+                style={buttonStyle}/>
                 {/* // isStopped={this.state.isStopped}
                 // isPause={this.state.isPause} /> */}
-                <button style={buttonStyle} onClick={this.handleAnimationData.bind(this)}>Change</button>
+                {/* <button style={buttonStyle} onClick={this.handleAnimationData.bind(this)}>Change</button> */}
                 <button style={buttonStyle} onClick={() => this.setState({isStopped: false})}>Play</button>
                 <button style={buttonStyle} onClick={() => this.setState({isStopped: !this.state.isPause})}>Pause</button>
             </React.Fragment>
