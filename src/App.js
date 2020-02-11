@@ -3,11 +3,13 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import LoginGame from './components/LineLogin/index'
 import Liff from './components/LiffLogin/index'
 import Lottie from './components/Animation/index'
+import Profile from './components/Profile_Test/index'
+
 
 function App() {
   return (
     <div className="App">
-      <Lottie />
+      <Profile/ >
       {/* <header className="App-header">
         <Router>
           <Switch>
