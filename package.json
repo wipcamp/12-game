@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.0",
     "bootstrap": "^4.4.1",
+    "cross-env": "^7.0.0",
     "flare-react": "^1.0.7",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.15",
@@ -23,7 +24,7 @@
     "styled-components": "^4.4.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cross-env PORT=3221 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
