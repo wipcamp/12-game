@@ -14,14 +14,6 @@ const BarCon = styled.div`
     }
 
 `
-const energyStyle = {
-    position: 'relative',
-}
-const expStyle = {
-    position: 'relative',
-    marginTop: '2vh'
-}
-
 
 
 export default class ContainerBar extends Component {
