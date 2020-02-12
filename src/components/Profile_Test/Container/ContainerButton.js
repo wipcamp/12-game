@@ -4,11 +4,12 @@ import styled from 'styled-components'
 
 const Container = styled.div`
     display: flex;
+    position: absolute;
     flex-direction: row;
-    position: relative;
-    width: 100%;
+    width: 100vw;
     padding-bottom: 1em; 
     margin: 4.6rem auto 0 auto;
+    bottom: 0;
 `
 export default class ContainerButton extends Component {
 
