@@ -3,9 +3,8 @@ import { Progress } from 'reactstrap'
 import styled from 'styled-components'
 
 const Bars = styled.div`
-    display: relative;
-    position: flex;
     margin-bottom: -1em;
+
 `
 
 const energyStyle = {

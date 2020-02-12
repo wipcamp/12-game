@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 const Div = styled.div`
     display: flex;
+    position: relative;
 `
 const Img = styled.img`
     position: relative;
@@ -10,12 +11,12 @@ const Img = styled.img`
     width: 2.5rem;
     height: 2.5rem;
     background-color: #fff0ff;
-    border: 1px;
     border-radius: 50%;
     margin: auto 0.5rem auto 0.5rem;
     `
     const H2 = styled.h2`
     position: relative;
+    z-index: 1;
     margin: auto 0.5rem auto 0.5rem;
 `
 

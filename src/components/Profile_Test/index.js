@@ -9,17 +9,18 @@ import Cookies from 'js-cookie';
 import Lottie from '../Animation/index';
 import ContainerButton from './Container/ContainerButton';
 import ContainerBar from './Container/ContainerBar';
-import Name from './model/Name'
-import ContainerStatus from './Container/ContainerStatus'
+import Name from './model/Name';
+import ContainerStatus from './Container/ContainerStatus';
 
 const loginGameUrl = 'https://game.freezer.wip.camp/login';
 // const loginGameUrl = 'http://localhost:3000/login'
 
 const Bg = styled.div`
+  width: 100vw;
+  height: 100vh;
   background-image: url(/image/MainBG.png);
-  background-size: contains;
-  width: 100%;
-  height: 100%;
+  background-size: contain;
+  z-index: -1;
 `;
 
 const Upper = styled.div`
@@ -333,7 +334,7 @@ export default class Profile extends Component {
       <Bg>
         <Upper>
           <ContainerBar />
-          <Name name={null}/>
+          <Name name={null} />
         </Upper>
         <Lottie />
         <ContainerStatus />
