@@ -80,7 +80,7 @@ export default class MiniGame2 extends Component {
         console.log(err);
     });
     // }
-    this.intervalId = setInterval(this.createObject.bind(this), 1000);
+    // this.intervalId = setInterval(this.createObject.bind(this), 1000);
   }
 
   render() {
