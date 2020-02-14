@@ -4,6 +4,8 @@ import LoginGame from './components/LineLogin/index';
 import Liff from './components/LiffLogin/index';
 import Lottie from './components/Animation/index';
 import Profile from './components/Profile_Test/index';
+// import Profile from './components/Profile/index'
+import MiniGame2 from './components/MiniGame2/index'
 import Map from './components/Map/index';
 
 function App() {
@@ -16,6 +18,9 @@ function App() {
           </Route>
           <Route exact path='/'>
             <Profile />
+          </Route>
+          <Route exact path='/MiniGame2'>
+            <MiniGame2 />
           </Route>
         </Router>
       </header>
