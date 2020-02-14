@@ -5,6 +5,7 @@ import Modal from 'react-bootstrap/Modal'
 import profileService from '../../services/profileService';
 import lineService from '../../services/LineService';
 import Cookies from 'js-cookie';
+import MiniGameModal from './MiniGameModal'
 
 const StyledNavbar = styled(Navbar)`
     background-color : red;
@@ -107,23 +108,7 @@ export default class Menubar extends Component {
                         </button>
                     </div>
                 </StyledNavbar>
-                <Modal show={this.state.showModal} onHide={this.handleClose} centered>
-                    <Modal.Body>
-                        {(user_energy==0||user_energy==null)?"no energy":"Use 1 energy to play minigame"}
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <button 
-                            style={{display:(user_energy==0||user_energy==null)?"none":"block"}} 
-                            variant="secondary" 
-                            onClick={() => this.getMinigamePage(this.props.user_id)}
-                        >
-                            play
-                        </button>
-                        <button variant="primary" onClick={this.handleClose}>
-                            cancel
-                        </button>
-                    </Modal.Footer>
-                </Modal>
+                <MiniGameModal show={this.state.showModal} onHide={this.handleClose} user_data={this.props.user_data}/>
             </div>
         );
     }

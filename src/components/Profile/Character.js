@@ -44,26 +44,55 @@ export default class Character extends Component {
     console.log(size)
     return size;
   }
+
+  calculateImageLevel(userLevel) {
+    if(userLevel < 20) {
+      return 0
+    }
+    else if(userLevel >= 20 && userLevel < 30) {
+      return 1
+    }
+    else if(userLevel >= 30 && userLevel < 40) {
+      return 2
+    }
+    else if(userLevel >= 40 && userLevel < 50) {
+      return 3
+    }
+    else {
+      return 4
+    }
+  }
     
   getProfileImage() {
     console.log(this.state.user_level)
-    let data = null;
-    for (let i = 0; i < this.state.image_source.length; i++) {
-      if (this.state.user_level<this.state.image_source[i].level) {
-        if(i!=0){
-          data = this.state.image_source[i-1].source
-        }else{
-          data = this.state.image_source[i].source
-        }
-         i = this.state.image_source.length
-      }
-      else{
-        if(i==this.state.image_source.length-1){
-          data = this.state.image_source[i].source
-        }
-      }
+    let data = '/image/level1.flr';
+    // for (let i = 0; i < this.state.image_source.length; i++) {
+    //   if (this.state.user_level<this.state.image_source[i].level) {
+    //     if(i!=0){
+    //       data = this.state.image_source[i-1].source
+    //     }else{
+    //       data = this.state.image_source[i].source
+    //     }
+    //      i = this.state.image_source.length
+    //   }
+    //   else{
+    //     if(i==this.state.image_source.length-1){
+    //       data = this.state.image_source[i].source
+    //     }
+    //   }
+    // }
+    // console.log('this thereeee')
+    // console.log(this.state.user_level % 10)
+    // console.log(this.state.user_level % 10 + 1)
+    // console.log('this thereeee')
+    // let file = Math.floor(20 / 10)
+    const sourceIndex = this.calculateImageLevel(this.state.user_level)
+    console.log('sourceINdex', sourceIndex)
+    if(this.state.user_level == 0) {
+      return <div>Loading</div>
+
     }
-    console.log(data)
+
     return (
       <CenterComponent>
         <FlareComponent 
@@ -71,7 +100,7 @@ export default class Character extends Component {
           controller={this.state.characterController} 
           width={this.getImageSize()} 
           height={this.getImageSize()} 
-          file={data}
+          file={this.state.image_source[sourceIndex].source}
         />
       </CenterComponent>
     );
