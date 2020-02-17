@@ -1,105 +1,87 @@
 import React, { Component } from 'react';
 import GageBar from './GageBar'
-import Monster from './Monster'
+import Monster_Test from './Monster_Test'
+import MonsterTexture from './MonsterTexture'
 import Player from './Player'
+import styled from 'styled-components';
 
 const liff = window.liff;
 
+const MonsterMovement = styled.div`
+
+`
+
+const PlayerMoveMent = styled.div`
+  top: 20vh;
+  left: 5vw;
+  position: fixed;
+  animation: player 2s infinite linear;
+
+@keyframes player {
+    0%   {
+        transform: translateY(0);
+    }
+    50%  {
+        transform: translateY(20vw);
+    }
+    100% {
+        transform: translateY(0);
+    }
+  }
+`
+
 export default class MiniGame2 extends Component {
 
-    constructor(){
-      super();
-      this.state = {
-        isLoad : false,
-      }
-      this.player = [];
-      this.monsters = [];
+  constructor() {
+    super();
+    this.state = {
+      isLoad: false,
     }
-
-  update(){
-    const player = this.player[0];
+    this.player = [];
+    this.monsters = [];
   }
 
-  generateMonsters(){
-    let monsters = [];
-    let player = this.player[0];
-      let monster = new Monster({
-        size: 80,
-        position: {
-          x:"10px",
-          y:"10px"
-          // x: randomNumBetweenExcluding(0, this.state.screen.width, ship.position.x-60, ship.position.x+60),
-          // y: randomNumBetweenExcluding(0, this.state.screen.height, ship.position.y-60, ship.position.y+60)
-        },
-        create: this.createObject.bind(this),
-        // addScore: this.addScore.bind(this)
-      });
-      this.createObject(monster, 'monsters');
-      this.updateObjects(this.monsters, 'monsters')
-  }
-
-  updateObjects(items, group){
-    let index = 0;
-    for (let item of items) {
-      // if (item.delete) {
-      //   this[group].splice(index, 1);
-      // }else{
-        items[index].render(this.state);
-      // }
-      index++;
-    }
-  }
-
-  createObject(){
-    console.log("create")
-    // this[group].push(item);
-    return(
-      <Monster/>
-    );
-    // console.log(this.monsters.length)
-  }
-
-  componentDidMount(){
+  componentDidMount() {
     // if(liff){
-      liff
-        .init({
-          liffId: '1653691835-vZ4GNK7z'
-      })
-      .then(async () => {
-        if(!liff.isLoggedIn()){
-          console.log("not liff")
-          //รอpathเกมน้อง
-          // window.location.replace("/");
-        } else {
-            this.setState({
-              isLoad:false
-            })
-        }
-    })
-    .catch(err => {
-        console.log(err);
-    });
+    //   liff
+    //     .init({
+    //       liffId: '1653691835-vZ4GNK7z'
+    //   })
+    //   .then(async () => {
+    //     if(!liff.isLoggedIn()){
+    //       console.log("not liff")
+    //       //รอpathเกมน้อง
+    //       // window.location.replace("/");
+    //     } else {
+    //         this.setState({
+    //           isLoad:false
+    //         })
+    //     }
+    // })
+    // .catch(err => {
+    //     console.log(err);
+    // });
     // }
     // this.intervalId = setInterval(this.createObject.bind(this), 1000);
   }
 
   render() {
-      console.log(this.state.isLoad)
-      console.log("in minigame 2 in user")
-      console.log(liff)
-      if(this.state.isLoad){
-          return <p>loading</p>
-      }else{       
-        return (
-          <div>
-            <div className="d-flex">
-              <Player/>
-              {this.createObject()}
-            </div>
-              <GageBar/>
-              <h1>minigame 2 page</h1>
-          </div>
-        );
-      }
-    }  
+    if (this.state.isLoad) {
+      return <p>loading</p>
+    } else {
+      return (
+        <div>
+          <PlayerMoveMent>
+            <Player />
+          </PlayerMoveMent>
+          <MonsterMovement>
+            {/* <Monster_Test/> */}
+            <MonsterTexture />
+          </MonsterMovement>
+          <GageBar />
+          <h1>minigame 2 page</h1>
+        </div>
+      );
+    }
+  }
 }
