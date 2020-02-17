@@ -52,12 +52,13 @@ export default class Profile extends Component {
     // user_exp: this.props.profileData.user_exp,
     // user_max_exp: this.props.profileData.user_max_exp,
     // cooldown_time: this.props.profileData.cooldown_time
-    user_id: "",
+    count:0,
+    user_id: "1",
     user_level: 0,
     user_str: 0,
     user_dex: 0,
     user_luk: 0,
-    user_energy: 0,
+    user_energy: 5,
     user_max_energy: 0,
     user_name: "",
     user_team_name: "",
@@ -69,6 +70,12 @@ export default class Profile extends Component {
     isLevelUp: false,
     onTimeOut: false
   };
+
+  setCount(){
+    this.setState({
+      count : this.state.count+10
+    })
+  }
 
   async componentDidMount() {
     // Cookies.set('userId','U0d2f062bb2921e6f1e48d70c7a030ab2')
@@ -111,7 +118,7 @@ export default class Profile extends Component {
               //console.log('userId in cookies : ' + tokenCookies.userId)
               // const userId = Cookies.get('userId')
               console.log('userId : ' + userId)
-              this.getProfileData(userId)
+              this.getProfileData(this.state.user_id)
             }
           }
         }
@@ -125,11 +132,15 @@ export default class Profile extends Component {
         //const userId = tokenCookies.userId
         // const userId = Cookies.get('userId')
         //console.log('userId : ' + userId)
-        this.getProfileData(this.props.profileId)
+        // this.getProfileData(this.props.profileId)
+        this.getProfileData(this.state.user_id)
       }
     // } else {
     //   window.location.href = loginGameUrl
     // }
+    this.setState({
+      user_level : 20,
+    })
 
   }
 
@@ -246,6 +257,7 @@ export default class Profile extends Component {
   }
 
   async getProfileData(id) {
+    console.log("userdata"+id)
     let data = await profileService.getProfile(id);
     //check if no data redirect to gamePr
     let cooldown_time = await profileService.getCooldownTime(id);
@@ -309,10 +321,12 @@ export default class Profile extends Component {
   }
 
   render() {
+    console.log("level"+this.state.user_level)
     return (
       <div>
         <div className="container">
           <CenterComponent>
+            <button onClick={()=>this.setCount()}>UPLEVEL</button>
             <Countdown
               minute={this.state.cooldown_time == null || this.state.time == null ? 999 : this.state.time.min}
               second={this.state.cooldown_time == null || this.state.time == null ? 999 : this.state.time.sec}
@@ -340,7 +354,7 @@ export default class Profile extends Component {
             <p onClick={this.getProfileData.bind(this)} >Get DATA</p>
             */}
             team: {this.state.user_team_name} <br />
-            <Character level={this.state.user_level} userExp={this.state.user_exp} maxExp={this.state.user_max_exp} />{' '}
+            <Character level={this.state.user_level+this.state.count} userExp={this.state.user_exp} maxExp={this.state.user_max_exp} />{' '}
             <Progressbar
               getNewStatus={()=>this.getNewStatus(this.state.user_id)}
               user_id={this.state.user_id}
