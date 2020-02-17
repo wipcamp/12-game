@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import LoginGame from './components/LineLogin/index';
 import Liff from './components/LiffLogin/index';
-import Lottie from './components/Animation/index';
 import Profile from './components/Profile_Test/index';
 import Map from './components/Map/index';
 
@@ -31,7 +30,7 @@ function App() {
                   </Route>
                 </Switch>
               </Router>
-            </header> */}{' '}
+            </header> */}
     </div>
   );
 }
