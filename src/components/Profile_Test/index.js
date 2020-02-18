@@ -6,11 +6,8 @@ import styled from 'styled-components';
 import Menubar from '../Profile/Menubar';
 import Countdown from '../Profile/Countdown';
 import Cookies from 'js-cookie';
-import Lottie from '../Animation/index';
 import ContainerButton from './Container/ContainerButton';
-import ContainerBar from './Container/ContainerBar';
-import Name from './model/Name';
-import ContainerStatus from './Container/ContainerStatus';
+import ProfileTest from './Profile'
 import Map from '../Map/index';
 import MiniGameModal from '../Profile/MiniGameModal'
 
@@ -25,10 +22,6 @@ const Bg = styled.div`
   z-index: 0;
 `;
 
-const Upper = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
 const Img = styled.img`
   height: 7vh;
   width: 7vh;
@@ -108,7 +101,7 @@ export default class Profile extends Component {
       console.log('searched');
       const verifyCodeMiniGame = JSON.parse(
         '{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
-        function(key, value) {
+        function (key, value) {
           return key === '' ? value : decodeURIComponent(value);
         }
       );
@@ -199,7 +192,7 @@ export default class Profile extends Component {
     } else {
       console.log(
         'add full energy' +
-          (this.state.user_max_energy - this.state.user_energy)
+        (this.state.user_max_energy - this.state.user_energy)
       );
       let totalEnergy = user_max_energy;
       await profileService.setEnergy(user_id, totalEnergy);
@@ -356,9 +349,30 @@ export default class Profile extends Component {
   };
 
   handleClose = () => {
-    this.setState({ showModal: false})
+    this.setState({ showModal: false })
   }
 
+  getMenubar() {
+    return (
+      <Container>
+        <button onClick={() => this.handleAction('home')}>
+          <Img src={this.state.button.home.src} alt={this.state.alt} />
+        </button>
+        <button onClick={() => this.handleAction('map')}>
+          <Img src={this.state.button.map.src} alt={this.state.alt} />
+        </button>
+        <button onClick={() => this.handleAction('minigame')}>
+          <Img
+            src={this.state.button.minigame.src}
+            alt={this.state.alt}
+          />
+        </button>
+        <button onClick={() => this.handleAction('test')}>
+          <Img src={this.state.button.test.src} alt={this.state.alt} />
+        </button>
+      </Container>
+    );
+  }
 
 
   handleAction(pwd) {
@@ -384,65 +398,18 @@ export default class Profile extends Component {
     return (
       <Bg>
         {this.state.screen === 'map' ? (
-          <>
-            <Map />
-            <Container>
-              <button onClick={() => this.handleAction('home')}>
-                <Img src={this.state.button.home.src} alt={this.state.alt} />
-              </button>
-              <button onClick={() => this.handleAction('map')}>
-                <Img src={this.state.button.map.src} alt={this.state.alt} />
-              </button>
-              <button onClick={() => this.handleAction('minigame')}>
-                <Img
-                  src={this.state.button.minigame.src}
-                  alt={this.state.alt}
-                />
-              </button>
-              <button onClick={() => this.handleAction('test')}>
-                <Img src={this.state.button.test.src} alt={this.state.alt} />
-              </button>
-            </Container>
-            <MiniGameModal show={this.state.showModal} onHide={this.handleClose} user_data={this.props.user_data}/>
-          </>
+          <Map />
         ) : this.state.screen === 'home' ? (
-          <>
-            <Upper>
-              <ContainerBar />
-              <Name
-                name={this.state.user_name}
-                teamName={this.state.user_team_name}
-                src={null}
-              />
-            </Upper>
-            <Lottie />
-            <ContainerStatus
-              str={this.state.user_str}
-              dex={this.state.user_dex}
-              luk={this.state.user_luk}
-            />
-            <Container>
-              <button onClick={() => this.handleAction('home')}>
-                <Img src={this.state.button.home.src} alt={this.state.alt} />
-              </button>
-              <button onClick={() => this.handleAction('map')}>
-                <Img src={this.state.button.map.src} alt={this.state.alt} />
-              </button>
-              <button onClick={() => this.handleAction('minigame')}>
-                <Img
-                  src={this.state.button.minigame.src}
-                  alt={this.state.alt}
-                />
-              </button>
-              <button onClick={() => this.handleAction('test')}>
-                <Img src={this.state.button.test.src} alt={this.state.alt} />
-              </button>
-            </Container>
-            <MiniGameModal show={this.state.showModal} onHide={this.handleClose} user_data={this.state.user_energy}/>
-          </>
+          <ProfileTest data={this.state}/>
         ) : (
-          ''
-        )}
+              ''
+            )}
+        {this.getMenubar()}
+        <MiniGameModal
+          show={this.state.showModal}
+          onHide={this.handleClose}
+          user_data={this.state.user_energy}
+        />
       </Bg>
     );
   }
