@@ -8,7 +8,19 @@ import styled from 'styled-components';
 const liff = window.liff;
 
 const MonsterMovement = styled.div`
+top: 20vh;
+left: 5vw;
+position: fixed;
+animation: monster 2s infinite linear;
 
+@keyframes monster {
+  0%   {
+      transform: translateX(100vw);
+  }
+  100% {
+      transform: translateX(0);
+  }
+}
 `
 
 const PlayerMoveMent = styled.div`

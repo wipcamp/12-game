@@ -14,8 +14,6 @@ const BarCon = styled.div`
     }
 
 `
-
-
 export default class ContainerBar extends Component {
 
     state = {
