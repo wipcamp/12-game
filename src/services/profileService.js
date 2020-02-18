@@ -6,6 +6,10 @@ const profileService = {
         let res = await api.get(`/profile?id=${lineId}`)
         return res;
     },
+    getProfileTest : async () => {
+        let res = await api.get(`/profile?id=1`)
+        return res;
+    },
     useEnergy : async (lineId) => {
         let res = await api.post(`/useEnergy?id=${lineId}`)
         return res;

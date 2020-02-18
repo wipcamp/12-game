@@ -14,7 +14,7 @@ const StyledNavbar = styled(Navbar)`
 export default class MiniGameModal extends Component {
     state = {
         showModal: false,
-        user_energy: this.props.user_data.user_energy,
+        user_energy: this.props.user_data,
         game:null
     };
 
@@ -32,9 +32,9 @@ export default class MiniGameModal extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const { user_energy } = this.props.user_data.user_energy;
-        if (nextProps.user_data.user_energy !== user_energy) {
-          this.setState({ user_energy: nextProps.user_data.user_energy });
+        const  user_energy  = this.state.user_energy;
+        if (nextProps.user_data !== user_energy) {
+          this.setState({ user_energy: nextProps.user_energy });
         }
       }
 

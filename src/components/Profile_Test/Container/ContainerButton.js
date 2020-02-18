@@ -14,26 +14,29 @@ const Container = styled.div`
 export default class ContainerButton extends Component {
 
     state = {
-        id: [ ]
+        id: []
     }
 
     componentDidMount() {
-        this.setState({
-            id: this.props.id
-        })
+        if(this.state.id !== this.props.id){
+            this.setState({
+                id: this.props.id
+            })
+        }
+    }
+
+    componentDidUpdate(prevProps){
+        if(prevProps.id !==  this.props.id){
+            this.setState({
+                id: this.props.id
+            })
+        }
     }
 
     render() {
         return (
             <React.Fragment>
-                <Container>
-                {
-                this.state.id.map((data, i) => (
-                    <Icon key={i} src={data.src} />
-                    )
-                    )
-                }
-                </Container>
+                <Icon name={this.props.id[2].name} src={this.props.id[2].src} />
             </React.Fragment>
         )
     }

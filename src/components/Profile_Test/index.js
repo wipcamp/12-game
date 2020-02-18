@@ -11,6 +11,8 @@ import ContainerButton from './Container/ContainerButton';
 import ContainerBar from './Container/ContainerBar';
 import Name from './model/Name';
 import ContainerStatus from './Container/ContainerStatus';
+import Map from '../Map/index';
+import MiniGameModal from '../Profile/MiniGameModal'
 
 const loginGameUrl = 'https://game.freezer.wip.camp/login';
 // const loginGameUrl = 'http://localhost:3000/login'
@@ -20,28 +22,42 @@ const Bg = styled.div`
   height: 100vh;
   background-image: url(/image/MainBG.png);
   background-size: contain;
-  z-index: -1;
+  z-index: 0;
 `;
 
 const Upper = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+const Img = styled.img`
+  height: 7vh;
+  width: 7vh;
+  border: 1px solid #000000;
+  border-radius: 50%;
+  margin: auto;
+`;
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  flex-direction: row;
+  width: 100vw;
+  padding-bottom: 1em;
+  margin: 4.6rem auto 0 auto;
+  bottom: 0;
+
+  button:nth-child(odd) {
+    margin: auto;
+  }
+
+  button:nth-child(even) {
+    margin: auto;
+  }
+`;
 
 export default class Profile extends Component {
   state = {
-    // user_id: this.props.profileData.user_id,
-    // user_level: this.props.profileData.user_level,
-    // user_str: this.props.profileData.user_str,
-    // user_dex: this.props.profileData.user_dex,
-    // user_luk: this.props.profileData.user_luk,
-    // user_energy: this.props.profileData.user_energy,
-    // user_max_energy: this.props.profileData.user_max_energy,
-    // user_name: this.props.profileData.user_name,
-    // user_team_name: this.props.profileData.user_team,
-    // user_exp: this.props.profileData.user_exp,
-    // user_max_exp: this.props.profileData.user_max_exp,
-    // cooldown_time: this.props.profileData.cooldown_time
     user_id: '',
     user_level: 0,
     user_str: 0,
@@ -58,27 +74,32 @@ export default class Profile extends Component {
     point: 0,
     isLevelUp: false,
     onTimeOut: false,
-    id: [
-      {
-        src: './image/logo192.png'
+    button: {
+      home: {
+        name: 'home',
+        src: 'https://img.icons8.com/cute-clipart/64/000000/home.png'
       },
-      {
-        src: './image/logo192.png'
+      minigame: {
+        name: 'minigame',
+        src: 'https://img.icons8.com/cute-clipart/64/000000/controller.png'
       },
-      {
-        src: './image/logo192.png'
+      map: {
+        name: 'map',
+        src: 'https://img.icons8.com/cute-clipart/64/000000/map.png'
       },
-      {
-        src: './image/line_ci.png'
+      test: {
+        name: 'comingsoon',
+        src: 'https://img.icons8.com/color/48/000000/activity-history.png'
       }
-    ]
+    },
+    screen: 'home',
+    showModal: false
   };
 
   async componentDidMount() {
-    // Cookies.set('userId','U0d2f062bb2921e6f1e48d70c7a030ab2')
     let isDataChange = false;
-    //const tokenCookies = Cookies.getJSON('token')
-    //console.log('tokenObject : ' + tokenCookies)
+    const tokenCookies = Cookies.getJSON('token');
+    console.log('tokenObject : ' + tokenCookies);
     // if (tokenCookies) {
     console.log('loggedIn');
     const search = window.location.search.substring(1);
@@ -144,8 +165,8 @@ export default class Profile extends Component {
     }
     // } else {
     //   window.location.href = loginGameUrl
-    // }
   }
+  // }
 
   async addEnergy(energyAdd, newCooldown) {
     const { user_energy, user_max_energy, cooldown_time, user_id } = this.state;
@@ -267,14 +288,15 @@ export default class Profile extends Component {
   }
 
   async getProfileData(id) {
-    let data = await profileService.getProfile(id);
+    // let data = await profileService.getProfile(id);
+    let data = await profileService.getProfileTest();
     //check if no data redirect to gamePr
     let cooldown_time = await profileService.getCooldownTime(id);
     let userGame = data.data;
-    console.log(data.data);
+    console.log('Data: ' + userGame);
     const team = userGame.team;
     console.log('team object : ' + team);
-    console.log('team name : ' + team.teamName);
+    // console.log('team name : ' + team.teamName);
     let cooldownTime = cooldown_time.data;
     console.log(cooldownTime);
     this.setState({
@@ -329,16 +351,98 @@ export default class Profile extends Component {
     }
   }
 
+  handleShow = () => {
+    this.setState({ showModal: true });
+  };
+
+  handleClose = () => {
+    this.setState({ showModal: false})
+  }
+
+
+
+  handleAction(pwd) {
+    switch (pwd) {
+      case 'home':
+        this.setState({
+          screen: 'home'
+        });
+        break;
+      case 'map':
+        this.setState({
+          screen: 'map'
+        });
+        break;
+      case 'minigame':
+        this.handleShow()
+      default:
+        break;
+    }
+  }
+
   render() {
     return (
       <Bg>
-        <Upper>
-          <ContainerBar />
-          <Name name={null} />
-        </Upper>
-        <Lottie />
-        <ContainerStatus />
-        <ContainerButton id={this.state.id} />
+        {this.state.screen === 'map' ? (
+          <>
+            <Map />
+            <Container>
+              <button onClick={() => this.handleAction('home')}>
+                <Img src={this.state.button.home.src} alt={this.state.alt} />
+              </button>
+              <button onClick={() => this.handleAction('map')}>
+                <Img src={this.state.button.map.src} alt={this.state.alt} />
+              </button>
+              <button onClick={() => this.handleAction('minigame')}>
+                <Img
+                  src={this.state.button.minigame.src}
+                  alt={this.state.alt}
+                />
+              </button>
+              <button onClick={() => this.handleAction('test')}>
+                <Img src={this.state.button.test.src} alt={this.state.alt} />
+              </button>
+            </Container>
+            <MiniGameModal show={this.state.showModal} onHide={this.handleClose} user_data={this.props.user_data}/>
+          </>
+        ) : this.state.screen === 'home' ? (
+          <>
+            <Upper>
+              <ContainerBar />
+              <Name
+                name={this.state.user_name}
+                teamName={this.state.user_team_name}
+                src={null}
+              />
+            </Upper>
+            <Lottie />
+            <ContainerStatus
+              str={this.state.user_str}
+              dex={this.state.user_dex}
+              luk={this.state.user_luk}
+            />
+            <Container>
+              <button onClick={() => this.handleAction('home')}>
+                <Img src={this.state.button.home.src} alt={this.state.alt} />
+              </button>
+              <button onClick={() => this.handleAction('map')}>
+                <Img src={this.state.button.map.src} alt={this.state.alt} />
+              </button>
+              <button onClick={() => this.handleAction('minigame')}>
+                <Img
+                  src={this.state.button.minigame.src}
+                  alt={this.state.alt}
+                />
+              </button>
+              <button onClick={() => this.handleAction('test')}>
+                <Img src={this.state.button.test.src} alt={this.state.alt} />
+              </button>
+            </Container>
+            <MiniGameModal show={this.state.showModal} onHide={this.handleClose} user_data={this.state.user_energy}/>
+          </>
+        ) : (
+          ''
+        )}
       </Bg>
     );
   }

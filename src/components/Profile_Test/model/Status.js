@@ -52,14 +52,27 @@ export default class Status extends Component {
     
     state = {
         stat: "",
-        num: ""
+        number: ""
     }
 
     componentDidMount(){
         this.setState({
             stat: this.props.stat || "Sth",
-            num: this.props.num || 0
+            number: this.props.number 
         })
+    }
+
+    componentDidUpdate(prevProps){
+        if(prevProps.stat !== this.props.stat){
+            this.setState({
+                stat: this.props.stat
+            })
+        }
+        if(prevProps.number !== this.props.number){
+            this.setState({
+                number: this.props.number
+            })
+        }
     }
 
     render() {
@@ -68,7 +81,7 @@ export default class Status extends Component {
                 <Head></Head>
                 <Body>
                     <p>{this.state.stat}</p>
-                    <p>{this.state.num}</p>
+                    <p>{this.state.number}</p>
                 </Body>
             </Div>
         )
