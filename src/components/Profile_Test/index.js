@@ -9,7 +9,7 @@ import Cookies from 'js-cookie';
 import ContainerButton from './Container/ContainerButton';
 import ProfileTest from './Profile'
 import Map from '../Map/index';
-import MiniGameModal from '../Profile/MiniGameModal'
+import MiniGameModal from './MiniGameModal'
 
 const loginGameUrl = 'https://game.freezer.wip.camp/login';
 // const loginGameUrl = 'http://localhost:3000/login'
@@ -317,6 +317,7 @@ export default class Profile extends Component {
         isLevelUp: true
       });
     }
+    console.log(this.state)
   }
 
   onTimeOut() {
@@ -395,6 +396,7 @@ export default class Profile extends Component {
   }
 
   render() {
+    console.log("usenerfy"+this.state.user_energy)
     return (
       <Bg>
         {this.state.screen === 'map' ? (
@@ -408,7 +410,7 @@ export default class Profile extends Component {
         <MiniGameModal
           show={this.state.showModal}
           onHide={this.handleClose}
-          user_data={this.state.user_energy}
+          user_data={this.state}
         />
       </Bg>
     );
