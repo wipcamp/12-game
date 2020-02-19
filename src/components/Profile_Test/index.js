@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import profileService from '../../services/profileService';
 import styled from 'styled-components';
-import Countdown from '../Profile/Countdown';
+import Countdown from './Countdown';
 import Cookies from 'js-cookie';
 import ContainerButton from './Container/ContainerButton';
 import ProfileTest from './Profile'
@@ -281,7 +281,7 @@ export default class Profile extends Component {
     // let data = await profileService.getProfile(id);
     let data = await profileService.getProfileTest();
     //check if no data redirect to gamePr
-    let cooldown_time = await profileService.getCooldownTime(id);
+    let cooldown_time = await profileService.getCooldownTime(1);
     let userGame = data.data;
     console.log('Data: ' + userGame);
     const team = userGame.team;
@@ -393,17 +393,22 @@ export default class Profile extends Component {
   }
 
   render() {
-    console.log("usenerfy"+this.state.user_energy)
+    console.log("cooldown" + this.state.cooldown_time)
     return (
       <Bg>
         {this.state.screen === 'map' ? (
           <Map />
         ) : this.state.screen === 'home' ? (
-          <ProfileTest data={this.state}/>
+          <ProfileTest data={this.state} />
         ) : (
               ''
             )}
         {this.getMenubar()}
+        <Countdown
+          minute={this.state.cooldown_time == null || this.state.time == null ? 999 : this.state.time.min}
+          second={this.state.cooldown_time == null || this.state.time == null ? 999 : this.state.time.sec}
+          onTimeOut={() => this.onTimeOut()}
+        />
         <MiniGameModal
           show={this.state.showModal}
           onHide={this.handleClose}
