@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import profileService from '../../services/profileService';
-import Progressbar from '../Profile/Progressbar';
-import Character from '../Profile/Character';
 import styled from 'styled-components';
-import Menubar from '../Profile/Menubar';
 import Countdown from '../Profile/Countdown';
 import Cookies from 'js-cookie';
 import ContainerButton from './Container/ContainerButton';
