@@ -25,6 +25,7 @@ export default class Monster extends Component {
               width={200}
               isStopped={this.state.isStopped}
               isPaused={this.state.isPaused}
+              isClickToPauseDisabled={true}
             />
         );
     }
