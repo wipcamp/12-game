@@ -23,6 +23,14 @@ animation: monster 2s infinite linear;
 }
 `
 
+const ControllerBar = styled.div`
+  position : fixed;
+  bottom: 0vh;
+  height: 30vh;
+  width: 100vh;
+  background-color: powderblue;
+`
+
 const PlayerMoveMent = styled.div`
   top: 20vh;
   left: 5vw;
@@ -90,8 +98,9 @@ export default class MiniGame2 extends Component {
             {/* <Monster_Test/> */}
             <MonsterTexture />
           </MonsterMovement>
-          <GageBar />
-          <h1>minigame 2 page</h1>
+          <ControllerBar>
+            <GageBar />
+          </ControllerBar>
         </div>
       );
     }
