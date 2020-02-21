@@ -5,9 +5,9 @@ import { Progress } from "reactstrap";
 const Triangle = styled.div`
 width: 0;
 height: 0;
-border-left: 10px solid transparent;
-border-right: 10px solid transparent;
-border-top: 20px solid red;
+border-left: 1vh solid transparent;
+border-right: 1vh solid transparent;
+border-top: 2vh solid red;
 position: relative;
 animation: mymove 2s infinite linear;
 animation-delay: 2s;
@@ -23,10 +23,6 @@ animation-delay: 2s;
         transform: translateX(0);
     }
   }
-`
-
-const GageSize = styled.div`
-  width : 50vw;
 `
 
 export default class GageBar extends Component {
@@ -56,15 +52,17 @@ export default class GageBar extends Component {
     render() {
         console.log(this.state.startTime)
         return (
-            <GageSize>
+            <div>
                 <Triangle />
-                <Progress multi>
+                <Progress multi
+                    style={ {marginTop: 10, height: '2vh', paddingVertical: 20, width: '50vw' } }
+                >
                     <Progress bar color="warning" value="30" />
                     <Progress bar color="danger" value="40" />
                     <Progress bar color="warning" value="30" />
                 </Progress>
                 <button onClick={()=>this.attack(new Date())}>click</button>
-            </GageSize>
+            </div>
         );
     }
 }
