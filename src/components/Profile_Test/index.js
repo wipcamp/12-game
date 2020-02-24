@@ -7,6 +7,7 @@ import ContainerButton from './Container/ContainerButton';
 import ProfileTest from './Profile'
 import Map from '../Map/index';
 import MiniGameModal from './MiniGameModal'
+import Realtime from '../Realtime/Index'
 
 const loginGameUrl = 'https://game.freezer.wip.camp/login';
 // const loginGameUrl = 'http://localhost:3000/login'
@@ -82,7 +83,7 @@ export default class Profile extends Component {
         src: 'https://img.icons8.com/color/48/000000/activity-history.png'
       }
     },
-    screen: 'home',
+    screen: 'test',
     showModal: false
   };
 
@@ -385,6 +386,11 @@ export default class Profile extends Component {
           screen: 'map'
         });
         break;
+      case 'test':
+        this.setState({
+          screen: 'test'
+        });
+        break;
       case 'minigame':
         this.handleShow()
       default:
@@ -400,6 +406,8 @@ export default class Profile extends Component {
           <Map />
         ) : this.state.screen === 'home' ? (
           <ProfileTest data={this.state} />
+        ) : this.state.screen === 'test' ? (
+          <Realtime />
         ) : (
               ''
             )}
