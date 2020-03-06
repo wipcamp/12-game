@@ -30,22 +30,28 @@ export default class GageBar extends Component {
     state = {
         isLoad: false,
         startTime: new Date(),
+        position: 30,
+        size: 40,
     }
 
     componentDidMount() {
-        
+
     }
 
-    attack(time){
-        console.log((time-this.state.startTime)%1000)
-        let diff = (time-this.state.startTime)%1000
-        //ถ้าสีแดง=20
-        // if(diff>=700&&diff<=999){
-        //     console.log("diff"+diff)
-        // }
-        //ถ้าสีแดง=40
-        if((diff>=700&&diff<=999)||(diff>=1&&diff<=150)){
-            console.log("diff"+diff)
+    attack(time) {
+        let diff = (time - this.state.startTime) % 1000
+        let start = this.state.position * 10 + 400;
+        let end = (this.state.position + this.state.size) * 10 + 400;
+        let remain = 0
+        if (end % 1000 > 0) {
+            remain = end % 1000;
+            if ((diff >= start && diff <= end) || (diff >= 1 && diff <= remain)) {
+                console.log("diff sp" + diff)
+            }
+        } else {
+            if (diff >= start && diff <= end) {
+                console.log("diff normal" + diff)
+            }
         }
     }
 
@@ -55,13 +61,13 @@ export default class GageBar extends Component {
             <div>
                 <Triangle />
                 <Progress multi
-                    style={ {marginTop: 10, height: '2vh', paddingVertical: 20, width: '50vw' } }
+                    style={{ marginTop: 10, height: '2vh', paddingVertical: 20, width: '50vw' }}
                 >
-                    <Progress bar color="warning" value="30" />
-                    <Progress bar color="danger" value="40" />
-                    <Progress bar color="warning" value="30" />
+                    <Progress bar color="warning" value={this.state.position} />
+                    <Progress bar color="danger" value={this.state.size} />
+                    <Progress bar color="warning" value={100 - (this.state.size + this.state.position)} />
                 </Progress>
-                <button onClick={()=>this.attack(new Date())}>click</button>
+                <button onClick={() => this.attack(new Date())}>click</button>
             </div>
         );
     }
