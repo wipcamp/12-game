@@ -23,8 +23,8 @@ const Triangle = styled.div`
     }
   }
 `;
-
 export default class GageBar extends Component {
+  
   state = {
     isLoad: false,
     startTime: new Date(),
@@ -32,31 +32,50 @@ export default class GageBar extends Component {
     size: 40
   };
 
+  time = {
+    //time init
+    init: 0,
+    //time start position target
+    start: 0,
+    //time end position target
+    end: 0,
+    //go or back
+    goBack: 0
+  };
+
   componentDidMount() {}
 
-  attack(time) {
-    let diff = (time - this.state.startTime) % 1000;
-    let start = this.state.position * 10 + 400;
-    let end = (this.state.position + this.state.size) * 10 + 400;
-    let remain = 0;
-    if (end % 1000 > 0) {
-      remain = end % 1000;
-      if ((diff >= start && diff <= end) || (diff >= 1 && diff <= remain)) {
-        console.log('diff sp' + diff);
-      }
-    } else {
-      if (diff >= start && diff <= end) {
-        console.log('diff normal' + diff);
-      }
-    }
-  }
-
   getRandom = (min, max) => {
-    return Math.floor(min + (Math.random()*(max + 1 - min)))
-  }
+    return Math.floor(min + Math.random() * (max + 1 - min));
+  };
+
+  initTime = () => {
+    setInterval(() => {
+      let times = new Date().getMilliseconds();
+      this.time = {
+        init: times + 400,
+        //t: s * v
+        start: this.state.position * 10 + this.time.init,
+        end: this.state.size * 10 + this.time.start,
+        goBack: 1
+      };
+    }, 1000);
+  };
+
+  atk = t => {
+    let check = t + this.time.init;
+    if (check <= this.time.start || check >= this.time.end) {
+      this.setState({
+        position: this.getRandom(10, 50)
+      });
+      console.log('hit');
+    } else {
+      console.log('missed');
+    }
+  };
 
   render() {
-    console.log(this.state.startTime);
+    {this.initTime()}
     return (
       <div>
         <Triangle />
@@ -77,17 +96,10 @@ export default class GageBar extends Component {
             value={100 - (this.state.size + this.state.position)}
           />
         </Progress>
-        <button onClick={() => this.attack(new Date())}>click</button>
-        <button
-          onClick={() => {
-            this.setState({
-              position: this.getRandom(20,80),
-              size: this.getRandom(20,40)
-            });
-            console.log(this.state.position);
-            console.log(this.state.size);
-          }}
-        >Random</button>
+        <button onClick={() => this.atk(new Date().getMilliseconds())}>
+          Attack
+        </button>
+        
       </div>
     );
   }
