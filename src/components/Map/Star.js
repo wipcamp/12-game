@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import teamService from '../../services/teamService'
+// import teamService from '../../services/teamService'
 
 const Aries = styled.div`
 background-color: #FFDFBD;

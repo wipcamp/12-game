@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import styled, { css } from 'styled-components'
+// import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import Proptypes from 'prop-types'
 import profileService from '../../services/profileService';
 
@@ -16,10 +17,10 @@ const stars = {
     LIBRA: "libra",
 }
 
-const Img = styled.img`
-    width: 3em;
-    height: 3em;
-`
+// const Img = styled.img`
+//     width: 3em;
+//     height: 3em;
+// `
 
 const P = styled.p`
     position: relative;
@@ -107,7 +108,7 @@ export default class StarGroup extends Component {
     }
 
     async getTeamData(){
-        let data = await profileService
+        // let data = await profileService
     }
 
     render() {

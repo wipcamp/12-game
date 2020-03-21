@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import GageBar from './GageBar'
-import Monster_Test from './Monster_Test'
-import MonsterTexture from './MonsterTexture'
-import Player from './Player'
 import styled from 'styled-components';
 
-const liff = window.liff;
+
+import GageBar from './GageBar'
+// import Monster_Test from './Monster_Test'
+import MonsterTexture from './MonsterTexture'
+import Player from './Player'
+import Health from './Health'
+
+// const liff = window.liff;
 
 const MonsterMovement = styled.div`
 top: 20vh;
@@ -52,14 +55,19 @@ const PlayerMoveMent = styled.div`
 
 export default class MiniGame2 extends Component {
 
-  constructor() {
-    super();
-    this.state = {
-      isLoad: false,
-    }
-    this.player = [];
-    this.monsters = [];
+  state = {
+    isAttack: false,
+    isClicked: true
   }
+
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     isLoad: false,
+  //   }
+  //   this.player = [];
+  //   this.monsters = [];
+  // }
 
   componentDidMount() {
     // if(liff){
@@ -91,6 +99,7 @@ export default class MiniGame2 extends Component {
     } else {
       return (
         <div>
+          <p>attack:  {this.state.isAttack? 'true': 'false'} </p>
           <PlayerMoveMent>
             <Player />
           </PlayerMoveMent>
@@ -101,6 +110,8 @@ export default class MiniGame2 extends Component {
           <ControllerBar>
             <GageBar />
           </ControllerBar>
+          <Health isAttack={this.state.isAttack}/>
+          <button onClick={() => this.state.isClicked? this.setState({isClicked: false}) : this.setState({isClicked: true})} >under</button>
         </div>
       );
     }

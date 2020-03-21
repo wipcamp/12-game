@@ -9,7 +9,7 @@ const Triangle = styled.div`
   border-right: 1vh solid transparent;
   border-top: 2vh solid red;
   position: relative;
-  animation: mymove 2s infinite linear;
+  animation: mymove 10s infinite linear;
 
   @keyframes mymove {
     0% {
@@ -29,7 +29,7 @@ export default class GageBar extends Component {
     isLoad: false,
     startTime: new Date(),
     position: 30,
-    size: 40
+    size: 10
   };
 
   time = {
@@ -75,7 +75,7 @@ export default class GageBar extends Component {
   };
 
   render() {
-    {this.initTime()}
+    this.initTime()
     return (
       <div>
         <Triangle />

@@ -3,13 +3,12 @@ import profileService from '../../services/profileService';
 import styled from 'styled-components';
 import Countdown from './Countdown';
 import Cookies from 'js-cookie';
-import ContainerButton from './Container/ContainerButton';
 import ProfileTest from './Profile'
 import Map from '../Map/index';
 import MiniGameModal from './MiniGameModal'
 import Realtime from '../Realtime/Index'
 
-const loginGameUrl = 'https://game.freezer.wip.camp/login';
+// const loginGameUrl = 'https://game.freezer.wip.camp/login';
 // const loginGameUrl = 'http://localhost:3000/login'
 
 const Bg = styled.div`
@@ -118,7 +117,7 @@ export default class Profile extends Component {
         console.log(timeStart);
         console.log(score);
         console.log(timePlay);
-        if (verifyMiniGameCookie == verifyCode) {
+        if (verifyMiniGameCookie === verifyCode) {
           isDataChange = true;
           console.log('same code');
           let res = await profileService.getExp(userId, score);
@@ -140,7 +139,7 @@ export default class Profile extends Component {
         }
       }
     }
-    if (isDataChange == false) {
+    if (isDataChange === false) {
       // if (true) {
       Cookies.remove('verifyCode', {
         domain: 'game.freezer.wip.camp',
@@ -160,9 +159,10 @@ export default class Profile extends Component {
   // }
 
   async addEnergy(energyAdd, newCooldown) {
-    const { user_energy, user_max_energy, cooldown_time, user_id } = this.state;
+    const { user_energy, user_max_energy, user_id } = this.state;
+    // const { user_energy, user_max_energy, cooldown_time, user_id } = this.state;
     const final_energy_add =
-      this.state.onTimeOut == true ? energyAdd : energyAdd + 1;
+      this.state.onTimeOut === true ? energyAdd : energyAdd + 1;
     this.setState({
       onTimeOut: false
     });
@@ -176,7 +176,7 @@ export default class Profile extends Component {
       this.setCooldownTime(user_id, newCooldown);
       this.getNewEnergy(user_id);
     } else if (
-      this.state.user_max_energy ==
+      this.state.user_max_energy ===
       this.state.user_energy + final_energy_add
     ) {
       console.log('equals');
@@ -393,6 +393,7 @@ export default class Profile extends Component {
         break;
       case 'minigame':
         this.handleShow()
+        break;
       default:
         break;
     }

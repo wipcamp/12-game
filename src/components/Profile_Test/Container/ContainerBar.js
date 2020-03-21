@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Progress } from 'reactstrap'
+// import { Progress } from 'reactstrap'
 import styled from 'styled-components'
 import Bar from '../model/Bar'
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ContainerUpper from '../Profile_Test/Container/ContainerUpper'
 import ContainerButton from '../Profile_Test/Container/ContainerButton'
 import styled from 'styled-components'
-import StarGroup from './StarGroup'
+// import StarGroup from './StarGroup'
 import teamService from '../../services/teamService'
 import Star from './Star'
 
@@ -14,22 +14,22 @@ const Bg = styled.div`
     z-index:-1;
 `
 
-const LeoStyle = {
-    backgroundColor: '#fff00f',
-    top: '3em'
-}
+// const LeoStyle = {
+//     backgroundColor: '#fff00f',
+//     top: '3em'
+// }
 
-const starStyle = {
-    LEO: {
-        top: '5em',
-        color: 'Aqua'
-    }
-}
-const energyStyle = {
-    position: 'relative',
-    top: '-1em',
-    left: '1.8em'
-}
+// const starStyle = {
+//     LEO: {
+//         top: '5em',
+//         color: 'Aqua'
+//     }
+// }
+// const energyStyle = {
+//     position: 'relative',
+//     top: '-1em',
+//     left: '1.8em'
+// }
 
 export default class index extends Component {
 

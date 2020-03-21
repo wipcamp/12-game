@@ -77,69 +77,69 @@ class Test extends Component {
       <div className="App">
         <header className="App-header">
           <div className="support">
-            <img width="25%" src="https://img.icons8.com/color/420/line-me.png" />
-            <img width="25%" src="https://lh3.googleusercontent.com/illfpW97yh9TtvtmtN-BiNcpomys5gzAj4nw8Je6Ydby814PRquAPcvsP2tAV43Iqe8logzjUnjp7tN5Dvk" />
+            <img width="25%" src="https://img.icons8.com/color/420/line-me.png" alt="sth"/>
+            <img width="25%" src="https://lh3.googleusercontent.com/illfpW97yh9TtvtmtN-BiNcpomys5gzAj4nw8Je6Ydby814PRquAPcvsP2tAV43Iqe8logzjUnjp7tN5Dvk" alt='sth' />
           </div>
           <div className="support">
             {
-              (this.state.pictureUrl && this.state.pictureUrl != '')
+              (this.state.pictureUrl && this.state.pictureUrl !== '')
                 ?
-                <img width="25%" src={this.state.pictureUrl} />
+                <img width="25%" src={this.state.pictureUrl} alt='sth'/>
                 :
                 null
             }
           </div>
           {
-            (this.state.name && this.state.name != '')
+            (this.state.name && this.state.name !== '')
               ?
               <p>Name: {this.state.name}</p>
               :
               null
           }
           {
-            (this.state.userLineID && this.state.userLineID != '')
+            (this.state.userLineID && this.state.userLineID !== '')
               ?
               <p>LineID: {this.state.userLineID}</p>
               :
               null
           }
           {
-            (this.state.statusMessage && this.state.statusMessage != '')
+            (this.state.statusMessage && this.state.statusMessage !== '')
               ?
               <p>statusMessage: {this.state.statusMessage}</p>
               :
               null
           }
           {
-            (this.state.languageDevice && this.state.languageDevice != '')
+            (this.state.languageDevice && this.state.languageDevice !== '')
               ?
               <p>languageDevice: {this.state.languageDevice}</p>
               :
               null
           }
           {
-            (this.state.versionSDK && this.state.versionSDK != '')
+            (this.state.versionSDK && this.state.versionSDK !== '')
               ?
               <p>versionSDK: {this.state.versionSDK}</p>
               :
               null
           }
           {
-            (this.state.client && this.state.client != '')
+            (this.state.client && this.state.client !== '')
               ?
               <p>client: {this.state.client}</p>
               :
               null
           }
           {
-            (this.state.isLogin && this.state.isLogin != '')
+            (this.state.isLogin && this.state.isLogin !== '')
               ?
               <p>isLogin: {this.state.isLogin}</p>
               :
               null
           }
           {
-            (this.state.os && this.state.os != '')
+            (this.state.os && this.state.os !== '')
               ?
               <p>os: {this.state.os}</p>
               :

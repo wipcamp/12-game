@@ -16,13 +16,13 @@ const Head = styled.div`
     background: linear-gradient(180deg, #C4C4C4 0%, #808080 100%);
     padding: auto;
 `
-const P = styled.p`
-    position: relative;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%)
-`
+// const P = styled.p`
+//     position: relative;
+//     top: 50%;
+//     left: 50%;
+//     margin-right: -50%;
+//     transform: translate(-50%, -50%)
+// `
 const Body = styled.div`
     display: flex;
     justify-content: space-between;

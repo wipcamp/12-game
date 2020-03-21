@@ -24,7 +24,8 @@ export default class CharacterController extends FlareComponent.Controller
     {
         // advance the walk time
         this._WalkTime += elapsed;
-        const { _MusicWalk: musicWalk, _Walk: walk, _WalkTime: walkTime , _Jump:jump,_Wave:wave} = this;
+        // const { _MusicWalk: musicWalk, _Walk: walk, _WalkTime: walkTime , _Jump:jump,_Wave:wave} = this;
+        const { _MusicWalk: musicWalk, _Walk: walk, _WalkTime: walkTime,_Wave:wave} = this;
         
         musicWalk.apply(walkTime % musicWalk.duration, artboard, 1.0);       
         wave.apply(walkTime % wave.duration, artboard, 1.0);  

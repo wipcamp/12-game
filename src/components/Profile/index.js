@@ -7,8 +7,6 @@ import Menubar from './Menubar';
 import Countdown from './Countdown'
 import Cookies from 'js-cookie'
 
-const loginGameUrl = 'https://game.freezer.wip.camp/login'
-// const loginGameUrl = 'http://localhost:3000/login'
 const CenterComponent = styled.div`
   position: fixed;
   top: 50%;
@@ -104,7 +102,7 @@ export default class Profile extends Component {
           console.log(timeStart)
           console.log(score)
           console.log(timePlay)
-          if (verifyMiniGameCookie == verifyCode) {
+          if (verifyMiniGameCookie === verifyCode) {
             isDataChange = true
             console.log('same code')
             let res = await profileService.getExp(userId, score)
@@ -123,7 +121,7 @@ export default class Profile extends Component {
           }
         }
       }
-      if (isDataChange == false) {
+      if (isDataChange === false) {
       // if (true) {
         Cookies.remove('verifyCode', { domain: 'game.freezer.wip.camp', path: '' })
         console.log('removed verifyCode')
@@ -145,8 +143,9 @@ export default class Profile extends Component {
   }
 
   async addEnergy(energyAdd, newCooldown) {
-    const { user_energy, user_max_energy, cooldown_time, user_id } = this.state
-    const final_energy_add = this.state.onTimeOut==true?energyAdd:energyAdd+1;
+    // const { user_energy, user_max_energy, cooldown_time, user_id } = this.state
+    const { user_energy, user_max_energy, user_id } = this.state
+    const final_energy_add = this.state.onTimeOut===true?energyAdd:energyAdd+1;
     this.setState({
       onTimeOut : false
     })
@@ -156,7 +155,7 @@ export default class Profile extends Component {
       await profileService.setEnergy(user_id, totalEnergy)
       this.setCooldownTime(user_id, newCooldown)
       this.getNewEnergy(user_id)
-    } else if (this.state.user_max_energy == this.state.user_energy + final_energy_add) {
+    } else if (this.state.user_max_energy === this.state.user_energy + final_energy_add) {
       console.log("equals")
       let totalEnergy = user_energy + final_energy_add;
       await profileService.setEnergy(user_id, totalEnergy)

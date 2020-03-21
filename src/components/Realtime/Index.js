@@ -36,7 +36,7 @@ export default class Index extends Component {
   };
 
   componentDidMount() {
-    let name;
+    // let name;
 
     firebaseRef.once('value').then(snapData => {
       console.log(snapData.val().name);

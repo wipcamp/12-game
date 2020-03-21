@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
+// import styled from 'styled-components'
 
 export default class Countdown extends Component {
 
   state = { minute: this.props.minute, second: this.props.second }
 
   timer() {
-    if (this.state.minute != 999 && this.state.second != 999) {
+    // if (this.state.minute != 999 && this.state.second != 999) {
+    if (this.state.minute !== 999 && this.state.second !== 999) {
       this.setState({
         second: this.state.second - 1
       });
@@ -53,7 +54,8 @@ export default class Countdown extends Component {
 
   render() {
     const { second, minute } = this.state;
-    if (minute != 999 && second != 999) {
+    // if (minute != 999 && second != 999) {
+    if (minute !== 999 && second !== 999) {
       return <div>{minute > 9 ? minute : '0' + minute}:{second > 9 ? second : '0' + second}</div>;
     } else {
       return null;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import Status from '../model/Status';
 
 export default class ContainerStatus extends Component {

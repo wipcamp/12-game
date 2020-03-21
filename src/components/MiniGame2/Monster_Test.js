@@ -1,8 +1,8 @@
 import React from "react";
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
 import Matter from "matter-js";
 import MonsterTexture from './MonsterTexture'
-import { GameEngine } from "react-game-engine";
+// import { GameEngine } from "react-game-engine";
 
 const particleOptions = {
     friction: 0.05,
