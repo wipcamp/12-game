@@ -17,10 +17,10 @@ function App() {
             <Map />
           </Route>
           <Route exact path='/'>
-            <Profile />
+            <MiniGame2 />
           </Route>
           <Route exact path='/MiniGame2'>
-            <MiniGame2 />
+            <Profile />
           </Route>
         </Router>
       </header>
