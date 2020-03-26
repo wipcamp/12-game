@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { ThemeConsumer } from 'styled-components';
 // import styled from 'styled-components'
 
 export default class Health extends Component {
   state = {
     health: 100,
-    point: 0
+    point: 0,
+    velo: 2
   };
 
   prevState = {
@@ -12,18 +14,47 @@ export default class Health extends Component {
   };
 
   componentDidMount() {
-    console.log('health: ' + this.props.stating.health)
-    if (this.props.stating.health.point !== this.state.point) {
+    if (this.props.point !== this.state.point) {
       this.setState({
         point: this.props.point
       });
     }
-    this.check();
+    if (this.props.velo !== this.state.velo) {
+      this.setState({
+        velo: this.props.velo
+      });
+    }
+    let checking = setInterval(() => {
+      if (this.state.health !== 0 || this.state.health < 0) {
+        if (this.prevState.point === this.state.point) {
+          this.setState({
+            health: this.state.health - 10
+          });
+          if (this.state.velo !== this.props.velo) {
+            this.setState({
+              velo: this.props.velo
+            });
+          }
+        } else {
+          this.prevState = {
+            point: this.state.point
+          };
+        }
+        if (this.props.confirm) {
+          this.props.confirm(this.state.health);
+        }
+      } else {
+        if (this.props.confirm) {
+          this.props.confirm(this.state.health);
+          console.log(this.state.health);
+        }
+      }
+    }, 2000);
+      // }, this.state.velo * 1000);
   }
-  
+
   componentDidUpdate(prevProps) {
-    console.log('health props: ' + this.props.stating.health)
-    if (prevProps.stating !== this.props.stating) {
+    if (prevProps.point !== this.props.point) {
       this.setState({
         point: this.props.point
       });
@@ -31,36 +62,19 @@ export default class Health extends Component {
         point: prevProps.point
       };
     }
+    if (prevProps.velo !== this.props.velo) {
+      this.setState({
+        velo: this.props.velo
+      });
+    }
   }
 
-  check = () => {
-    let checking = setInterval(() => {
-      if (this.prevState.point === this.state.point) {
-        this.setState({
-          health: this.state.health - 10
-        });
-        console.log('crash');
-      } else {
-        this.prevState = {
-          point: this.state.point
-        };
-        console.log('not crash');
-      }
-      if (this.state.health === 0 || this.state.health < 0) {
-        this.props.confirm(this.state)
-        clearInterval(checking);
-      }
-    }, 2000);
-  };
-
   render() {
-    console.log('health: ' + this.state.health);
     return (
       <div>
         <h1>Health</h1>
         <h2> health: {this.state.health} </h2>
         <h2> point: {this.state.point} </h2>
-        <button onClick={() => this.underAttack()}>Attack</button>
       </div>
     );
   }

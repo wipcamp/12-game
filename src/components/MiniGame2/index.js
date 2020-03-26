@@ -12,7 +12,7 @@ const MonsterMovement = styled.div`
   left: 5vw;
   position: fixed;
   background-color: red;
-  animation: monster 2s infinite linear;
+  animation: monster 10s infinite linear;
   @keyframes monster {
     0% {
       transform: translateX(100vw);
@@ -64,43 +64,58 @@ export default class MiniGame2 extends Component {
     point: 0,
     position: 30,
     size: 30,
-    gage: [],
-    health: []
+    health: 100,
+    velo: 2
   };
 
   prevState = {
     point: 0
   };
 
+  keep = {
+    velo: 2
+  }
+
   componentDidMount() {
   }
   componnentDidUpdate() {}
-
-  reduce = () => {
-    setInterval(() => {
-      if (this.prevState.point === this.state.point) {
-        if (this.state.health !== 0) {
-          this.setState({
-            health: this.state.health - 10
-          });
-        }
-      }
-    }, 2000);
-  };
 
   onGage = order => {
     if (order) {
       console.log('point from gagebar: ' + order);
       this.setState({
-        gage: order
+        point: order
       });
     }
   };
 
   conHealth = order => {
     this.setState({
-      health: order.health
+      health: order
     });
+  };
+
+  getMonster = () => {
+    const Mon = styled.div`
+      top: 20vh;
+      left: 5vw;
+      position: fixed;
+      background-color: red;
+      animation: monster ${this.state.velo}s infinite linear;
+      @keyframes monster {
+        0% {
+          transform: translateX(100vw);
+        }
+        100% {
+          transform: translateX(10vw);
+        }
+      }
+    `;
+    if(this.state.health > 0) {
+      return (<Mon><MonsterTexture /></Mon>);
+    }else {
+      return ( <h2>Dead</h2> )
+    }
   };
 
   render() {
@@ -109,21 +124,20 @@ export default class MiniGame2 extends Component {
     } else {
       return (
         <div>
-          {this.state.health !== 0 ? (
+          {this.state.health > 0 ? (
             <PlayerMoveMent ref={this.player}>
               <Player />
             </PlayerMoveMent>
-          ) : <h2>You are</h2> }
-          {this.state.health !== 0 ? (
-            <MonsterMovement ref={this.monster}>
-              <MonsterTexture />
-            </MonsterMovement>
-          ) : <h2>Dead</h2> }
+          ) : (
+            <h2>You are</h2>
+          )}
+          {this.getMonster()}
           <ControllerBar>
-            <GageBar confirm={this.onGage} stating={this.state}/>
+            <GageBar confirm={this.onGage} health={this.state.health} />
           </ControllerBar>
           <p>point index: {this.state.point} </p>
-          <Health stating={this.state} confirm={this.conHealth} />
+          <p> index health: {this.state.health} </p>
+          <Health point={this.state.point} velo={this.state.velo} confirm={this.conHealth} />
         </div>
       );
     }

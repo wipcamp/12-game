@@ -71,7 +71,7 @@ export default class GageBar extends Component {
     isLoad: false,
     startTime: new Date(),
     position: 30,
-    size: 30,
+    size: 15,
     point: 0,
     health: 100,
     hit: 1,
@@ -80,58 +80,73 @@ export default class GageBar extends Component {
 
   prevState = {
     point: -1
-  }
+  };
+
+  stateForExport = {
+    point: 0,
+    velo: 2
+  };
 
   componentDidMount() {
-    console.log('checking' + this.props.stating.health)
-    this.setState({
-      health: this.props.stating.health.health
-    })
+    if (this.state.velo !== this.props.velo) {
+      this.setState({
+        velo: this.props.velo
+      });
+    }
+    if (this.state.health !== this.props.health) {
+      this.setState({
+        health: this.props.health
+      });
+    }
     let check = setInterval(() => {
       if (this.state.health !== 0) {
-        if(this.prevState.point !== this.state.point){
-          if(this.props.confirm){
-            this.props.confirm(this.state.point)
-            console.log('not hit: ' + this.prevState.point)
+        if (this.prevState.point !== this.state.point) {
+          if (this.props.confirm) {
+            this.props.confirm(this.state.point);
           }
-        }else {
+        } else {
           this.prevState = {
             point: this.state.point
-          }
+          };
         }
       } else {
         clearInterval(check);
       }
     }, 2000);
+    // }, this.state.velo * 1000);
 
     //for scope 1 hit/2second
     let hitting = setInterval(() => {
       this.setState({
         monsDead: false
-      })
-      if(this.state.health !== 0){
-        if(this.state.hit === 0){
+      });
+      if (this.state.health !== 0) {
+        if (this.state.hit === 0) {
           this.setState({
-            hit: 1,
-          })
-        }else{
-          console.log('not stack hitting')
+            hit: 1
+          });
         }
-      }else {
-        clearInterval(hitting)
+      } else {
+        clearInterval(hitting);
       }
-    },2000)
+    }, 2000);
+    // },this.state.velo * 1000)
   }
 
-  componentDidUpdate(prevProps, prevState){
-    if(prevProps.stating !== this.props.stating){
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.health !== this.props.health) {
       this.setState({
-        health: this.props.stating.health
-      })
+        health: this.props.health
+      });
     }
-    if(prevState.point !== this.state.point){
-      if(this.props.confirm){
-        this.props.confirm(this.state)
+    if (prevProps.velo !== this.props.velo) {
+      this.setState({
+        velo: this.props.velo
+      });
+    }
+    if (prevState.point !== this.state.point) {
+      if (this.props.confirm) {
+        this.props.confirm(this.state.point);
       }
     }
   }
@@ -141,41 +156,37 @@ export default class GageBar extends Component {
   };
 
   attack = () => {
-    if(this.state.hit === 1){
+    if (this.state.hit === 1) {
       this.setState({
         hit: 0
-      })
+      });
       let rectangle = this.atTarget.current.getBoundingClientRect();
       let mark = this.selector.current.getBoundingClientRect();
       let begin = (this.state.position * Math.floor(rectangle.width)) / 100;
       let end =
-        ((this.state.position + this.state.size) * Math.floor(rectangle.width)) /
+        ((this.state.position + this.state.size) *
+          Math.floor(rectangle.width)) /
         100;
       if (mark.x >= begin && mark.x <= end) {
-        console.log('hit');
         this.setState({
           position: this.getRandom(10, 50),
           point: this.state.point + 10,
           monsDead: true
         });
-      } else {
-        console.log('miss');
       }
-    }else {
-      console.log(`can 't hit not more stack`)
     }
   };
-
-  onConfirm = order => {
-    console.log(order)
-  }
 
   render() {
     return (
       <div>
         <p> point: {this.state.point} </p>
         <p> health: {this.state.health} </p>
-        {this.state.health !== 0 ? <Triangle ref={this.selector} /> : <Tri />}
+        {this.state.health !== 0 ? (
+          <Triangle ref={this.selector} />
+        ) : (
+          <Tri ref={this.selector} />
+        )}
         <Div ref={this.atTarget}>
           <Progress
             multi
