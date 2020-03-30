@@ -24,33 +24,43 @@ export default class Health extends Component {
         velo: this.props.velo
       });
     }
+    let velo = this.props.velo
+
+    // function decrease health
     let checking = setInterval(() => {
-      if (this.state.health !== 0 || this.state.health < 0) {
-        if (this.prevState.point === this.state.point) {
-          this.setState({
-            health: this.state.health - 10
-          });
-          if (this.state.velo !== this.props.velo) {
+      // for decrease health from velo monster
+      velo--
+      if(velo < 0){
+        velo = this.props.velo-1
+      }
+      // decrease health ref from above function
+      if(velo === 0){
+        if (this.state.health !== 0 || this.state.health < 0) {
+          if (this.prevState.point === this.state.point) {
             this.setState({
-              velo: this.props.velo
+              health: this.state.health - 10
             });
+            if (this.state.velo !== this.props.velo) {
+              this.setState({
+                velo: this.props.velo
+              });
+            }
+          } else {
+            this.prevState = {
+              point: this.state.point
+            };
+          }
+          if (this.props.confirm) {
+            this.props.confirm(this.state.health);
           }
         } else {
-          this.prevState = {
-            point: this.state.point
-          };
-        }
-        if (this.props.confirm) {
-          this.props.confirm(this.state.health);
-        }
-      } else {
-        if (this.props.confirm) {
-          this.props.confirm(this.state.health);
-          console.log(this.state.health);
+          if (this.props.confirm) {
+            this.props.confirm(this.state.health);
+          }
         }
       }
-    }, 2000);
-      // }, this.state.velo * 1000);
+      
+    }, 1000);
   }
 
   componentDidUpdate(prevProps) {

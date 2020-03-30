@@ -74,15 +74,13 @@ export default class MiniGame2 extends Component {
 
   keep = {
     velo: 2
-  }
+  };
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
   componnentDidUpdate() {}
 
   onGage = order => {
     if (order) {
-      console.log('point from gagebar: ' + order);
       this.setState({
         point: order
       });
@@ -95,26 +93,137 @@ export default class MiniGame2 extends Component {
     });
   };
 
-  getMonster = () => {
-    const Mon = styled.div`
-      top: 20vh;
-      left: 5vw;
-      position: fixed;
-      background-color: red;
-      animation: monster ${this.state.velo}s infinite linear;
-      @keyframes monster {
-        0% {
-          transform: translateX(100vw);
-        }
-        100% {
-          transform: translateX(10vw);
-        }
-      }
-    `;
-    if(this.state.health > 0) {
-      return (<Mon><MonsterTexture /></Mon>);
-    }else {
-      return ( <h2>Dead</h2> )
+  getMonster = velo => {
+    let Mon = null;
+    switch (velo) {
+      case 1:
+        Mon = styled.div`
+          top: 20vh;
+          left: 5vw;
+          position: fixed;
+          background-color: aqua;
+          animation: monster 1s infinite linear;
+          @keyframes monster {
+            0% {
+              transform: translateX(100vw);
+            }
+            100% {
+              transform: translateX(10vw);
+            }
+          }
+        `;
+        break;
+      case 2:
+        Mon = styled.div`
+          top: 20vh;
+          left: 5vw;
+          position: fixed;
+          background-color: wheat;
+          animation: monster 2s infinite linear;
+          @keyframes monster {
+            0% {
+              transform: translateX(100vw);
+            }
+            100% {
+              transform: translateX(10vw);
+            }
+          }
+        `;
+        break;
+      case 3:
+        Mon = styled.div`
+          top: 20vh;
+          left: 5vw;
+          position: fixed;
+          background-color: red;
+          animation: monster 3s infinite linear;
+          @keyframes monster {
+            0% {
+              transform: translateX(100vw);
+            }
+            100% {
+              transform: translateX(10vw);
+            }
+          }
+        `;
+        break;
+      case 4:
+        Mon = styled.div`
+          top: 20vh;
+          left: 5vw;
+          position: fixed;
+          background-color: blue;
+          animation: monster 4s infinite linear;
+          @keyframes monster {
+            0% {
+              transform: translateX(100vw);
+            }
+            100% {
+              transform: translateX(10vw);
+            }
+          }
+        `;
+        break;
+      case 5:
+        Mon = styled.div`
+          top: 20vh;
+          left: 5vw;
+          position: fixed;
+          background-color: black;
+          animation: monster 5s infinite linear;
+          @keyframes monster {
+            0% {
+              transform: translateX(100vw);
+            }
+            100% {
+              transform: translateX(10vw);
+            }
+          }
+        `;
+        break;
+      default:
+        break;
+    }
+    if (this.state.health > 0) {
+      return (
+        <Mon>
+          <MonsterTexture />
+        </Mon>
+      );
+    } else {
+      return <h2>Dead</h2>;
+    }
+  };
+
+  changeVelo = velo => {
+    switch (velo) {
+      case 1:
+        this.setState({
+          velo: 2
+        });
+        break;
+      case 2:
+        this.setState({
+          velo: 3
+        });
+        break;
+      case 3:
+        this.setState({
+          velo: 4
+        });
+        break;
+      case 4:
+        this.setState({
+          velo: 5
+        });
+        break;
+      case 5:
+        this.setState({
+          velo: 1
+        });
+        break;
+      default:
+        break;
     }
   };
 
@@ -131,13 +240,24 @@ export default class MiniGame2 extends Component {
           ) : (
             <h2>You are</h2>
           )}
-          {this.getMonster()}
+          {this.getMonster(this.state.velo)}
           <ControllerBar>
-            <GageBar confirm={this.onGage} health={this.state.health} />
+            <GageBar
+              confirm={this.onGage}
+              velo={this.state.velo}
+              health={this.state.health}
+            />
           </ControllerBar>
           <p>point index: {this.state.point} </p>
           <p> index health: {this.state.health} </p>
-          <Health point={this.state.point} velo={this.state.velo} confirm={this.conHealth} />
+          <button onClick={() => this.changeVelo(this.state.velo)}>
+            Change Velo
+          </button>
+          <Health
+            point={this.state.point}
+            velo={this.state.velo}
+            confirm={this.conHealth}
+          />
         </div>
       );
     }
