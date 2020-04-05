@@ -9,7 +9,7 @@ const Triangle = styled.div`
   border-right: 1vh solid transparent;
   border-top: 2vh solid red;
   position: relative;
-  animation: mymove 2s infinite linear;
+  animation: mymove ${props => props.velo}s infinite linear;
 
   @keyframes mymove {
     0% {
@@ -23,35 +23,14 @@ const Triangle = styled.div`
     }
   }
 `;
-const Tri = styled.div`
-  width: 0;
-  height: 0;
-  border-left: 1vh solid transparent;
-  border-right: 1vh solid transparent;
-  border-top: 2vh solid red;
-  position: relative;
-  animation: mymoves 2s infinite linear;
 
-  @keyframes mymoves {
-    0% {
-      transform: translateX(0);
-    }
-    50% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(0);
-    }
-  }
-`;
+Triangle.defaultProps = {
+  velo: 2
+}
 
-const Alive = styled.h1`
-  color: green;
-`;
-
-const Dead = styled.h1`
-  color: red;
-`;
+const Status = styled.h2`
+  color: ${props => props.alive ? 'green' : 'red'};
+`
 
 const Div = styled.div`
   background-color: red;
@@ -60,6 +39,7 @@ const Div = styled.div`
   padding-left: 0.5vw;
   display: inline-block;
 `;
+
 export default class GageBar extends Component {
   constructor(props) {
     super(props);
@@ -68,14 +48,13 @@ export default class GageBar extends Component {
   }
 
   state = {
-    isLoad: false,
-    startTime: new Date(),
     position: 30,
     size: 15,
     point: 0,
     health: 100,
     hit: 1,
-    monsDead: false
+    velo: 2,
+    monsAlive: true
   };
 
   prevState = {
@@ -86,6 +65,8 @@ export default class GageBar extends Component {
     point: 0,
     velo: 2
   };
+
+       
 
   componentDidMount() {
     if (this.state.velo !== this.props.velo) {
@@ -98,11 +79,17 @@ export default class GageBar extends Component {
         health: this.props.health
       });
     }
+
+    //for export point 
     let check = setInterval(() => {
       if (this.state.health !== 0) {
         if (this.prevState.point !== this.state.point) {
           if (this.props.confirm) {
-            this.props.confirm(this.state.point);
+            let order = {
+              point: this.state.point,
+              monsAlive: this.state.monsAlive
+            }
+            this.props.confirm(order);
           }
         } else {
           this.prevState = {
@@ -113,13 +100,9 @@ export default class GageBar extends Component {
         clearInterval(check);
       }
     }, 2000);
-    // }, this.state.velo * 1000);
 
     //for scope 1 hit/2second
     let hitting = setInterval(() => {
-      this.setState({
-        monsDead: false
-      });
       if (this.state.health !== 0) {
         if (this.state.hit === 0) {
           this.setState({
@@ -130,7 +113,16 @@ export default class GageBar extends Component {
         clearInterval(hitting);
       }
     }, 2000);
-    // },this.state.velo * 1000)
+    let updateAliveMonster = setInterval(() => {
+      if(!this.state.monsAlive){
+        this.setState({
+          monsAlive: true
+        })
+      }
+      if(this.state.health === 0){
+        clearInterval(updateAliveMonster)
+      }
+    },1000)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -146,7 +138,11 @@ export default class GageBar extends Component {
     }
     if (prevState.point !== this.state.point) {
       if (this.props.confirm) {
-        this.props.confirm(this.state.point);
+        let order = {
+          point: this.state.point,
+          monsAlive: this.state.monsAlive
+        }
+        this.props.confirm(order);
       }
     }
   }
@@ -171,7 +167,7 @@ export default class GageBar extends Component {
         this.setState({
           position: this.getRandom(10, 50),
           point: this.state.point + 10,
-          monsDead: true
+          monsAlive: false
         });
       }
     }
@@ -183,9 +179,9 @@ export default class GageBar extends Component {
         <p> point: {this.state.point} </p>
         <p> health: {this.state.health} </p>
         {this.state.health !== 0 ? (
-          <Triangle ref={this.selector} />
+          <Triangle velo={2} ref={this.selector} />
         ) : (
-          <Tri ref={this.selector} />
+          <Triangle velo={0} ref={this.selector} />
         )}
         <Div ref={this.atTarget}>
           <Progress
@@ -207,7 +203,7 @@ export default class GageBar extends Component {
           </Progress>
         </Div>
         <button onClick={() => this.attack()}>Attack</button>
-        {this.state.health === 0 ? <Dead>Dead</Dead> : <Alive>Alive</Alive>}
+        {this.state.health === 0 ? <Status >Dead</Status> : <Status alive>Alive</Status>}
       </div>
     );
   }

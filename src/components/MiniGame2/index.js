@@ -6,23 +6,6 @@ import Player from './Player';
 import Health from './Health';
 
 // const liff = window.liff;
-
-const MonsterMovement = styled.div`
-  top: 20vh;
-  left: 5vw;
-  position: fixed;
-  background-color: red;
-  animation: monster 10s infinite linear;
-  @keyframes monster {
-    0% {
-      transform: translateX(100vw);
-    }
-    100% {
-      transform: translateX(10vw);
-    }
-  }
-`;
-
 const ControllerBar = styled.div`
   position: fixed;
   bottom: 0vh;
@@ -49,6 +32,16 @@ const PlayerMoveMent = styled.div`
   }
 `;
 
+const H2 = styled.h2`
+  top: 20vh;
+  left: 5vw;
+  background-color: ${props => props.color};
+`;
+
+H2.defaultProps = {
+  color: 'red'
+};
+
 export default class MiniGame2 extends Component {
   constructor(props) {
     super(props);
@@ -65,7 +58,8 @@ export default class MiniGame2 extends Component {
     position: 30,
     size: 30,
     health: 100,
-    velo: 2
+    velo: 2,
+    monsAlive: true
   };
 
   prevState = {
@@ -76,13 +70,12 @@ export default class MiniGame2 extends Component {
     velo: 2
   };
 
-  componentDidMount() {}
-  componnentDidUpdate() {}
-
   onGage = order => {
     if (order) {
+      console.log(order);
       this.setState({
-        point: order
+        point: order.point,
+        monsAlive: order.monsAlive
       });
     }
   };
@@ -94,10 +87,11 @@ export default class MiniGame2 extends Component {
   };
 
   getMonster = velo => {
-    let Mon = null;
+    let Mon = styled.div``;
     switch (velo) {
       case 1:
         Mon = styled.div`
+          display: ${props => (props.dead ? 'none' : 'show')};
           top: 20vh;
           left: 5vw;
           position: fixed;
@@ -115,6 +109,7 @@ export default class MiniGame2 extends Component {
         break;
       case 2:
         Mon = styled.div`
+          display: ${props => (props.dead ? 'none' : 'show')};
           top: 20vh;
           left: 5vw;
           position: fixed;
@@ -185,13 +180,21 @@ export default class MiniGame2 extends Component {
         break;
     }
     if (this.state.health > 0) {
-      return (
-        <Mon>
-          <MonsterTexture />
-        </Mon>
-      );
+      if (this.state.monsAlive) {
+        return (
+          <Mon>
+            <MonsterTexture />
+          </Mon>
+        );
+      } else {
+        return (
+          <Mon dead>
+            <MonsterTexture />
+          </Mon>
+        );
+      }
     } else {
-      return <h2>Dead</h2>;
+      return <H2 color='blue'>Dead</H2>;
     }
   };
 
@@ -227,6 +230,10 @@ export default class MiniGame2 extends Component {
     }
   };
 
+  getMonsterStatus = () => {
+    return this.state.monsAlive ? <H2 color='Green'>Alive</H2> : <H2>Dead</H2>;
+  };
+
   render() {
     if (this.state.isLoad) {
       return <p>loading</p>;
@@ -238,7 +245,7 @@ export default class MiniGame2 extends Component {
               <Player />
             </PlayerMoveMent>
           ) : (
-            <h2>You are</h2>
+            <H2 color='aqua'>You are</H2>
           )}
           {this.getMonster(this.state.velo)}
           <ControllerBar>
@@ -250,8 +257,16 @@ export default class MiniGame2 extends Component {
           </ControllerBar>
           <p>point index: {this.state.point} </p>
           <p> index health: {this.state.health} </p>
+          {this.getMonsterStatus(this.state.monsAlive)}
           <button onClick={() => this.changeVelo(this.state.velo)}>
             Change Velo
+          </button>
+          <button
+            onClick={() =>
+              this.setState({ monsAlive: this.state.monsAlive ? false : true })
+            }
+          >
+            Change alive monster
           </button>
           <Health
             point={this.state.point}

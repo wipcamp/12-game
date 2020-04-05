@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { ThemeConsumer } from 'styled-components';
-// import styled from 'styled-components'
 
 export default class Health extends Component {
   state = {
@@ -24,15 +23,16 @@ export default class Health extends Component {
         velo: this.props.velo
       });
     }
-    let velo = this.props.velo
-
+    
     // function decrease health
+    let velo = this.props.velo
     let checking = setInterval(() => {
       // for decrease health from velo monster
       velo--
       if(velo < 0){
         velo = this.props.velo-1
       }
+
       // decrease health ref from above function
       if(velo === 0){
         if (this.state.health !== 0 || this.state.health < 0) {
@@ -59,7 +59,6 @@ export default class Health extends Component {
           }
         }
       }
-      
     }, 1000);
   }
 
@@ -88,4 +87,5 @@ export default class Health extends Component {
       </div>
     );
   }
+  
 }
